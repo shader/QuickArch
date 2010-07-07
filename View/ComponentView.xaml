@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="QuickArch.View.ComponentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vw="clr-namespace:QuickArch.View" 
+             Width="100" Height="40" x:Name="componentThumb">
+    <Canvas Name="thumbCanvas" Width="{Binding ElementName=componentThumb, Path=Width}" Height="{Binding ElementName=componentThumb, Path=Height}">
+        <Rectangle x:Name="tplRect" Width="{Binding ElementName=thumbCanvas, Path=Width}" 
+                               Height="{Binding ElementName=thumbCanvas, Path=Height}" Fill="LightCyan" />
+        <TextBox x:Name="titleTextBox" TextWrapping="Wrap" Text="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}" 
+                 Width="{Binding ElementName=thumbCanvas, Path=Width}" Background="Transparent" HorizontalContentAlignment="Center" BorderThickness="0" />
+        <Border BorderBrush="Black" Height="{Binding ElementName=thumbCanvas, Path=Height}" 
+                            Width="{Binding ElementName=thumbCanvas, Path=Width}" BorderThickness="2" />
+    </Canvas>
+</UserControl>

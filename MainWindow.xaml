@@ -1,0 +1,85 @@
+﻿<Window x:Class="QuickArch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:QuickArch"
+        Title="{Binding Path=DisplayName}" Height="720" Width="1024" 
+        Icon="/QuickArch;component/Images/Winter.jpg" ResizeMode="CanResizeWithGrip">
+    <Window.Resources>
+        <ResourceDictionary Source="MainWindowResources.xaml" />
+    </Window.Resources>
+    <DockPanel>
+        <!--Top Menu-->
+        <Menu DockPanel.Dock="Top" Height="22" Name="topMenu" FontSize="11" Foreground="#FF7575F1">
+            <MenuItem Header="File">
+                <MenuItem Header="New Document" />
+                <MenuItem Header="Open Document" />
+                <MenuItem Header="Save Document" />
+                <MenuItem Header="Exit" Command="{Binding Path=CloseCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Edit" >
+
+            </MenuItem>
+            <MenuItem Header="View" >
+
+            </MenuItem>
+            <MenuItem Header="Tools" >
+                <MenuItem Header="Export to PNG" />
+            </MenuItem>
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFCFCFCF" Offset="0.5" />
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="White" Offset="0.992" />
+                </LinearGradientBrush>
+            </Menu.Background>
+        </Menu>
+        
+        <!--Top Toolbar/Quickbar-->
+        <ToolBar DockPanel.Dock="Top" Height="25" Name="myToolbar">
+                <ToolBar.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFCFCFCF" Offset="0.5" />
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="White" Offset="0.992" />
+                </LinearGradientBrush>
+            </ToolBar.Background>
+        </ToolBar>
+        
+        <!--Bottom statusbar-->
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock Name="txtblkcomps" />
+            <Separator/>
+            <TextBlock Name="txtBlkCompLoc"/>
+            <Separator/>
+            <TextBlock Name="txtblklinks" />
+            <Separator />
+            <TextBlock Name="txtblkwidth" />
+            <Separator />
+            <TextBlock Name="txtblkheight" />
+            <Separator />
+            <TextBlock Name="mouseLoc" />
+        </StatusBar>
+        
+        <!--Treeview of architecture-->
+        <TreeView DockPanel.Dock="Left" Width="140" x:Name="archTree" />
+        
+        <!--Control panel/Palette-->
+        <StackPanel DockPanel.Dock="Left" x:Name="controlStackPanel" Width="124">
+            <Border Style="{StaticResource MainBorderStyle}" Width="120" Height="{Binding ElementName=controlStackPanel, Path=ActualHeight}">
+                <HeaderedContentControl
+                Content="{Binding Path=Commands}"
+                ContentTemplate="{StaticResource CommandsTemplate}"
+                Header="Control Panel"
+                Style="{StaticResource MainHCCStyle}"/>
+            </Border>
+        </StackPanel>
+        
+        <!--Main Workspace canvas within scrollviewer-->
+        <Border Style="{StaticResource MainBorderStyle}">
+            <HeaderedContentControl Content="{Binding Path=Workspaces}"
+                                    ContentTemplate="{StaticResource WorkspacesTemplate}"
+                                    Header="Workspace"
+                                    Style="{StaticResource MainHCCStyle}" />
+        </Border>
+    </DockPanel>
+</Window>
