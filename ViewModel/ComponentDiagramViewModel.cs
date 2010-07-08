@@ -99,6 +99,7 @@ namespace QuickArch.ViewModel
         void OnComponentAddedToManager(object sender, ComponentAddedEventArgs e)
         {
             var viewModel = new ComponentViewModel(e.NewComponent, componentManager);
+            this.AllComponents.Add(viewModel);
         }
     }
 }
