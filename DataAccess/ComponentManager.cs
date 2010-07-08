@@ -74,7 +74,7 @@ namespace QuickArch.DataAccess
                                 where comp.Title != null
                                 select new XElement("Component", 
                                            new XAttribute("title", comp.Title)));
-            xDoc.Save("savedoc.xml");
+            xDoc.Save(FileManager.File);
         }
     }
 }
