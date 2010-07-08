@@ -30,14 +30,14 @@ namespace QuickArch
                 viewModel.RequestClose -= handler;
                 window.Close();
             };
-                viewModel.RequestClose += handler;
+            viewModel.RequestClose += handler;
 
-                //allow all controls in the window to
-                //bind to the viewModel by setting the
-                //DataContext, which propagates down the element tree
-                window.DataContext = viewModel;
+            //allow all controls in the window to
+            //bind to the viewModel by setting the
+            //DataContext, which propagates down the element tree
+            window.DataContext = viewModel;
 
-                window.Show();
+            window.Show();
         }
     }
 }
