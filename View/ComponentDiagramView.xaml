@@ -11,8 +11,12 @@
             <vw:ComponentView />
         </DataTemplate>
     </UserControl.Resources>
-    <ListView Width="200" Height="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+    <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"
               ItemsSource="{Binding Path=AllComponents}" ItemTemplate="{StaticResource ComponentTemplate}">
-        
-    </ListView>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Canvas />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
 </UserControl>
