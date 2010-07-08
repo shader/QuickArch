@@ -8,7 +8,7 @@ namespace QuickArch.Model
 {
     public class Connector
     {
-       public static Connector CreateNewComponent()
+       public static Connector CreateNewConnector()
         {
             return new Connector();
         }
