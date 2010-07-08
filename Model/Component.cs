@@ -8,22 +8,12 @@ namespace QuickArch.Model
 {
     public class Component
     {
-        public static Component CreateNewComponent()
-        {
-            return new Component();
-        }
+        public Component() { }
 
-        public static Component CreateComponent(string title, string parent)
+        public Component(string title, string parent)
         {
-            return new Component
-            {
-                Title = title,
-                Parent = parent
-            };
-        }
-
-        protected Component()
-        {
+            Title = title;
+            Parent = parent;
         }
 
         public string Title { get; set; }

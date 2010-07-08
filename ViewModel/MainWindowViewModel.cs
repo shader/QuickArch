@@ -21,6 +21,7 @@ namespace QuickArch.ViewModel
        ObservableCollection<WorkspaceViewModel> workspaces;
        RelayCommand saveCommand;
        RelayCommand saveAsCommand;
+       RelayCommand openCommand;
        #endregion
 
        //Constructor
@@ -99,7 +100,7 @@ namespace QuickArch.ViewModel
        }
        void CreateNewComponent()
        {
-           Component component = Component.CreateNewComponent();
+           Component component = new Component();
            ComponentViewModel newComponentViewModel = new ComponentViewModel(component, componentManager);
            newComponentViewModel.Save();
        }
@@ -137,6 +138,19 @@ namespace QuickArch.ViewModel
                    saveAsCommand = new RelayCommand(param => componentManager.SaveAs());
 
                return saveAsCommand;
+           }
+       }
+       #endregion
+       #region OpenCommand
+       //returns the command that loads a document
+       public ICommand OpenCommand
+       {
+           get
+           {
+               if (openCommand == null)
+                   openCommand = new RelayCommand(param => componentManager.Open());
+
+               return openCommand;
            }
        }
        #endregion
