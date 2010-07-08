@@ -20,6 +20,7 @@ namespace QuickArch.ViewModel
        readonly ComponentManager componentManager;
        ObservableCollection<WorkspaceViewModel> workspaces;
        RelayCommand saveCommand;
+       RelayCommand saveAsCommand;
        #endregion
 
        //Constructor
@@ -27,7 +28,6 @@ namespace QuickArch.ViewModel
        {
            componentManager = new ComponentManager();
            base.DisplayName = Resources.MainWindowViewModel_DisplayName;
-           RequestSave += Save;
        }
 
        #region Commands
@@ -121,25 +121,24 @@ namespace QuickArch.ViewModel
            get
            {
                if (saveCommand == null)
-                   saveCommand = new RelayCommand(param => this.OnRequestSave());
+                   saveCommand = new RelayCommand(param => componentManager.Save());
 
                return saveCommand;
            }
        }
        #endregion
-       #region RequestSave [event]
-       //raised when the diagrams should be saved
-       public event EventHandler RequestSave = delegate {};
- 
-       void OnRequestSave()
+       #region SaveAsCommand
+       //returns the command that attempts to save all of the data in the component diagrams.
+       public ICommand SaveAsCommand
        {
-            RequestSave(this, EventArgs.Empty);
+           get
+           {
+               if (saveAsCommand == null)
+                   saveAsCommand = new RelayCommand(param => componentManager.SaveAs());
+
+               return saveAsCommand;
+           }
        }
        #endregion
-
-       void Save(object sender, EventArgs e)
-       {
-           componentManager.SaveAll();
-       }
    }
 }

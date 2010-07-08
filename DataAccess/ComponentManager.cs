@@ -67,14 +67,25 @@ namespace QuickArch.DataAccess
             return new List<Component>(components);
         }
 
-        public void SaveAll()
+        public void Save()
         {
             xDoc = new XElement("Components",
                                 from comp in components
                                 where comp.Title != null
                                 select new XElement("Component", 
                                            new XAttribute("title", comp.Title)));
-            xDoc.Save(FileManager.File);
+            if (FileManager.File != null)
+                xDoc.Save(FileManager.File);
+        }
+
+        public void SaveAs()
+        {
+            string file = FileManager.PickFile();
+            if (file != null)
+            {
+                FileManager.File = file;
+                Save();
+            }
         }
     }
 }
