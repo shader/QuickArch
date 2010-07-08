@@ -4,25 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vw ="clr-namespace:QuickArch.View"
+             xmlns:vm ="clr-namespace:QuickArch.ViewModel"
              Width="650" Height="490">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="ComponentGroups" Source="{Binding Path=AllComponents}" />
-        <Style x:Key="ComponentStyle" TargetType="{x:Type vw:ComponentView}">
-            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsSelected" Value="False" />
-                        <Condition Property="IsMouseOver" Value="False" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="#EEEEEEEE" />
-                </MultiTrigger>
-            </Style.Triggers>
-        </Style>
+        <DataTemplate DataType="{x:Type vm:ComponentViewModel}" x:Key="ComponentTemplate">
+            <vw:ComponentView />
+        </DataTemplate>
     </UserControl.Resources>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <Canvas Width="640" Height="480" Background="White" DataContext="{StaticResource ComponentGroups}">
-            <Canvas.
-        </Canvas>
-    </ScrollViewer>
+    <ListView Width="200" Height="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+              ItemsSource="{Binding Path=AllComponents}" ItemTemplate="{StaticResource ComponentTemplate}">
+        
+    </ListView>
 </UserControl>

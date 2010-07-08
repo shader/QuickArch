@@ -8,13 +8,26 @@ namespace QuickArch.Model
 {
     public class Connector
     {
-        private Component startComponent;
-        private Component endComponent;
-
-        public Connector(Component start, Component end)
+       public static Connector CreateNewComponent()
         {
-            startComponent = start;
-            endComponent = end;
+            return new Connector();
         }
+
+        public static Connector CreateConnector(Component start, Component end)
+        {
+            return new Connector
+            {
+                Start = start,
+                End = end
+            };
+        }
+
+        protected Connector()
+        {
+        }
+
+        public Component Start { get; set; }
+
+        public Component End { get; set; }
     }
 }
