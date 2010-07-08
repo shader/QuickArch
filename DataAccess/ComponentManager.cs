@@ -58,7 +58,7 @@ namespace QuickArch.DataAccess
 
             return components.Contains(component);
         }
-
+        //Shallow copied list
         public List<Component> getComponents()
         {
             return new List<Component>(components);

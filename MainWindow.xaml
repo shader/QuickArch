@@ -64,8 +64,8 @@
         <TreeView DockPanel.Dock="Left" Width="140" x:Name="archTree" />
         
         <!--Control panel/Palette-->
-        <StackPanel DockPanel.Dock="Left" x:Name="controlStackPanel" Width="124">
-            <Border Style="{StaticResource MainBorderStyle}" Width="120" Height="{Binding ElementName=controlStackPanel, Path=ActualHeight}">
+        <StackPanel DockPanel.Dock="Left" x:Name="controlStackPanel" Width="154">
+            <Border Style="{StaticResource MainBorderStyle}" Width="150" Height="{Binding ElementName=controlStackPanel, Path=ActualHeight}">
                 <HeaderedContentControl
                 Content="{Binding Path=Commands}"
                 ContentTemplate="{StaticResource CommandsTemplate}"

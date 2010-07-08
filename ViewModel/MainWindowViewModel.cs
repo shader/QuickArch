@@ -15,7 +15,7 @@ namespace QuickArch.ViewModel
    public class MainWindowViewModel : WorkspaceViewModel
    {
        #region Fields
-       ReadOnlyCollection<CommandViewModel> commands;
+       Collection<CommandViewModel> commands;
        readonly ComponentManager componentManager;
        ObservableCollection<WorkspaceViewModel> workspaces;
        #endregion
@@ -29,24 +29,25 @@ namespace QuickArch.ViewModel
 
        #region Commands
        //Returns a read-only list of commands that the UI can display and execute
-       public ReadOnlyCollection<CommandViewModel> Commands
+       public Collection<CommandViewModel> Commands
        {
            get
            {
                if (commands == null)
                {
-                   List<CommandViewModel> cmds = this.createCommands();
-                   commands = new ReadOnlyCollection<CommandViewModel>(cmds);
+                   List<CommandViewModel> cmds = this.CreateCommands();
+                   commands = new Collection<CommandViewModel>(cmds);
                }
                return commands;
            }
        }
 
-       List<CommandViewModel> createCommands()
+       List<CommandViewModel> CreateCommands()
        {
            return new List<CommandViewModel>
            {
-               new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponent, new RelayCommand(param => this.CreateNewComponent())),
+               new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponentDiagram, new RelayCommand(param => this.CreateNewComponentDiagram()),true),
+               new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponent, new RelayCommand(param => this.CreateNewComponent()),true)
                //new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewConnector, new RelayCommand(param => this.CreateNewConnector()))
            };
        }
@@ -87,12 +88,17 @@ namespace QuickArch.ViewModel
 
        #region Private Helpers
 
+       void CreateNewComponentDiagram()
+       {
+           ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(componentManager);
+           this.Workspaces.Add(workspace);
+           this.SetActiveWorkspace(workspace);
+       }
        void CreateNewComponent()
        {
            Component component = Component.CreateNewComponent();
-           ComponentViewModel workspace = new ComponentViewModel(component, componentManager);
-           this.Workspaces.Add(workspace);
-           this.SetActiveWorkspace(workspace);
+           ComponentViewModel newComponentViewModel = new ComponentViewModel(component, componentManager);
+           newComponentViewModel.Save();
        }
 
        void SetActiveWorkspace(WorkspaceViewModel workspace)

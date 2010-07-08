@@ -62,10 +62,14 @@
       <DependentUpon>CompDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\CommandViewModel.cs" />
+    <Compile Include="ViewModel\ComponentDiagramViewModel.cs" />
     <Compile Include="ViewModel\ComponentViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
+    <Compile Include="View\ComponentDiagramView.xaml.cs">
+      <DependentUpon>ComponentDiagramView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ComponentView.xaml.cs">
       <DependentUpon>ComponentView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +96,10 @@
     <Page Include="MainWindowResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ComponentDiagramView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ComponentView.xaml">
       <SubType>Designer</SubType>

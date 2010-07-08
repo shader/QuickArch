@@ -129,6 +129,10 @@
     <value>New Component</value>
     <comment>Display name for the command that creates a new component</comment>
   </data>
+  <data name="MainWindowViewModel_Command_CreateNewComponentDiagram" xml:space="preserve">
+    <value>New Component Diagram</value>
+    <comment>Display name for the command that creates a new component diagram</comment>
+  </data>
   <data name="MainWindowViewModel_Command_CreateNewConnector" xml:space="preserve">
     <value>New Link</value>
     <comment>Display name for the command that creates a new link/connector</comment>

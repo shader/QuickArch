@@ -88,6 +88,15 @@ namespace QuickArch.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Component Diagram.
+        /// </summary>
+        internal static string MainWindowViewModel_Command_CreateNewComponentDiagram {
+            get {
+                return ResourceManager.GetString("MainWindowViewModel_Command_CreateNewComponentDiagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Link.
         /// </summary>
         internal static string MainWindowViewModel_Command_CreateNewConnector {

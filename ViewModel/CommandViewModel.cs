@@ -8,15 +8,18 @@ namespace QuickArch.ViewModel
     /// </summary>
     public class CommandViewModel : ViewModelBase
     {
-        public CommandViewModel(string displayName, ICommand command)
+        public CommandViewModel(string displayName, ICommand command, bool isEnabled)
         {
             if (command == null)
                 throw new ArgumentNullException("command");
 
             base.DisplayName = displayName;
             this.Command = command;
+            this.IsEnabled = isEnabled;
         }
 
         public ICommand Command { get; private set; }
+
+        public bool IsEnabled { get; set; }
     }
 }
