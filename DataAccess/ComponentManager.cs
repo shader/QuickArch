@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections;
 using QuickArch;
 using QuickArch.Model;
+using System.Xml.Linq;
 
 namespace QuickArch.DataAccess
 {
@@ -12,6 +13,8 @@ namespace QuickArch.DataAccess
     {
         private List<Component> components;
         private List<Connector> links;
+        private XElement xDoc;
+        
 
         //Constructor
         public ComponentManager()
@@ -62,6 +65,16 @@ namespace QuickArch.DataAccess
         public List<Component> getComponents()
         {
             return new List<Component>(components);
+        }
+
+        public void SaveAll()
+        {
+            xDoc = new XElement("Components",
+                                from comp in components
+                                where comp.Title != null
+                                select new XElement("Component", 
+                                           new XAttribute("title", comp.Title)));
+            xDoc.Save("savedoc.xml");
         }
     }
 }

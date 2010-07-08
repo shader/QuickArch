@@ -9,6 +9,7 @@ using QuickArch.Model;
 using System.Diagnostics;
 using System.Windows.Data;
 using QuickArch.Properties;
+using System.Windows.Input;
 
 namespace QuickArch.ViewModel
 {
@@ -18,6 +19,7 @@ namespace QuickArch.ViewModel
        Collection<CommandViewModel> commands;
        readonly ComponentManager componentManager;
        ObservableCollection<WorkspaceViewModel> workspaces;
+       RelayCommand saveCommand;
        #endregion
 
        //Constructor
@@ -25,6 +27,7 @@ namespace QuickArch.ViewModel
        {
            componentManager = new ComponentManager();
            base.DisplayName = Resources.MainWindowViewModel_DisplayName;
+           RequestSave += Save;
        }
 
        #region Commands
@@ -110,5 +113,33 @@ namespace QuickArch.ViewModel
                collectionView.MoveCurrentTo(workspace);
        }
        #endregion
+
+       #region SaveCommand
+       //returns the command that attempts to save all of the data in the component diagrams.
+       public ICommand SaveCommand
+       {
+           get
+           {
+               if (saveCommand == null)
+                   saveCommand = new RelayCommand(param => this.OnRequestSave());
+
+               return saveCommand;
+           }
+       }
+       #endregion
+       #region RequestSave [event]
+       //raised when the diagrams should be saved
+       public event EventHandler RequestSave = delegate {};
+ 
+       void OnRequestSave()
+       {
+            RequestSave(this, EventArgs.Empty);
+       }
+       #endregion
+
+       void Save(object sender, EventArgs e)
+       {
+           componentManager.SaveAll();
+       }
    }
 }
