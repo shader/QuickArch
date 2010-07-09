@@ -15,7 +15,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ItemsControl}">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <ItemsPresenter />
                             </ScrollViewer>
                     </ControlTemplate>
@@ -28,7 +28,7 @@
                   x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" Width="{Binding ElementName=ComponentDiagramControl, Path=Width}">
             <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel />
+                <Canvas />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
     </ItemsControl>
