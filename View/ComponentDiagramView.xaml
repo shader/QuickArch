@@ -5,18 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vw ="clr-namespace:QuickArch.View"
              xmlns:vm ="clr-namespace:QuickArch.ViewModel"
+             x:Name="ComponentDiagramControl"
              Width="650" Height="490">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type vm:ComponentViewModel}" x:Key="ComponentTemplate">
             <vw:ComponentView />
         </DataTemplate>
     </UserControl.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
     <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"
-              ItemsSource="{Binding Path=AllComponents}" ItemTemplate="{StaticResource ComponentTemplate}">
+                  ItemsSource="{Binding Path=AllComponents}" ItemTemplate="{StaticResource ComponentTemplate}" 
+                  x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" Width="{Binding ElementName=ComponentDiagramControl, Path=Width}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
     </ItemsControl>
+    </ScrollViewer>
 </UserControl>

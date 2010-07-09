@@ -128,6 +128,7 @@ namespace QuickArch.ViewModel
            }
        }
        #endregion
+
        #region SaveAsCommand
        //returns the command that attempts to save all of the data in the component diagrams.
        public ICommand SaveAsCommand
@@ -141,6 +142,7 @@ namespace QuickArch.ViewModel
            }
        }
        #endregion
+
        #region OpenCommand
        //returns the command that loads a document
        public ICommand OpenCommand
