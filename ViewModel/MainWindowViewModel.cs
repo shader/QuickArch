@@ -94,14 +94,16 @@ namespace QuickArch.ViewModel
 
        void CreateNewComponentDiagram()
        {
-           ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(componentManager);
+           ComponentManager newComponentManager = new ComponentManager();
+           ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(newComponentManager);
            this.Workspaces.Add(workspace);
            this.SetActiveWorkspace(workspace);
        }
        void CreateNewComponent()
        {
            Component component = new Component();
-           ComponentViewModel newComponentViewModel = new ComponentViewModel(component, componentManager);
+           ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
+           ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.getComponentManager());
            newComponentViewModel.Save();
        }
 
@@ -112,6 +114,15 @@ namespace QuickArch.ViewModel
            System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
            if(collectionView != null)
                collectionView.MoveCurrentTo(workspace);
+       }
+       WorkspaceViewModel GetActiveWorkspace()
+       {
+           System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
+           if (collectionView != null)
+           {
+               return collectionView.CurrentItem as WorkspaceViewModel;
+           }
+           return null;
        }
        #endregion
 

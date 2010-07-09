@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vw="clr-namespace:QuickArch.View" 
-             Width="100" Height="40" x:Name="componentThumb">
-    <Canvas Name="thumbCanvas" Width="{Binding ElementName=componentThumb, Path=Width}" Height="{Binding ElementName=componentThumb, Path=Height}">
+             Width="100" Height="40" x:Name="componentControl" Cursor="Hand"
+             >
+    <Canvas x:Name="thumbCanvas" Width="{Binding ElementName=componentControl, Path=Width}" Height="{Binding ElementName=componentControl, Path=Height}">
         <Rectangle x:Name="tplRect" Width="{Binding ElementName=thumbCanvas, Path=Width}" 
                                Height="{Binding ElementName=thumbCanvas, Path=Height}" Fill="LightCyan" />
         <TextBox x:Name="titleTextBox" TextWrapping="Wrap" Text="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}" 

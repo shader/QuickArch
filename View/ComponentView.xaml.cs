@@ -20,15 +20,13 @@ namespace QuickArch.View
     /// </summary>
     public partial class ComponentView : UserControl
     {
-        private bool isDragging;
-        private Point controlPoint, mousePoint, newMousePoint;
 
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(ComponentView));
 
         public bool IsSelected
         {
             get { return (bool)base.GetValue(IsSelectedProperty); }
-            set { base.SetValue(IsSelectedProperty, value); } 
+            set { base.SetValue(IsSelectedProperty, value); }
         }
 
         public ComponentView()

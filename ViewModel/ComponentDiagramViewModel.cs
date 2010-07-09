@@ -36,6 +36,11 @@ namespace QuickArch.ViewModel
             this.ShowComponents();
         }
 
+        public ComponentManager getComponentManager()
+        {
+            return componentManager;
+        }
+
         /// <summary>
         /// Create a list of components from the manager and
         /// convert to an ObservableCollection for the UI to handle
