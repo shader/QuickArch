@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:QuickArch"
         xmlns:vw="clr-namespace:QuickArch.View"
+        xmlns:vm="clr-namespace:QuickArch.ViewModel"
         Title="{Binding Path=DisplayName}" Height="720" Width="1024" 
         Icon="/QuickArch;component/Images/Winter.jpg" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
@@ -64,8 +65,7 @@
         
         <!--Treeview of architecture-->
         <TreeView DockPanel.Dock="Left" Width="140" x:Name="archTree" >
-            <TreeViewItem Header="Document 1">
-                <TextBlock Text="Hello World" />
+            <TreeViewItem Header="Document 1" ItemsSource="{Binding Path=AllComponents}">
             </TreeViewItem>
         </TreeView>
         

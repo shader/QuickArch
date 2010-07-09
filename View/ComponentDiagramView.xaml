@@ -11,16 +11,25 @@
         <DataTemplate DataType="{x:Type vm:ComponentViewModel}" x:Key="ComponentTemplate">
             <vw:ComponentView />
         </DataTemplate>
+        <Style TargetType="{x:Type ItemsControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ItemsControl}">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
     <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"
                   ItemsSource="{Binding Path=AllComponents}" ItemTemplate="{StaticResource ComponentTemplate}" 
                   x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" Width="{Binding ElementName=ComponentDiagramControl, Path=Width}">
-        <ItemsControl.ItemsPanel>
+            <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <Canvas x:Name="componentCanvas" />
+                <StackPanel />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
     </ItemsControl>
-    </ScrollViewer>
 </UserControl>
