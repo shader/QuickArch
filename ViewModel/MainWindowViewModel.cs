@@ -9,6 +9,7 @@ using QuickArch.Model;
 using System.Diagnostics;
 using System.Windows.Data;
 using QuickArch.Properties;
+using System.Windows.Input;
 
 namespace QuickArch.ViewModel
 {
@@ -18,6 +19,9 @@ namespace QuickArch.ViewModel
        Collection<CommandViewModel> commands;
        readonly ComponentManager componentManager;
        ObservableCollection<WorkspaceViewModel> workspaces;
+       RelayCommand saveCommand;
+       RelayCommand saveAsCommand;
+       RelayCommand openCommand;
        #endregion
 
        //Constructor
@@ -96,7 +100,7 @@ namespace QuickArch.ViewModel
        }
        void CreateNewComponent()
        {
-           Component component = Component.CreateNewComponent();
+           Component component = new Component();
            ComponentViewModel newComponentViewModel = new ComponentViewModel(component, componentManager);
            newComponentViewModel.Save();
        }
@@ -108,6 +112,46 @@ namespace QuickArch.ViewModel
            System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
            if(collectionView != null)
                collectionView.MoveCurrentTo(workspace);
+       }
+       #endregion
+
+       #region SaveCommand
+       //returns the command that attempts to save all of the data in the component diagrams.
+       public ICommand SaveCommand
+       {
+           get
+           {
+               if (saveCommand == null)
+                   saveCommand = new RelayCommand(param => componentManager.Save());
+
+               return saveCommand;
+           }
+       }
+       #endregion
+       #region SaveAsCommand
+       //returns the command that attempts to save all of the data in the component diagrams.
+       public ICommand SaveAsCommand
+       {
+           get
+           {
+               if (saveAsCommand == null)
+                   saveAsCommand = new RelayCommand(param => componentManager.SaveAs());
+
+               return saveAsCommand;
+           }
+       }
+       #endregion
+       #region OpenCommand
+       //returns the command that loads a document
+       public ICommand OpenCommand
+       {
+           get
+           {
+               if (openCommand == null)
+                   openCommand = new RelayCommand(param => componentManager.Open());
+
+               return openCommand;
+           }
        }
        #endregion
    }
