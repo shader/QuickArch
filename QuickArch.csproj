@@ -68,6 +68,7 @@
     <Compile Include="ViewModel\ComponentDiagramViewModel.cs" />
     <Compile Include="ViewModel\ComponentViewModel.cs" />
     <Compile Include="ViewModel\ConnectorViewModel.cs" />
+    <Compile Include="ViewModel\DocumentViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
