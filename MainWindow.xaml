@@ -13,7 +13,7 @@
         <!--Top Menu-->
         <Menu DockPanel.Dock="Top" Height="22" Name="topMenu" FontSize="11" Foreground="#FF7575F1">
             <MenuItem Header="File">
-                <MenuItem Header="New Document..." />
+                <MenuItem Header="New Document..." Command="{Binding Path=NewDocumentCommand}"/>
                 <MenuItem Header="Open Document..." Command="{Binding Path=OpenCommand}"/>
                 <MenuItem Header="Save Document" Command="{Binding Path=SaveCommand}"/>
                 <MenuItem Header="Save As..." Command="{Binding Path=SaveAsCommand}"/>

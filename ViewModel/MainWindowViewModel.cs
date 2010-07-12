@@ -16,19 +16,28 @@ namespace QuickArch.ViewModel
    public class MainWindowViewModel : WorkspaceViewModel
    {
        #region Fields
+       //Collection of commands to be displayed in UI
        Collection<CommandViewModel> commands;
-       readonly ComponentManager componentManager;
+       //Maintain a list of ComponentManagers created and used by ComponentDiagrams
+       List<ComponentManager> componentManagers;
+       //ObservableCollection of workspaces (component diagrams for now, maybe sequence charts later)
        ObservableCollection<WorkspaceViewModel> workspaces;
+       //List of DocumentViewModels created by the user/window
+       List<DocumentViewModel> documents;
+       RelayCommand newDocumentCommand;
        RelayCommand saveCommand;
        RelayCommand saveAsCommand;
        RelayCommand openCommand;
+       private int i;
        #endregion
 
        //Constructor
        public MainWindowViewModel()
        {
-           componentManager = new ComponentManager();
+           componentManagers = new List<ComponentManager>();
+           documents = new List<DocumentViewModel>();
            base.DisplayName = Resources.MainWindowViewModel_DisplayName;
+           i = 0;
        }
 
        #region Commands
@@ -106,6 +115,12 @@ namespace QuickArch.ViewModel
            ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.getComponentManager());
            newComponentViewModel.Save();
        }
+       void CreateNewDocument()
+       {
+           i++;
+           Document document = new Document("Document " + i);
+           DocumentViewModel newDocument = new DocumentViewModel(document);
+       }
 
        void SetActiveWorkspace(WorkspaceViewModel workspace)
        {
@@ -125,7 +140,21 @@ namespace QuickArch.ViewModel
            return null;
        }
        #endregion
+       
+       #region NewDocumentCommand
+       public ICommand NewDocumentCommand
+       {
+           get
+           {
+               //if(newDocumentCommand == null)
+                  // newDocumentCommand = new RelayCommand(param => this.CreateNewDocument());
 
+               return newDocumentCommand;
+           }
+       }
+       #endregion
+
+       /*
        #region SaveCommand
        //returns the command that attempts to save all of the data in the component diagrams.
        public ICommand SaveCommand
@@ -133,7 +162,7 @@ namespace QuickArch.ViewModel
            get
            {
                if (saveCommand == null)
-                   saveCommand = new RelayCommand(param => componentManager.Save());
+                   saveCommand = new RelayCommand(param => document.Save());
 
                return saveCommand;
            }
@@ -147,7 +176,7 @@ namespace QuickArch.ViewModel
            get
            {
                if (saveAsCommand == null)
-                   saveAsCommand = new RelayCommand(param => componentManager.SaveAs());
+                   saveAsCommand = new RelayCommand(param => document.SaveAs());
 
                return saveAsCommand;
            }
@@ -161,11 +190,12 @@ namespace QuickArch.ViewModel
            get
            {
                if (openCommand == null)
-                   openCommand = new RelayCommand(param => componentManager.Open());
+                   openCommand = new RelayCommand(param => document.Open());
 
                return openCommand;
            }
        }
        #endregion
+       */
    }
 }

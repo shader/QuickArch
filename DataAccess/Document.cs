@@ -22,6 +22,12 @@ namespace QuickArch.DataAccess
 
         public String Title { get; set; }
 
+        public List<ComponentDiagramViewModel> ComponentDiagrams
+        {
+            get { return _componentDiagrams; }
+            set { _componentDiagrams = value; }
+        }
+
         public void AddComponentDiagram(ComponentDiagramViewModel componentDiagram)
         {
             if (componentDiagram == null)
