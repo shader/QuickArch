@@ -28,7 +28,7 @@
                   x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" Width="{Binding ElementName=ComponentDiagramControl, Path=Width}">
             <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <Canvas />
+                <StackPanel />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
     </ItemsControl>

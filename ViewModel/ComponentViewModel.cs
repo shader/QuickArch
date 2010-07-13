@@ -10,10 +10,10 @@ namespace QuickArch.ViewModel
 {
     public class ComponentViewModel : WorkspaceViewModel
     {
-        readonly Component component;
-        readonly ComponentManager componentManager;
-        bool isSelected;
-        RelayCommand saveCommand;
+        readonly Component _component;
+        readonly ComponentManager _componentManager;
+        bool _isSelected;
+        RelayCommand _saveCommand;
 
         public ComponentViewModel(Component component, ComponentManager componentManager)
         {
@@ -22,20 +22,20 @@ namespace QuickArch.ViewModel
             if (componentManager == null)
                 throw new ArgumentNullException("componentManager");
 
-            this.component = component;
-            this.componentManager = componentManager;
+            _component = component;
+            _componentManager = componentManager;
         }
 
         #region Component Properties
         public string Title
         {
-            get { return component.Title; }
+            get { return _component.Title; }
             set
             {
-                if (value == component.Title)
+                if (value == _component.Title)
                     return;
 
-                component.Title = value;
+                _component.Title = value;
 
                 base.OnPropertyChanged("Title");
             }
@@ -43,13 +43,13 @@ namespace QuickArch.ViewModel
 
         public string Parent
         {
-            get { return component.Parent; }
+            get { return _component.Parent; }
             set
             {
-                if (value == component.Parent)
+                if (value == _component.Parent)
                     return;
 
-                component.Parent = value;
+                _component.Parent = value;
 
                 base.OnPropertyChanged("Parent");
             }
@@ -59,13 +59,13 @@ namespace QuickArch.ViewModel
         #region Presentation Properties
         public bool IsSelected
         {
-            get { return isSelected; }
+            get { return _isSelected; }
             set
             {
-                if (value == isSelected)
+                if (value == _isSelected)
                     return;
 
-                isSelected = value;
+                _isSelected = value;
 
                 base.OnPropertyChanged("IsSelected");
             }
@@ -75,14 +75,14 @@ namespace QuickArch.ViewModel
         {
             get
             {
-                if (saveCommand == null)
+                if (_saveCommand == null)
                 {
-                    saveCommand = new RelayCommand(
+                    _saveCommand = new RelayCommand(
                         param => this.Save(),
                         param => this.CanSave
                         );
                 }
-                return saveCommand;
+                return _saveCommand;
             }
         }
         #endregion
@@ -95,7 +95,7 @@ namespace QuickArch.ViewModel
                 //throw new InvalidOperationException(Strings.ComponentViewModel_Exception_CannotSave);
 
             if (this.IsNewComponent)
-                componentManager.addComponent(component);
+                _componentManager.AddComponent(_component);
         }
         #endregion
 
@@ -103,7 +103,7 @@ namespace QuickArch.ViewModel
         //returns true if this component was created by the user and has not yet been saved to the manager
         bool IsNewComponent
         {
-            get { return !componentManager.containsComponent(component); }
+            get { return !_componentManager.ContainsComponent(_component); }
         }
 
         //returns true if the component is valid and can be saved

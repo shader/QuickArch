@@ -9,7 +9,7 @@ namespace QuickArch.ViewModel
     public abstract class WorkspaceViewModel : ViewModelBase
     {
         #region Fields
-        RelayCommand closeCommand;
+        RelayCommand _closeCommand;
         #endregion
 
         #region Constructor
@@ -23,10 +23,10 @@ namespace QuickArch.ViewModel
         {
             get
             {
-                if (closeCommand == null)
-                    closeCommand = new RelayCommand(param => this.OnRequestClose());
+                if (_closeCommand == null)
+                    _closeCommand = new RelayCommand(param => this.OnRequestClose());
 
-                return closeCommand;
+                return _closeCommand;
             }
         }
         #endregion

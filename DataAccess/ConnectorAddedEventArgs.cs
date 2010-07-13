@@ -6,7 +6,7 @@ using QuickArch.Model;
 
 namespace QuickArch.DataAccess
 {
-    class ConnectorAddedEventArgs : EventArgs
+    public class ConnectorAddedEventArgs : EventArgs
     {
             public ConnectorAddedEventArgs(Connector newConnector)
             {

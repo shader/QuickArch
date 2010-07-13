@@ -17,9 +17,10 @@ namespace QuickArch.ViewModel
     /// </summary>
     public class ComponentDiagramViewModel : WorkspaceViewModel
     {
-        readonly ComponentManager componentManager;
+        readonly ComponentManager _componentManager;
+        bool _isSelected;
 
-        //Constructor
+        #region Constructor
         public ComponentDiagramViewModel(ComponentManager componentManager)
         {
             if (componentManager == null)
@@ -27,18 +28,19 @@ namespace QuickArch.ViewModel
 
             base.DisplayName = Resources.ComponentDiagramViewModel_DisplayName;
 
-            this.componentManager = componentManager;
+            _componentManager = componentManager;
 
             //Subscribe for notifications of when a new component is added
-            componentManager.ComponentAdded += this.OnComponentAddedToManager;
+            _componentManager.ComponentAdded += this.OnComponentAddedToManager;
 
             //Populate the diagram with ComponentViewModels
             this.ShowComponents();
         }
+        #endregion
 
-        public ComponentManager getComponentManager()
+        public ComponentManager GetComponentManager()
         {
-            return componentManager;
+            return _componentManager;
         }
 
         /// <summary>
@@ -47,8 +49,8 @@ namespace QuickArch.ViewModel
         /// </summary>
         void ShowComponents()
         {
-            List<ComponentViewModel> all = (from comp in componentManager.getComponents() 
-                                            select new ComponentViewModel(comp, componentManager)).ToList();
+            List<ComponentViewModel> all = (from comp in _componentManager.GetComponents() 
+                                            select new ComponentViewModel(comp, _componentManager)).ToList();
             foreach (ComponentViewModel cvm in all)
                 cvm.PropertyChanged += this.OnComponentViewModelPropertyChanged;
 
@@ -63,6 +65,19 @@ namespace QuickArch.ViewModel
         /// </summary>
         public ObservableCollection<ComponentViewModel> AllComponents { get; private set; }
 
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value != _isSelected)
+                {
+                    _isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
+
         #endregion
 
         #region Base Class Overrides
@@ -75,7 +90,7 @@ namespace QuickArch.ViewModel
             this.AllComponents.Clear();
             this.AllComponents.CollectionChanged -= this.OnCollectionChanged;
 
-            componentManager.ComponentAdded -= this.OnComponentAddedToManager;
+            _componentManager.ComponentAdded -= this.OnComponentAddedToManager;
         }
         #endregion
 
@@ -91,7 +106,6 @@ namespace QuickArch.ViewModel
                 foreach (ComponentViewModel compVM in e.OldItems)
                     compVM.PropertyChanged -= this.OnComponentViewModelPropertyChanged;
         }
-        #endregion
 
         void OnComponentViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -103,8 +117,9 @@ namespace QuickArch.ViewModel
 
         void OnComponentAddedToManager(object sender, ComponentAddedEventArgs e)
         {
-            var viewModel = new ComponentViewModel(e.NewComponent, componentManager);
+            var viewModel = new ComponentViewModel(e.NewComponent, _componentManager);
             this.AllComponents.Add(viewModel);
         }
+        #endregion
     }
 }

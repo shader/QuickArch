@@ -11,71 +11,71 @@ namespace QuickArch.DataAccess
 {
     public class ComponentManager
     {
-        private List<Component> components;
-        private List<Connector> links;
-        private XDocument xDoc;
+        private List<Component> _components;
+        private List<Connector> _links;
+        private XDocument _xDoc;
         
 
         //Constructor
         public ComponentManager()
         {
-            components = new List<Component>();
-            links = new List<Connector>();
+            _components = new List<Component>();
+            _links = new List<Connector>();
         }
 
         //Raised when a component is placed into the manager
         public event EventHandler<ComponentAddedEventArgs> ComponentAdded;
 
-        public void addComponent(Component component)
+        public void AddComponent(Component component)
         {
             if (component == null)
                 throw new ArgumentNullException("component");
-            if (!components.Contains(component))
+            if (!_components.Contains(component))
             {
-                components.Add(component);
+                _components.Add(component);
 
                 if (this.ComponentAdded != null)
                     this.ComponentAdded(this, new ComponentAddedEventArgs(component));
             }
         }
 
-        public void removeComponent(Component component)
+        public void RemoveComponent(Component component)
         {
-            components.Remove(component);
+            _components.Remove(component);
         }
 
-        public void addLink(Connector link)
+        public void AddLink(Connector link)
         {
-            links.Add(link);
+            _links.Add(link);
         }
 
-        public void removeLink(Connector link)
+        public void RemoveLink(Connector link)
         {
-            links.Remove(link);
+            _links.Remove(link);
         }
 
-        public bool containsComponent(Component component)
+        public bool ContainsComponent(Component component)
         {
             if (component == null)
                 throw new ArgumentNullException("component");
 
-            return components.Contains(component);
+            return _components.Contains(component);
         }
         //Shallow copied list
-        public List<Component> getComponents()
+        public List<Component> GetComponents()
         {
-            return new List<Component>(components);
+            return new List<Component>(_components);
         }
 
         public void Save()
         {
-            xDoc = new XDocument(new XElement("Components",
-                                 from comp in components
+            _xDoc = new XDocument(new XElement("Components",
+                                 from comp in _components
                                  where comp.Title != null
                                  select new XElement("Component", 
                                             new XAttribute("Title", comp.Title))));
             if (FileManager.File != null)
-                xDoc.Save(FileManager.File);
+                _xDoc.Save(FileManager.File);
         }
 
         public void SaveAs()
@@ -94,13 +94,13 @@ namespace QuickArch.DataAccess
             if (file != null)
             {
                 FileManager.File = file;
-                xDoc = XDocument.Load(file);
-                var components = xDoc.Element("Components");
+                _xDoc = XDocument.Load(file);
+                var components = _xDoc.Element("Components");
                 var comps = components.Descendants("Component");
-                var elements = from el in xDoc.Element("Components").Descendants("Component") select el;
+                var elements = from el in _xDoc.Element("Components").Descendants("Component") select el;
                 foreach (var el in elements)
                 {
-                    addComponent(new Component(el.Attribute("Title") != null ? el.Attribute("Title").Value : null,
+                    AddComponent(new Component(el.Attribute("Title") != null ? el.Attribute("Title").Value : null,
                                                el.Attribute("Parent") != null ? el.Attribute("Parent").Value : null));
                 }
             }

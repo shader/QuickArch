@@ -17,25 +17,25 @@ namespace QuickArch.ViewModel
    {
        #region Fields
        //Collection of commands to be displayed in UI
-       Collection<CommandViewModel> commands;
+       Collection<CommandViewModel> _commands;
        //Maintain a list of ComponentManagers created and used by ComponentDiagrams
-       List<ComponentManager> componentManagers;
+       List<ComponentManager> _componentManagers;
        //ObservableCollection of workspaces (component diagrams for now, maybe sequence charts later)
-       ObservableCollection<WorkspaceViewModel> workspaces;
+       ObservableCollection<WorkspaceViewModel> _workspaces;
        //List of DocumentViewModels created by the user/window
-       List<DocumentViewModel> documents;
-       RelayCommand newDocumentCommand;
-       RelayCommand saveCommand;
-       RelayCommand saveAsCommand;
-       RelayCommand openCommand;
+       ObservableCollection<DocumentViewModel> _documents;
+       RelayCommand _newDocumentCommand;
+       RelayCommand _saveCommand;
+       RelayCommand _saveAsCommand;
+       RelayCommand _openCommand;
        private int i;
        #endregion
 
        //Constructor
        public MainWindowViewModel()
        {
-           componentManagers = new List<ComponentManager>();
-           documents = new List<DocumentViewModel>();
+           _componentManagers = new List<ComponentManager>();
+           _documents = new ObservableCollection<DocumentViewModel>();
            base.DisplayName = Resources.MainWindowViewModel_DisplayName;
            i = 0;
        }
@@ -46,12 +46,12 @@ namespace QuickArch.ViewModel
        {
            get
            {
-               if (commands == null)
+               if (_commands == null)
                {
                    List<CommandViewModel> cmds = this.CreateCommands();
-                   commands = new Collection<CommandViewModel>(cmds);
+                   _commands = new Collection<CommandViewModel>(cmds);
                }
-               return commands;
+               return _commands;
            }
        }
 
@@ -72,12 +72,12 @@ namespace QuickArch.ViewModel
        {
            get
            {
-               if (workspaces == null)
+               if (_workspaces == null)
                {
-                   workspaces = new ObservableCollection<WorkspaceViewModel>();
-                   workspaces.CollectionChanged += this.OnWorkspacesChanged;
+                   _workspaces = new ObservableCollection<WorkspaceViewModel>();
+                   _workspaces.CollectionChanged += this.OnWorkspacesChanged;
                }
-               return workspaces;
+               return _workspaces;
            }
        }
 
@@ -99,12 +99,53 @@ namespace QuickArch.ViewModel
        }
        #endregion
 
+       #region Documents
+       public ObservableCollection<DocumentViewModel> Documents
+       {
+           get
+           {
+               if(_documents == null)
+               {
+                   _documents = new ObservableCollection<DocumentViewModel>();
+                   _documents.CollectionChanged += this.OnDocumentsChanged;
+               }
+               return _documents;
+           }
+       }
+
+       void OnDocumentsChanged(object sender, NotifyCollectionChangedEventArgs e)
+       {
+           if (e.NewItems != null && e.NewItems.Count != 0)
+               foreach (DocumentViewModel document in e.NewItems)
+                   document.RequestClose += this.OnDocumentRequestClose;
+
+           if (e.OldItems != null && e.OldItems.Count != 0)
+               foreach (DocumentViewModel document in e.OldItems)
+                   document.RequestClose -= this.OnDocumentRequestClose;
+       }
+
+       void OnDocumentRequestClose(object sender, EventArgs e)
+       {
+           DocumentViewModel dvm = sender as DocumentViewModel;
+           dvm.Dispose();
+           this.Documents.Remove(dvm);
+       }
+       #endregion
+
        #region Private Helpers
 
        void CreateNewComponentDiagram()
        {
            ComponentManager newComponentManager = new ComponentManager();
            ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(newComponentManager);
+           //get current document and add component diagram to it
+           for(int j = 0; j < _documents.Count; j++)
+           {
+               if (_documents.ElementAt<DocumentViewModel>(j).IsSelected)
+               {
+                   _documents.ElementAt<DocumentViewModel>(j).ComponentDiagrams.Add(workspace);
+               }
+           }
            this.Workspaces.Add(workspace);
            this.SetActiveWorkspace(workspace);
        }
@@ -112,7 +153,7 @@ namespace QuickArch.ViewModel
        {
            Component component = new Component();
            ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
-           ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.getComponentManager());
+           ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.GetComponentManager());
            newComponentViewModel.Save();
        }
        void CreateNewDocument()
@@ -120,6 +161,7 @@ namespace QuickArch.ViewModel
            i++;
            Document document = new Document("Document " + i);
            DocumentViewModel newDocument = new DocumentViewModel(document);
+           _documents.Add(newDocument);
        }
 
        void SetActiveWorkspace(WorkspaceViewModel workspace)
@@ -146,10 +188,10 @@ namespace QuickArch.ViewModel
        {
            get
            {
-               //if(newDocumentCommand == null)
-                  // newDocumentCommand = new RelayCommand(param => this.CreateNewDocument());
+               if(_newDocumentCommand == null)
+                  _newDocumentCommand = new RelayCommand(param => this.CreateNewDocument());
 
-               return newDocumentCommand;
+               return _newDocumentCommand;
            }
        }
        #endregion

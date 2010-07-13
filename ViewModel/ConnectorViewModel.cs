@@ -9,9 +9,9 @@ namespace QuickArch.ViewModel
 {
     public class ConnectorViewModel : WorkspaceViewModel
     {
-        readonly Connector connector;
-        readonly ComponentManager componentManager;
-        bool isSelected;
+        readonly Connector _connector;
+        readonly ComponentManager _componentManager;
+        bool _isSelected;
 
         #region Constructor
         public ConnectorViewModel(Connector connector, ComponentManager componentManager)
@@ -21,8 +21,8 @@ namespace QuickArch.ViewModel
             if (componentManager == null)
                 throw new ArgumentNullException("componentManager");
 
-            this.connector = connector;
-            this.componentManager = componentManager;
+            _connector = connector;
+            _componentManager = componentManager;
         }
         #endregion
 
@@ -30,13 +30,13 @@ namespace QuickArch.ViewModel
 
         public Component Start
         {
-            get { return connector.Start; }
+            get { return _connector.Start; }
             set
             {
-                if (value == connector.Start)
+                if (value == _connector.Start)
                     return;
 
-                connector.Start = value;
+                _connector.Start = value;
 
                 base.OnPropertyChanged("Start");
             }
@@ -44,13 +44,13 @@ namespace QuickArch.ViewModel
 
         public Component End
         {
-            get { return connector.End; }
+            get { return _connector.End; }
             set
             {
-                if (value == connector.End)
+                if (value == _connector.End)
                     return;
 
-                connector.End = value;
+                _connector.End = value;
 
                 base.OnPropertyChanged("End");
             }
@@ -62,13 +62,13 @@ namespace QuickArch.ViewModel
 
         public bool IsSelected
         {
-            get { return isSelected; }
+            get { return _isSelected; }
             set
             {
-                if (value == isSelected)
+                if (value == _isSelected)
                     return;
 
-                isSelected = value;
+                _isSelected = value;
 
                 base.OnPropertyChanged("IsSelected");
             }

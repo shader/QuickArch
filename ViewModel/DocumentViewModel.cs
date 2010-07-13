@@ -6,7 +6,6 @@ using QuickArch.DataAccess;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using QuickArch.DataAccess;
 
 namespace QuickArch.ViewModel
 {
@@ -15,8 +14,8 @@ namespace QuickArch.ViewModel
         readonly Document _document;
         bool _isSelected;
         bool _isExpanded;
-        RelayCommand saveCommand;
-        RelayCommand openCommand;
+        RelayCommand _saveCommand;
+        RelayCommand _openCommand;
 
         #region Constructor
         public DocumentViewModel(Document document)
