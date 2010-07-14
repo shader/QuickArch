@@ -13,12 +13,15 @@ namespace QuickArch.View
         // Resizing adorner uses Thumbs for visual elements.  
         // The Thumbs have built-in mouse input handling.
         Thumb topLeft, topRight, bottomLeft, bottomRight;
+        Point origin = new Point(0, 0);
+        Point position = new Point(0,0);
+        Canvas myCanvas;
 
         // To store and manage the adorner's visual children.
         VisualCollection visualChildren;
 
         // Initialize the ResizingAdorner.
-        public ResizingAdorner(UIElement adornedElement)
+        public ResizingAdorner(UIElement adornedElement, Canvas canvas)
             : base(adornedElement)
         {                
             visualChildren = new VisualCollection(this);
@@ -35,6 +38,8 @@ namespace QuickArch.View
             bottomRight.DragDelta += new DragDeltaEventHandler(HandleBottomRight);
             topLeft.DragDelta += new DragDeltaEventHandler(HandleTopLeft);
             topRight.DragDelta += new DragDeltaEventHandler(HandleTopRight);
+
+            myCanvas = canvas;
         }
 
         // Handler for resizing from the bottom-right.
@@ -74,9 +79,9 @@ namespace QuickArch.View
 
             double height_old = adornedElement.Height;
             double height_new = Math.Max(adornedElement.Height - args.VerticalChange, hitThumb.DesiredSize.Height);
-            double top_old = Canvas.GetTop(adornedElement);
+            position = adornedElement.TranslatePoint(origin, myCanvas);
             adornedElement.Height = height_new;
-            Canvas.SetTop(adornedElement, top_old - (height_new - height_old));
+            adornedElement.RenderTransform = new TranslateTransform(position.X, position.Y - (height_new - height_old));
         }
 
         // Handler for resizing from the top-left.
@@ -97,15 +102,14 @@ namespace QuickArch.View
 
             double width_old = adornedElement.Width;
             double width_new = Math.Max(adornedElement.Width - args.HorizontalChange, hitThumb.DesiredSize.Width);
-            double left_old = Canvas.GetLeft(adornedElement);
             adornedElement.Width = width_new;
-            Canvas.SetLeft(adornedElement, left_old - (width_new - width_old));
-            
+
             double height_old = adornedElement.Height;
             double height_new = Math.Max(adornedElement.Height - args.VerticalChange, hitThumb.DesiredSize.Height);
-            double top_old = Canvas.GetTop(adornedElement);
             adornedElement.Height = height_new;
-            Canvas.SetTop(adornedElement, top_old - (height_new - height_old));
+
+            position = adornedElement.TranslatePoint(origin, myCanvas);
+            adornedElement.RenderTransform = new TranslateTransform(position.X - (width_new - width_old), position.Y - (height_new - height_old));
         }
 
         // Handler for resizing from the bottom-left.
@@ -126,9 +130,10 @@ namespace QuickArch.View
 
             double width_old = adornedElement.Width;
             double width_new = Math.Max(adornedElement.Width - args.HorizontalChange, hitThumb.DesiredSize.Width);
-            double left_old = Canvas.GetLeft(adornedElement);
-            adornedElement.Width = width_new;            
-            Canvas.SetLeft(adornedElement, left_old - (width_new - width_old));
+            adornedElement.Width = width_new;
+
+            position = adornedElement.TranslatePoint(origin, myCanvas);
+            adornedElement.RenderTransform = new TranslateTransform(position.X - (width_new - width_old), position.Y);
         }
 
         // Arrange the Adorners.

@@ -133,7 +133,7 @@ namespace QuickArch.View
                 _originalPoint = selectedElement.TranslatePoint(new Point(0,0), myCanvas);
 
                 aLayer = AdornerLayer.GetAdornerLayer(selectedElement);
-                aLayer.Add(new ResizingAdorner(selectedElement));
+                aLayer.Add(new ResizingAdorner(selectedElement, myCanvas));
                 selected = true;
                 e.Handled = true;
             }
