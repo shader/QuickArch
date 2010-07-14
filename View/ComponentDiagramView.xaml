@@ -6,7 +6,7 @@
              xmlns:vw ="clr-namespace:QuickArch.View"
              xmlns:vm ="clr-namespace:QuickArch.ViewModel"
              x:Name="ComponentDiagramControl"
-             Width="650" Height="490">
+             Width="650" Height="490" Loaded="Diagram_Created">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type vm:ComponentViewModel}" x:Key="ComponentTemplate">
             <vw:ComponentView />
@@ -28,8 +28,7 @@
                   x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" Width="{Binding ElementName=ComponentDiagramControl, Path=Width}">
             <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <Canvas Name="myCanvas" Background="Transparent" 
-                        />
+                <Canvas Name ="myCanvas" Background="Transparent"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
     </ItemsControl>
