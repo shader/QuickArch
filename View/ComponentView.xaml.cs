@@ -20,7 +20,6 @@ namespace QuickArch.View
     /// </summary>
     public partial class ComponentView : UserControl
     {
-
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(ComponentView));
 
         public bool IsSelected

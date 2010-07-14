@@ -10,7 +10,8 @@
         <Rectangle x:Name="tplRect" Width="{Binding ElementName=thumbCanvas, Path=Width}" 
                                Height="{Binding ElementName=thumbCanvas, Path=Height}" Fill="LightCyan" />
         <TextBox x:Name="titleTextBox" TextWrapping="Wrap" Text="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}" 
-                 Width="{Binding ElementName=thumbCanvas, Path=Width}" Background="Transparent" HorizontalContentAlignment="Center" BorderThickness="0" />
+                 Width="{Binding ElementName=thumbCanvas, Path=Width}" Background="Transparent" 
+                 HorizontalContentAlignment="Center" BorderThickness="0" />
         <Border BorderBrush="Black" Height="{Binding ElementName=thumbCanvas, Path=Height}" 
                             Width="{Binding ElementName=thumbCanvas, Path=Width}" BorderThickness="2" />
     </Canvas>

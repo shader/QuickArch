@@ -25,7 +25,7 @@ namespace QuickArch.ViewModel
             
             _document = document;
             
-            base.DisplayName = "Document1";
+            base.DisplayName = _document.Title;
 
             _document.ComponentDiagramAdded += this.OnComponentDiagramAddedToDocument;
 
@@ -98,7 +98,7 @@ namespace QuickArch.ViewModel
 
         void OnComponentDiagramAddedToDocument(object sender, ComponentDiagramAddedEventArgs e)
         {
-            var viewModel = new ComponentDiagramViewModel(new ComponentManager());
+            var viewModel = new ComponentDiagramViewModel(new ComponentManager(),"Component Diagram");
             this.ComponentDiagrams.Add(viewModel);
         }
         #endregion

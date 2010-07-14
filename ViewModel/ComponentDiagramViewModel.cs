@@ -21,12 +21,12 @@ namespace QuickArch.ViewModel
         bool _isSelected;
 
         #region Constructor
-        public ComponentDiagramViewModel(ComponentManager componentManager)
+        public ComponentDiagramViewModel(ComponentManager componentManager, string displayName)
         {
             if (componentManager == null)
                 throw new ArgumentNullException("componentManager");
 
-            base.DisplayName = Resources.ComponentDiagramViewModel_DisplayName;
+            base.DisplayName = displayName;
 
             _componentManager = componentManager;
 

@@ -36,6 +36,7 @@ namespace QuickArch.ViewModel
        {
            _componentManagers = new List<ComponentManager>();
            _documents = new ObservableCollection<DocumentViewModel>();
+           _commands = new Collection<CommandViewModel>(this.CreateCommands());
            base.DisplayName = Resources.MainWindowViewModel_DisplayName;
            i = 0;
        }
@@ -91,6 +92,7 @@ namespace QuickArch.ViewModel
                foreach (WorkspaceViewModel workspace in e.OldItems)
                    workspace.RequestClose -= this.OnWorkspaceRequestClose;
        }
+
        void OnWorkspaceRequestClose(object sender, EventArgs e)
        {
            WorkspaceViewModel workspace = sender as WorkspaceViewModel;
@@ -137,11 +139,11 @@ namespace QuickArch.ViewModel
        void CreateNewComponentDiagram()
        {
            ComponentManager newComponentManager = new ComponentManager();
-           ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(newComponentManager);
+           ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(newComponentManager, "Component Diagram");
            //get current document and add component diagram to it
            for(int j = 0; j < _documents.Count; j++)
            {
-               if (_documents.ElementAt<DocumentViewModel>(j).IsSelected)
+               if (_documents.ElementAt<DocumentViewModel>(j).IsSelected || _documents.Count==1)
                {
                    _documents.ElementAt<DocumentViewModel>(j).ComponentDiagrams.Add(workspace);
                }
@@ -195,7 +197,6 @@ namespace QuickArch.ViewModel
            }
        }
        #endregion
-
        /*
        #region SaveCommand
        //returns the command that attempts to save all of the data in the component diagrams.
@@ -203,14 +204,14 @@ namespace QuickArch.ViewModel
        {
            get
            {
-               if (saveCommand == null)
-                   saveCommand = new RelayCommand(param => document.Save());
+               if (_saveCommand == null)
+                   _saveCommand = new RelayCommand(param => document.Save());
 
-               return saveCommand;
+               return _saveCommand;
            }
        }
        #endregion
-
+       
        #region SaveAsCommand
        //returns the command that attempts to save all of the data in the component diagrams.
        public ICommand SaveAsCommand
