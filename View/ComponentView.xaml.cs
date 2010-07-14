@@ -30,6 +30,7 @@ namespace QuickArch.View
 
         public ComponentView()
         {
+            this.RenderTransform = new TranslateTransform(50, 50);
             InitializeComponent();
         }
     }

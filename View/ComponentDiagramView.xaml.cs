@@ -26,9 +26,7 @@ namespace QuickArch.View
         bool selected = false;
         UIElement selectedElement = null;
 
-        Point _startPoint;
-        private double _originalLeft;
-        private double _originalTop;
+        Point _startPoint, _originalPoint;
         private Canvas myCanvas;
 
         public ComponentDiagramView()
@@ -39,15 +37,15 @@ namespace QuickArch.View
         private void myCanvas_Loaded(object sender, RoutedEventArgs e)
         {
             myCanvas = sender as Canvas;
-            myCanvas.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(myCanvas_PreviewMouseLeftButtonDown);
-            myCanvas.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
+            myCanvas.MouseLeftButtonDown += new MouseButtonEventHandler(myCanvas_MouseLeftButtonDown);
+            myCanvas.MouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
         }   
 
         private void Diagram_Created(object sender, RoutedEventArgs e)
         {
-            this.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(Diagram_MouseLeftButtonDown);
-            this.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
-            this.PreviewMouseMove += new MouseEventHandler(Diagram_MouseMove);
+            this.MouseLeftButtonDown += new MouseButtonEventHandler(Diagram_MouseLeftButtonDown);
+            this.MouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
+            this.MouseMove += new MouseEventHandler(Diagram_MouseMove);
             this.MouseLeave += new MouseEventHandler(Diagram_MouseLeave);
         }
 
@@ -88,8 +86,9 @@ namespace QuickArch.View
                 if (_isDragging)
                 {
                     Point position = Mouse.GetPosition(myCanvas);
-                    Canvas.SetTop(selectedElement, position.Y - (_startPoint.Y - _originalTop));
-                    Canvas.SetLeft(selectedElement, position.X - (_startPoint.X - _originalLeft));
+                    var newX = position.X - (_startPoint.X - _originalPoint.X);
+                    var newY = position.Y - (_startPoint.Y - _originalPoint.Y);
+                    selectedElement.RenderTransform = new TranslateTransform(newX, newY);
                 }
             }
         }
@@ -109,7 +108,7 @@ namespace QuickArch.View
         }
 
         // Handler for element selection on the canvas providing resizing adorner
-        void myCanvas_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Remove selection on clicking anywhere the window
             if (selected)
@@ -131,9 +130,7 @@ namespace QuickArch.View
                 _startPoint = e.GetPosition(myCanvas);
 
                 selectedElement = e.Source as UIElement;
-
-                _originalLeft = Canvas.GetLeft(selectedElement);
-                _originalTop = Canvas.GetTop(selectedElement);
+                _originalPoint = selectedElement.TranslatePoint(new Point(0,0), myCanvas);
 
                 aLayer = AdornerLayer.GetAdornerLayer(selectedElement);
                 aLayer.Add(new ResizingAdorner(selectedElement));
