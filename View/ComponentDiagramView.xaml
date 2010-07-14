@@ -28,7 +28,8 @@
                   x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" Width="{Binding ElementName=ComponentDiagramControl, Path=Width}">
             <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <vw:DragCanvas Background="Transparent" />
+                <Canvas Name="myCanvas" Background="Transparent" 
+                        />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
     </ItemsControl>

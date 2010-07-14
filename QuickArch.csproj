@@ -79,6 +79,7 @@
       <DependentUpon>ComponentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DragCanvas.cs" />
+    <Compile Include="View\ResizingAdorner.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
