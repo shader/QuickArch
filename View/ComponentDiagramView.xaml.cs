@@ -114,7 +114,7 @@ namespace QuickArch.View
             if (selected)
             {
                 selected = false;
-                if (selectedElement != null)
+                if (selectedElement != null && aLayer.GetAdorners(selectedElement) != null)
                 {
                     // Remove the adorner from the selected element
                     aLayer.Remove(aLayer.GetAdorners(selectedElement)[0]);
