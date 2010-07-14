@@ -29,21 +29,26 @@ namespace QuickArch.View
         Point _startPoint;
         private double _originalLeft;
         private double _originalTop;
+        private Canvas myCanvas;
 
         public ComponentDiagramView()
         {
             InitializeComponent();
         }
-        
+
+        private void myCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
+            myCanvas = sender as Canvas;
+            myCanvas.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(myCanvas_PreviewMouseLeftButtonDown);
+            myCanvas.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
+        }   
+
         private void Diagram_Created(object sender, RoutedEventArgs e)
         {
             this.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(Diagram_MouseLeftButtonDown);
             this.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
             this.PreviewMouseMove += new MouseEventHandler(Diagram_MouseMove);
             this.MouseLeave += new MouseEventHandler(Diagram_MouseLeave);
-
-            myCanvas.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(myCanvas_PreviewMouseLeftButtonDown);
-            myCanvas.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
         }
 
         // Handler for drag stopping on leaving the window
