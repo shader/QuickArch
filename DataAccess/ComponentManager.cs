@@ -61,6 +61,13 @@ namespace QuickArch.DataAccess
 
             return _components.Contains(component);
         }
+        public bool ContainsConnector(Connector connector)
+        {
+            if (connector == null)
+                throw new ArgumentNullException("connector");
+
+            return _links.Contains(connector);
+        }
         //Shallow copied list
         public List<Component> GetComponents()
         {

@@ -32,6 +32,7 @@ namespace QuickArch.ViewModel
 
             //Subscribe for notifications of when a new component is added
             _componentManager.ComponentAdded += this.OnComponentAddedToManager;
+            //_componentManager.ConnectorAdded
 
             //Populate the diagram with ComponentViewModels
             this.ShowComponents();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using QuickArch.Model;
 using QuickArch.DataAccess;
+using System.Windows.Input;
 
 namespace QuickArch.ViewModel
 {
@@ -12,6 +13,7 @@ namespace QuickArch.ViewModel
         readonly Connector _connector;
         readonly ComponentManager _componentManager;
         bool _isSelected;
+        RelayCommand _saveCommand;
 
         #region Constructor
         public ConnectorViewModel(Connector connector, ComponentManager componentManager)
@@ -74,10 +76,41 @@ namespace QuickArch.ViewModel
             }
         }
 
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (_saveCommand == null)
+                {
+                    _saveCommand = new RelayCommand(
+                        param => this.Save(),
+                        param => this.CanSave
+                        );
+                }
+                return _saveCommand;
+            }
+        }
+        #endregion
+
+        #region Public Methods
+        public void Save()
+        {
+            if (this.IsNewConnector)
+                _componentManager.AddLink(_connector);
+        }
         #endregion
 
         #region Private Helpers
+        bool IsNewConnector
+        {
+            get { return !_componentManager.ContainsConnector(_connector); }
+        }
 
+        //returns true if the component is valid and can be saved
+        bool CanSave
+        {
+            get {return true; }
+        }
         #endregion
     }
 }

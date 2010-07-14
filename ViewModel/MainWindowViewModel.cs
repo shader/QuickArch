@@ -164,6 +164,7 @@ namespace QuickArch.ViewModel
            Connector connector = new Connector();
            ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
            ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector, current.GetComponentManager());
+           newConnectorViewModel.Save();
        }
        void CreateNewDocument()
        {
