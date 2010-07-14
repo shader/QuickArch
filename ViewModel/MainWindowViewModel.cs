@@ -61,7 +61,8 @@ namespace QuickArch.ViewModel
            return new List<CommandViewModel>
            {
                new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponentDiagram, new RelayCommand(param => this.CreateNewComponentDiagram()),true),
-               new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponent, new RelayCommand(param => this.CreateNewComponent()),true)
+               new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponent, new RelayCommand(param => this.CreateNewComponent()),true),
+               new CommandViewModel("Create New Link", new RelayCommand(param => this.CreateNewConnector()),true)
                //new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewConnector, new RelayCommand(param => this.CreateNewConnector()))
            };
        }
@@ -157,6 +158,12 @@ namespace QuickArch.ViewModel
            ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
            ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.GetComponentManager());
            newComponentViewModel.Save();
+       }
+       void CreateNewConnector()
+       {
+           Connector connector = new Connector();
+           ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
+           ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector, current.GetComponentManager());
        }
        void CreateNewDocument()
        {

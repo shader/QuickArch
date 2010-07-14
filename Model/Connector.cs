@@ -22,9 +22,7 @@ namespace QuickArch.Model
             };
         }
 
-        protected Connector()
-        {
-        }
+        public Connector() { }
 
         public Component Start { get; set; }
 
