@@ -23,8 +23,12 @@ namespace QuickArch.DataAccess
             _links = new List<Connector>();
         }
 
+        #region Events
         //Raised when a component is placed into the manager
         public event EventHandler<ComponentAddedEventArgs> ComponentAdded;
+        //Raised when a connector is added to the manager
+        public event EventHandler<ConnectorAddedEventArgs> ConnectorAdded;
+        #endregion
 
         public void AddComponent(Component component)
         {

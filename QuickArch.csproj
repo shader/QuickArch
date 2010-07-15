@@ -78,6 +78,7 @@
     <Compile Include="View\ComponentView.xaml.cs">
       <DependentUpon>ComponentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ConnectorView.cs" />
     <Compile Include="View\DragCanvas.cs" />
     <Compile Include="View\ResizingAdorner.cs" />
     <Page Include="MainWindow.xaml">

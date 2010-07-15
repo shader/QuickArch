@@ -32,7 +32,7 @@ namespace QuickArch.ViewModel
 
             //Subscribe for notifications of when a new component is added
             _componentManager.ComponentAdded += this.OnComponentAddedToManager;
-            //_componentManager.ConnectorAdded
+            _componentManager.ConnectorAdded += this.OnConnectorAddedToManager;
 
             //Populate the diagram with ComponentViewModels
             this.ShowComponents();
@@ -65,6 +65,7 @@ namespace QuickArch.ViewModel
         /// Returns an ObservableCollection of ComponentViewModel objects
         /// </summary>
         public ObservableCollection<ComponentViewModel> AllComponents { get; private set; }
+        public ObservableCollection<ConnectorViewModel> AllConnectors { get; private set; }
 
         public bool IsSelected
         {
@@ -120,6 +121,11 @@ namespace QuickArch.ViewModel
         {
             var viewModel = new ComponentViewModel(e.NewComponent, _componentManager);
             this.AllComponents.Add(viewModel);
+        }
+        void OnConnectorAddedToManager(object sender, ConnectorAddedEventArgs e)
+        {
+            var viewModel = new ConnectorViewModel(e.NewConnector, _componentManager);
+            this.AllConnectors.Add(viewModel);
         }
         #endregion
     }
