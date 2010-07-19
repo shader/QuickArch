@@ -48,12 +48,12 @@ namespace QuickArch.DataAccess
             _components.Remove(component);
         }
 
-        public void AddLink(Connector link)
+        public void AddConnector(Connector link)
         {
             _links.Add(link);
         }
 
-        public void RemoveLink(Connector link)
+        public void RemoveConnector(Connector link)
         {
             _links.Remove(link);
         }
@@ -76,6 +76,10 @@ namespace QuickArch.DataAccess
         public List<Component> GetComponents()
         {
             return new List<Component>(_components);
+        }
+        public List<Connector> GetConnectors()
+        {
+            return new List<Connector>(_links);
         }
 
         public void Save()

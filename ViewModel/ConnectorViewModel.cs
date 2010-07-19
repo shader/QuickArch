@@ -96,7 +96,7 @@ namespace QuickArch.ViewModel
         public void Save()
         {
             if (this.IsNewConnector)
-                _componentManager.AddLink(_connector);
+                _componentManager.AddConnector(_connector);
         }
         #endregion
 

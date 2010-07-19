@@ -36,6 +36,7 @@ namespace QuickArch.ViewModel
 
             //Populate the diagram with ComponentViewModels
             this.ShowComponents();
+            this.ShowConnectors();
         }
         #endregion
 
@@ -56,7 +57,17 @@ namespace QuickArch.ViewModel
                 cvm.PropertyChanged += this.OnComponentViewModelPropertyChanged;
 
             this.AllComponents = new ObservableCollection<ComponentViewModel>(all);
-            this.AllComponents.CollectionChanged += this.OnCollectionChanged;
+            this.AllComponents.CollectionChanged += this.OnComponentCollectionChanged;
+        }
+        void ShowConnectors()
+        {
+            List<ConnectorViewModel> all = (from conn in _componentManager.GetConnectors()
+                                            select new ConnectorViewModel(conn, _componentManager)).ToList();
+            foreach (ConnectorViewModel link in all)
+                link.PropertyChanged += this.OnConnectorViewModelPropertyChanged;
+
+            this.AllConnectors = new ObservableCollection<ConnectorViewModel>(all);
+            this.AllComponents.CollectionChanged += this.OnConnectorCollectionChanged;
         }
 
         #region Public Interface
@@ -88,35 +99,40 @@ namespace QuickArch.ViewModel
         {
             foreach (ComponentViewModel compVM in this.AllComponents)
                 compVM.Dispose();
+            foreach (ConnectorViewModel connVM in this.AllConnectors)
+                connVM.Dispose();
 
             this.AllComponents.Clear();
-            this.AllComponents.CollectionChanged -= this.OnCollectionChanged;
+            this.AllComponents.CollectionChanged -= this.OnComponentCollectionChanged;
+
+            this.AllConnectors.Clear();
+            this.AllConnectors.CollectionChanged -= this.OnConnectorCollectionChanged;
 
             _componentManager.ComponentAdded -= this.OnComponentAddedToManager;
+            _componentManager.ConnectorAdded -= this.OnConnectorAddedToManager;
         }
         #endregion
 
         #region Event Handling Methods
-
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void OnComponentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Count != 0)
-            {
                 foreach (ComponentViewModel compVM in e.NewItems)
                     compVM.PropertyChanged += this.OnComponentViewModelPropertyChanged;
-                foreach (ConnectorViewModel connVM in e.NewItems)
-                    connVM.PropertyChanged += this.OnConnectorViewModelPropertyChanged;
-            }
 
             if (e.OldItems != null && e.OldItems.Count != 0)
-            {
                 foreach (ComponentViewModel compVM in e.OldItems)
                     compVM.PropertyChanged -= this.OnComponentViewModelPropertyChanged;
+        }
+        void OnConnectorCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.NewItems.Count != 0)
+                foreach (ConnectorViewModel connVM in e.NewItems)
+                    connVM.PropertyChanged += this.OnConnectorViewModelPropertyChanged;
+            if(e.OldItems != null && e.OldItems.Count != 0)
                 foreach (ConnectorViewModel connVM in e.OldItems)
                     connVM.PropertyChanged -= this.OnConnectorViewModelPropertyChanged;
-            }
         }
-
         void OnComponentViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             string IsSelected = "IsSelected";
@@ -124,7 +140,12 @@ namespace QuickArch.ViewModel
             //Make sure that the property name we're referencing is valid (debug only)
             (sender as ComponentViewModel).VerifyPropertyName(IsSelected);
         }
+        void OnConnectorViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            string IsSelected = "IsSelected";
 
+            (sender as ConnectorViewModel).VerifyPropertyName(IsSelected);
+        }
         void OnComponentAddedToManager(object sender, ComponentAddedEventArgs e)
         {
             var viewModel = new ComponentViewModel(e.NewComponent, _componentManager);

@@ -29,6 +29,7 @@ namespace QuickArch.ViewModel
        RelayCommand _saveAsCommand;
        RelayCommand _openCommand;
        private int i;
+       private int j;
        #endregion
 
        //Constructor
@@ -38,7 +39,13 @@ namespace QuickArch.ViewModel
            _documents = new ObservableCollection<DocumentViewModel>();
            _commands = new Collection<CommandViewModel>(this.CreateCommands());
            base.DisplayName = Resources.MainWindowViewModel_DisplayName;
+
+           //private counters for document name/component diagram name
            i = 0;
+           j = 0;
+
+           this.CreateNewDocument();
+           this.CreateNewComponentDiagram();
        }
 
        #region Commands
@@ -139,14 +146,16 @@ namespace QuickArch.ViewModel
 
        void CreateNewComponentDiagram()
        {
+           j++;
            ComponentManager newComponentManager = new ComponentManager();
-           ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(newComponentManager, "Component Diagram");
+           ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(newComponentManager, "Component Diagram " + j);
            //get current document and add component diagram to it
-           for(int j = 0; j < _documents.Count; j++)
+           //ERRORS
+           for(int count = 0; count < _documents.Count; count++)
            {
-               if (_documents.ElementAt<DocumentViewModel>(j).IsSelected || _documents.Count==1)
+               if (_documents.ElementAt<DocumentViewModel>(count).IsSelected || _documents.Count==1)
                {
-                   _documents.ElementAt<DocumentViewModel>(j).ComponentDiagrams.Add(workspace);
+                   _documents.ElementAt<DocumentViewModel>(count).ComponentDiagrams.Add(workspace);
                }
            }
            this.Workspaces.Add(workspace);

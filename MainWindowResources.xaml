@@ -90,7 +90,7 @@
 
     <!--This template renders a tab item with a close button-->
     <DataTemplate x:Key="ClosableTabItemTemplate">
-        <DockPanel Width="130">
+        <DockPanel Width="146">
             <Button Command="{Binding Path=CloseCommand}"
                 Content="X"
                 Cursor="Hand"
