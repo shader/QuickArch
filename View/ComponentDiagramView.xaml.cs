@@ -124,7 +124,7 @@ namespace QuickArch.View
 
             // If any element except canvas is clicked, 
             // assign the selected element and add the adorner
-            if (e.Source != myCanvas)
+            if (e.Source.GetType() == typeof(ComponentView))
             {
                 _isDown = true;
                 _startPoint = e.GetPosition(myCanvas);

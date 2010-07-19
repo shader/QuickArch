@@ -101,12 +101,20 @@ namespace QuickArch.ViewModel
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Count != 0)
+            {
                 foreach (ComponentViewModel compVM in e.NewItems)
                     compVM.PropertyChanged += this.OnComponentViewModelPropertyChanged;
+                foreach (ConnectorViewModel connVM in e.NewItems)
+                    connVM.PropertyChanged += this.OnConnectorViewModelPropertyChanged;
+            }
 
             if (e.OldItems != null && e.OldItems.Count != 0)
+            {
                 foreach (ComponentViewModel compVM in e.OldItems)
                     compVM.PropertyChanged -= this.OnComponentViewModelPropertyChanged;
+                foreach (ConnectorViewModel connVM in e.OldItems)
+                    connVM.PropertyChanged -= this.OnConnectorViewModelPropertyChanged;
+            }
         }
 
         void OnComponentViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
