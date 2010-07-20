@@ -38,7 +38,19 @@
         </Menu>
         
         <!--Top Toolbar/Quickbar-->
-        <ToolBar DockPanel.Dock="Top" Height="25" Name="myToolbar">
+        <ToolBar DockPanel.Dock="Top" Height="25" Name="myToolbar" ItemsSource="{Binding Path=Commands}">
+            <ToolBar.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl IsTabStop="False" ItemsSource="{Binding}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Margin="1,6" Command="{Binding Path=Command}" Content="{Binding Path=DisplayName}" 
+                                    IsEnabled="{Binding Path=IsEnabled}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ToolBar.ItemTemplate>
                 <ToolBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />
@@ -53,14 +65,6 @@
             <TextBlock Name="txtblkcomps" />
             <Separator/>
             <TextBlock Name="txtBlkCompLoc"/>
-            <Separator/>
-            <TextBlock Name="txtblklinks" />
-            <Separator />
-            <TextBlock Name="txtblkwidth" />
-            <Separator />
-            <TextBlock Name="txtblkheight" />
-            <Separator />
-            <TextBlock Name="mouseLoc" />
         </StatusBar>
         
         <!--Treeview of architecture-->
@@ -94,7 +98,6 @@
                 <HeaderedContentControl
                 Content="{Binding Path=Commands}"
                 ContentTemplate="{StaticResource CommandsTemplate}"
-                Header="Control Panel"
                 Style="{StaticResource MainHCCStyle}"/>
             </Border>
         </StackPanel>
@@ -103,7 +106,6 @@
         <Border Style="{StaticResource MainBorderStyle}">
             <HeaderedContentControl Content="{Binding Path=Workspaces}"
                                     ContentTemplate="{StaticResource WorkspacesTemplate}"
-                                    Header="Workspace"
                                     Style="{StaticResource MainHCCStyle}" />
         </Border>
     </DockPanel>

@@ -28,10 +28,10 @@
     </DataTemplate>
 
     <!-- 
-  This style configures both of the main content areas in the main window.
-  -->
+  This style configures both of the main content areas in the main window.-->
+  
     <Style x:Key="MainHCCStyle" TargetType="{x:Type HeaderedContentControl}">
-        <Setter Property="HeaderTemplate">
+        <!--<Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <Border 
@@ -43,16 +43,10 @@
             Padding="4" 
             SnapsToDevicePixels="True" 
             >
-                        <TextBlock 
-              FontSize="14"
-              FontWeight="Bold"
-              Foreground="White" 
-              HorizontalAlignment="Center"  
-              Text="{TemplateBinding Content}"/>
                     </Border>
                 </DataTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
