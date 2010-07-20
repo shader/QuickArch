@@ -6,6 +6,7 @@ using QuickArch.DataAccess;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace QuickArch.ViewModel
 {
@@ -96,12 +97,21 @@ namespace QuickArch.ViewModel
             (sender as ComponentDiagramViewModel).VerifyPropertyName(IsSelected);
         }
 
+        //doesn't really do anything, can be implemented for other things
         void OnComponentDiagramAddedToDocument(object sender, ComponentDiagramAddedEventArgs e)
         {
-            var viewModel = new ComponentDiagramViewModel(new ComponentManager(),"Component Diagram");
-            this.ComponentDiagrams.Add(viewModel);
         }
+        
         #endregion
 
+        public void Save()
+        {
+            _document.Save();
+        }
+        public void Add(ComponentDiagramViewModel newDiagram)
+        {
+            this.ComponentDiagrams.Add(newDiagram);
+            _document.AddComponentDiagram(newDiagram);
+        }
     }
 }

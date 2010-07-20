@@ -22,6 +22,8 @@ namespace QuickArch.View
     {
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(ComponentView));
 
+        private Guid id;
+
         public bool IsSelected
         {
             get { return (bool)base.GetValue(IsSelectedProperty); }
@@ -32,6 +34,11 @@ namespace QuickArch.View
         {
             this.RenderTransform = new TranslateTransform(0, 0);
             InitializeComponent();
+        }
+
+        public Guid ID
+        { 
+            get { return id; } 
         }
     }
 }

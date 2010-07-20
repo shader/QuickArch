@@ -155,7 +155,7 @@ namespace QuickArch.ViewModel
            {
                if (_documents.ElementAt<DocumentViewModel>(count).IsSelected || _documents.Count==1)
                {
-                   _documents.ElementAt<DocumentViewModel>(count).ComponentDiagrams.Add(workspace);
+                   _documents.ElementAt<DocumentViewModel>(count).Add(workspace);
                }
            }
            this.Workspaces.Add(workspace);
@@ -215,7 +215,7 @@ namespace QuickArch.ViewModel
            }
        }
        #endregion
-       /*
+       
        #region SaveCommand
        //returns the command that attempts to save all of the data in the component diagrams.
        public ICommand SaveCommand
@@ -223,12 +223,13 @@ namespace QuickArch.ViewModel
            get
            {
                if (_saveCommand == null)
-                   _saveCommand = new RelayCommand(param => document.Save());
+                   _saveCommand = new RelayCommand(param => _documents.ElementAt<DocumentViewModel>(0).Save());
 
                return _saveCommand;
            }
        }
        #endregion
+       /*
        
        #region SaveAsCommand
        //returns the command that attempts to save all of the data in the component diagrams.

@@ -17,6 +17,7 @@ namespace QuickArch.ViewModel
         {
         }
         #endregion
+
         #region CloseCommand
         //returns the command that attempts to remove this workspace from the UI
         public ICommand CloseCommand
@@ -30,6 +31,7 @@ namespace QuickArch.ViewModel
             }
         }
         #endregion
+
         #region RequestClose [event]
         //raised when this workspace should be removed from the UI
         public event EventHandler RequestClose;
