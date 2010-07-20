@@ -30,7 +30,6 @@
             <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Name ="myCanvas" Background="Transparent" Loaded="myCanvas_Loaded">
-                    
                 </Canvas>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>

@@ -122,8 +122,7 @@ namespace QuickArch.View
                 }
             }
 
-            // If any element except canvas is clicked, 
-            // assign the selected element and add the adorner
+            // If a componentView is selected, add adorner layer to it
             if (e.Source.GetType() == typeof(ComponentView))
             {
                 _isDown = true;

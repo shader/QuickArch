@@ -174,6 +174,7 @@ namespace QuickArch.ViewModel
            ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
            ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector, current.GetComponentManager());
            newConnectorViewModel.Save();
+           //Mouse.OverrideCursor = Cursors.Cross;
        }
        void CreateNewDocument()
        {

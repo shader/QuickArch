@@ -67,7 +67,7 @@ namespace QuickArch.ViewModel
                 link.PropertyChanged += this.OnConnectorViewModelPropertyChanged;
 
             this.AllConnectors = new ObservableCollection<ConnectorViewModel>(all);
-            this.AllComponents.CollectionChanged += this.OnConnectorCollectionChanged;
+            this.AllConnectors.CollectionChanged += this.OnConnectorCollectionChanged;
         }
 
         #region Public Interface
