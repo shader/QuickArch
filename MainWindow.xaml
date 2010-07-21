@@ -38,19 +38,9 @@
         </Menu>
         
         <!--Top Toolbar/Quickbar-->
-        <ToolBar DockPanel.Dock="Top" Height="25" Name="myToolbar" ItemsSource="{Binding Path=Commands}">
-            <ToolBar.ItemTemplate>
-                <DataTemplate>
-                    <ItemsControl IsTabStop="False" ItemsSource="{Binding}" >
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Button Margin="1,6" Command="{Binding Path=Command}" Content="{Binding Path=DisplayName}" 
-                                    IsEnabled="{Binding Path=IsEnabled}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </DataTemplate>
-            </ToolBar.ItemTemplate>
+        <ToolBar DockPanel.Dock="Top" Height="28" Name="myToolbar" >
+            <Label Width="92" Content="New Component: "  />
+            <TextBox Background="White" Width="200" BorderBrush="Black" BorderThickness="1" />
                 <ToolBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />
@@ -82,11 +72,24 @@
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type vm:DocumentViewModel}" ItemsSource="{Binding ComponentDiagrams}" >
-                    <TextBlock Text="{Binding DisplayName}" />
+                <HierarchicalDataTemplate DataType="{x:Type vm:DocumentViewModel}" ItemsSource="{Binding ComponentDiagrams, UpdateSourceTrigger=PropertyChanged}" >
+                    <TextBlock Text="{Binding DisplayName}">
+                        <TextBlock.ContextMenu>
+                            <ContextMenu Opened="DocumentContextMenu_Opened">
+                                <MenuItem Header="New Component Diagram" Command="{Binding Path=NewComponentDiagramCommand}" />
+                                <MenuItem Command="ApplicationCommands.Close" />
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                    </TextBlock>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type vm:ComponentDiagramViewModel}">
-                    <TextBlock Text="{Binding DisplayName}" />
+                    <TextBlock Text="{Binding DisplayName}">
+                        <TextBlock.ContextMenu>
+                            <ContextMenu Opened="ComponentDiagramContextMenu_Opened">
+                                <MenuItem Header="Delete" Command="{Binding Path=DeleteCommand}" />
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                    </TextBlock>
                 </DataTemplate>
             </TreeView.Resources>
         </TreeView>

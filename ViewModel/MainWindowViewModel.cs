@@ -24,6 +24,7 @@ namespace QuickArch.ViewModel
        ObservableCollection<WorkspaceViewModel> _workspaces;
        //List of DocumentViewModels created by the user/window
        ObservableCollection<DocumentViewModel> _documents;
+       RelayCommand _newComponentDiagramCommand;
        RelayCommand _newDocumentCommand;
        RelayCommand _saveCommand;
        RelayCommand _saveAsCommand;
@@ -67,10 +68,8 @@ namespace QuickArch.ViewModel
        {
            return new List<CommandViewModel>
            {
-               new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponentDiagram, new RelayCommand(param => this.CreateNewComponentDiagram()),true),
                new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponent, new RelayCommand(param => this.CreateNewComponent()),true),
                new CommandViewModel("Create New Link", new RelayCommand(param => this.CreateNewConnector()),true)
-               //new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewConnector, new RelayCommand(param => this.CreateNewConnector()))
            };
        }
        #endregion
@@ -215,7 +214,20 @@ namespace QuickArch.ViewModel
            }
        }
        #endregion
-       
+
+       #region NewComponentDiagramCommand
+       public ICommand NewComponentDiagramCommand
+       {
+           get
+           {
+               if (_newComponentDiagramCommand == null)
+                   _newComponentDiagramCommand = new RelayCommand(param => this.CreateNewComponentDiagram());
+
+               return _newComponentDiagramCommand;
+           }
+       }
+       #endregion
+
        #region SaveCommand
        //returns the command that attempts to save all of the data in the component diagrams.
        public ICommand SaveCommand
