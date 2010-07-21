@@ -2,32 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace QuickArch.DataAccess
 {
     public class FileManager
     {
-        static string _file;
-
-        public static string File 
-        {
-            get
-            {
-                if (_file == null)
-                    _file = SaveFile();
-                return _file;
-            }
-            set { _file = value; } 
-        }
-
-        public static string SaveFile()
+        public static string GetSaveFile(string defaultName, string defaultExt, string Filter)
         {
             // Configure save file dialog box
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".xml"; // Default file extension
-            dlg.Filter = "Xml documents (.xml)|*.xml"; // Filter files by extension
-            // Show save file dialog box
+            dlg.FileName = defaultName;
+            dlg.DefaultExt = defaultExt; // Default file extension
+            dlg.Filter = Filter; // Filter files by extension
+
             Nullable<bool> result = dlg.ShowDialog();
 
             // Process save file dialog box results
@@ -39,13 +27,13 @@ namespace QuickArch.DataAccess
             else return null;
         }
 
-        public static string OpenFile()
+        public static string OpenFile(string name, string ext, string filter)
         {
             // Configure save file dialog box
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".xml"; // Default file extension
-            dlg.Filter = "Xml documents (.xml)|*.xml"; // Filter files by extension
+            dlg.FileName = name; // Default file name
+            dlg.DefaultExt = ext; // Default file extension
+            dlg.Filter = filter; // Filter files by extension
             // Show save file dialog box
             Nullable<bool> result = dlg.ShowDialog();
 

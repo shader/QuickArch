@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickArch.ViewModel;
+using System.IO;
 using System.Xml.Linq;
+using QuickArch.ViewModel;
+using QuickArch.DataAccess;
 
-namespace QuickArch.DataAccess
+namespace QuickArch.Model
 {
     public class Document
     {
         private List<ComponentDiagramViewModel> _componentDiagrams;
         //private List<SeqenceChartViewModel> _sequenceCharts;
-        private XDocument _xDoc;
+        string _file;
 
         public Document(String title)
         {
@@ -58,16 +60,6 @@ namespace QuickArch.DataAccess
 
         public void Save()
         {
-            if (_componentDiagrams.Count == 0)
-                throw new Exception("componentDiagrams");
-
-            _xDoc = new XDocument(new XElement("document", new XAttribute("version", "1.0"),
-                                    new XElement("component_diagram",new XAttribute("name",_componentDiagrams.ElementAt(0).DisplayName))
-                                    )
-            );
-
-            if (FileManager.File != null)
-                _xDoc.Save(FileManager.File);
         }
 
         public void SaveAs()
@@ -76,6 +68,9 @@ namespace QuickArch.DataAccess
 
         public void Open()
         {
+            _file = FileManager.OpenFile("", ".xml", "Xml documents (.xml)|*.xml");
+            FileStream stream = File.OpenRead(_file);
+            XElement.Load(stream);
         }
     }
 }
