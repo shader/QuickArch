@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows;
 namespace QuickArch
 {
     public partial class MainWindow : System.Windows.Window

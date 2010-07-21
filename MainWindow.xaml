@@ -28,7 +28,7 @@
         <!--Top Toolbar/Quickbar-->
         <ToolBar DockPanel.Dock="Top" Height="28" Name="myToolbar" >
             <Label Width="92" Content="New Component: "  />
-            <TextBox Background="White" Width="200" BorderBrush="Black" BorderThickness="1" />
+            <TextBox Background="White" Width="200" BorderBrush="Black" BorderThickness="1" KeyUp="CompBox_KeyUp"/>
                 <ToolBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />
