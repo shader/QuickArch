@@ -72,5 +72,9 @@ namespace QuickArch.Model
             FileStream stream = File.OpenRead(_file);
             XElement.Load(stream);
         }
+
+        public void ExportPng()
+        {
+        }
     }
 }

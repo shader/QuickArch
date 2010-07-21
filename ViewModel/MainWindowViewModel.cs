@@ -66,7 +66,7 @@ namespace QuickArch.ViewModel
 
            _toolCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
-                NewCommand("Export to PNG", null)
+                NewCommand("Export to PNG", param => document.ExportPng())
                });
 
                 //NewCommand(Resources.MainWindowViewModel_Command_CreateNewComponent, param => this.CreateNewComponent()),
@@ -209,6 +209,25 @@ namespace QuickArch.ViewModel
                return collectionView.CurrentItem as WorkspaceViewModel;
            }
            return null;
+       }
+       #endregion
+
+       #region Commands
+       public Collection<CommandViewModel> FileCommands
+       {
+           get { return _fileCommands; }
+       }
+       public Collection<CommandViewModel> EditCommands
+       {
+           get { return _editCommands; }
+       }
+       public Collection<CommandViewModel> ViewCommands
+       {
+           get { return _viewCommands; }
+       }
+       public Collection<CommandViewModel> ToolCommands
+       {
+           get { return _toolCommands; }
        }
        #endregion
    }

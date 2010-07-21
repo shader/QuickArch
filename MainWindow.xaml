@@ -12,17 +12,10 @@
     <DockPanel>
         <!--Top Menu-->
         <Menu DockPanel.Dock="Top" Height="22" Name="topMenu" FontSize="11" Foreground="#FF7575F1">
-            <MenuItem Header="File" ItemsSource="{Binding Path=Commands}" ItemTemplate="{StaticResource CommandsTemplate}" >
-            </MenuItem>
-            <MenuItem Header="Edit" >
-
-            </MenuItem>
-            <MenuItem Header="View" >
-
-            </MenuItem>
-            <MenuItem Header="Tools" >
-                <MenuItem Header="Export to PNG" />
-            </MenuItem>
+            <MenuItem Header="File" ItemsSource="{Binding Path=FileCommands}" ItemTemplate="{StaticResource CommandsTemplate}" />
+            <MenuItem Header="Edit" ItemsSource="{Binding Path=EditCommands}" ItemTemplate="{StaticResource CommandsTemplate}" />
+            <MenuItem Header="View" ItemsSource="{Binding Path=ViewCommands}" ItemTemplate="{StaticResource CommandsTemplate}" />
+            <MenuItem Header="Tools" ItemsSource="{Binding Path=ToolCommands}" ItemTemplate="{StaticResource CommandsTemplate}" />
             <Menu.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />
