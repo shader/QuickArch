@@ -17,14 +17,8 @@
 <!--This template shows how to render the list of commands on the left
     side in the main window (the 'Palette/Control Panel' area).-->
     <DataTemplate x:Key="CommandsTemplate">
-        <ItemsControl IsTabStop="False" ItemsSource="{Binding}" Margin="6,2">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Margin="1,6" Command="{Binding Path=Command}" Content="{Binding Path=DisplayName}" 
-                            IsEnabled="{Binding Path=IsEnabled}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <MenuItem Command="{Binding Path=Command}" Header="{Binding Path=DisplayName}" 
+                  IsEnabled="{Binding Path=IsEnabled}" />
     </DataTemplate>
 
     <!-- 

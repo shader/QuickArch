@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Collections.Specialized;
 using System.Xml.Linq;
+using System.Windows.Input;
 
 using QuickArch.Model;
 using QuickArch.DataAccess;
@@ -22,6 +23,7 @@ namespace QuickArch.ViewModel
     {
         readonly ComponentManager _componentManager;
         bool _isSelected;
+        private RelayCommand _deleteCommand;
 
         #region Constructor
         public ComponentDiagramViewModel(ComponentManager componentManager, string displayName)
@@ -103,6 +105,17 @@ namespace QuickArch.ViewModel
         }
 
         #endregion
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                    _deleteCommand = new RelayCommand(param => this.OnDispose());
+
+                return _deleteCommand;
+            }
+        }
 
         #region Base Class Overrides
 
