@@ -68,7 +68,7 @@
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type vm:DocumentViewModel}" ItemsSource="{Binding ComponentDiagrams, UpdateSourceTrigger=PropertyChanged}" >
+                <HierarchicalDataTemplate DataType="{x:Type vm:DocumentViewModel}" ItemsSource="{Binding Charts, UpdateSourceTrigger=PropertyChanged}" >
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
                             <ContextMenu Opened="DocumentContextMenu_Opened">

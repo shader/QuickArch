@@ -34,6 +34,7 @@ namespace QuickArch.View
         {
             this.RenderTransform = new TranslateTransform(0, 0);
             InitializeComponent();
+            id = Guid.NewGuid();
         }
 
         public Guid ID

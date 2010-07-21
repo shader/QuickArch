@@ -18,18 +18,13 @@ namespace QuickArch.ViewModel
    {
        #region Fields
        //Collection of commands to be displayed in UI
-       Collection<CommandViewModel> _commands;
+       Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands ;
        //Maintain a list of ComponentManagers created and used by ComponentDiagrams
        List<ComponentManager> _componentManagers;
        //ObservableCollection of workspaces (component diagrams for now, maybe sequence charts later)
        ObservableCollection<WorkspaceViewModel> _workspaces;
        //List of DocumentViewModels created by the user/window
        ObservableCollection<DocumentViewModel> _documents;
-       RelayCommand _newComponentDiagramCommand;
-       RelayCommand _newDocumentCommand;
-       RelayCommand _saveCommand;
-       RelayCommand _saveAsCommand;
-       RelayCommand _openCommand;
        Document document;
        private int i;
        private int j;
@@ -40,7 +35,12 @@ namespace QuickArch.ViewModel
        {
            _componentManagers = new List<ComponentManager>();
            _documents = new ObservableCollection<DocumentViewModel>();
-           _commands = new Collection<CommandViewModel>(this.CreateCommands());
+           
+           _fileCommands = new Collection<CommandViewModel>();
+           _editCommands = new Collection<CommandViewModel>();
+           _viewCommands = new Collection<CommandViewModel>();
+           _toolCommands = new Collection<CommandViewModel>();
+
            base.DisplayName = Resources.MainWindowViewModel_DisplayName;
 
            //private counters for document name/component diagram name
@@ -49,32 +49,35 @@ namespace QuickArch.ViewModel
 
            this.CreateNewDocument();
            this.CreateNewComponentDiagram();
-       }
 
-       #region Commands
-       //Returns a read-only list of commands that the UI can display and execute
-       public Collection<CommandViewModel> Commands
-       {
-           get
-           {
-               if (_commands == null)
-               {
-                   List<CommandViewModel> cmds = this.CreateCommands();
-                   _commands = new Collection<CommandViewModel>(cmds);
-               }
-               return _commands;
-           }
-       }
+           _fileCommands = new Collection<CommandViewModel>
+               (new CommandViewModel[] {
+                NewCommand("Save", param => _documents.ElementAt<DocumentViewModel>(0).Save()),
+                NewCommand("Save As...", param => document.SaveAs()),
+                NewCommand("Open", param => OpenDocument()),
+                NewCommand("New Document", param => CreateNewDocument()),
+               });
 
-       List<CommandViewModel> CreateCommands()
-       {
-           return new List<CommandViewModel>
-           {
-               new CommandViewModel(Resources.MainWindowViewModel_Command_CreateNewComponent, new RelayCommand(param => this.CreateNewComponent()),true),
-               new CommandViewModel("Create New Link", new RelayCommand(param => this.CreateNewConnector()),true)
-           };
+           _editCommands = new Collection<CommandViewModel>
+               (new CommandViewModel[] {});
+
+           _viewCommands = new Collection<CommandViewModel>
+               (new CommandViewModel[] {});
+
+           _toolCommands = new Collection<CommandViewModel>
+               (new CommandViewModel[] {
+                NewCommand("Export to PNG", null)
+               });
+
+                //NewCommand(Resources.MainWindowViewModel_Command_CreateNewComponent, param => this.CreateNewComponent()),
+                //NewCommand("Create New Link", param => this.CreateNewConnector()),
+                //NewCommand("New Component Diagram", param => CreateNewComponentDiagram())
        }
-       #endregion
+       
+       CommandViewModel NewCommand(string displayName, Action<object> execute, bool isEnabled=true)
+       {
+           return new CommandViewModel(displayName, new RelayCommand(execute), isEnabled);
+       }
 
        #region Workspaces
 
@@ -206,74 +209,6 @@ namespace QuickArch.ViewModel
                return collectionView.CurrentItem as WorkspaceViewModel;
            }
            return null;
-       }
-       #endregion
-       
-       #region NewDocumentCommand
-       public ICommand NewDocumentCommand
-       {
-           get
-           {
-               if(_newDocumentCommand == null)
-                  _newDocumentCommand = new RelayCommand(param => this.CreateNewDocument());
-
-               return _newDocumentCommand;
-           }
-       }
-       #endregion
-
-       #region NewComponentDiagramCommand
-       public ICommand NewComponentDiagramCommand
-       {
-           get
-           {
-               if (_newComponentDiagramCommand == null)
-                   _newComponentDiagramCommand = new RelayCommand(param => this.CreateNewComponentDiagram());
-
-               return _newComponentDiagramCommand;
-           }
-       }
-       #endregion
-
-       #region SaveCommand
-       //returns the command that attempts to save all of the data in the component diagrams.
-       public ICommand SaveCommand
-       {
-           get
-           {
-               if (_saveCommand == null)
-                   _saveCommand = new RelayCommand(param => _documents.ElementAt<DocumentViewModel>(0).Save());
-
-               return _saveCommand;
-           }
-       }
-       #endregion
-       
-       #region SaveAsCommand
-       //returns the command that attempts to save all of the data in the component diagrams.
-       public ICommand SaveAsCommand
-       {
-           get
-           {
-               if (_saveAsCommand == null)
-                   _saveAsCommand = new RelayCommand(param => document.SaveAs());
-
-               return _saveAsCommand;
-           }
-       }
-       #endregion
-
-       #region OpenCommand
-       //returns the command that loads a document
-       public ICommand OpenCommand
-       {
-           get
-           {
-               if (_openCommand == null)
-                   _openCommand = new RelayCommand(param => OpenDocument());
-
-               return _openCommand;
-           }
        }
        #endregion
    }

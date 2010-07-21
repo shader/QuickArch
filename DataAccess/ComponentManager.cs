@@ -13,7 +13,6 @@ namespace QuickArch.DataAccess
     {
         private List<Component> _components;
         private List<Connector> _links;
-        private XDocument _xDoc;
         
 
         //Constructor
