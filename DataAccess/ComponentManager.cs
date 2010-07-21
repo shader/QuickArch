@@ -84,41 +84,27 @@ namespace QuickArch.DataAccess
 
         public void Save()
         {
-            _xDoc = new XDocument(new XElement("Components",
-                                 from comp in _components
-                                 where comp.Title != null
-                                 select new XElement("Component", 
-                                            new XAttribute("Title", comp.Title))));
-            if (FileManager.File != null)
-                _xDoc.Save(FileManager.File);
+            //_xDoc = new XDocument(new XElement("Components",
+            //                     from comp in _components
+            //                     where comp.Title != null
+            //                     select new XElement("Component", 
+            //                                new XAttribute("Title", comp.Title))));
+            //if (FileManager.File != null)
+            //    _xDoc.Save(FileManager.File);
         }
 
-        public void SaveAs()
+        public void Load()
         {
-            string file = FileManager.SaveFile();
-            if (file != null)
-            {
-                FileManager.File = file;
-                Save();
-            }
-        }
-
-        public void Open()
-        {
-            string file = FileManager.OpenFile();
-            if (file != null)
-            {
-                FileManager.File = file;
-                _xDoc = XDocument.Load(file);
-                var components = _xDoc.Element("Components");
-                var comps = components.Descendants("Component");
-                var elements = from el in _xDoc.Element("Components").Descendants("Component") select el;
-                foreach (var el in elements)
-                {
-                    AddComponent(new Component(el.Attribute("Title") != null ? el.Attribute("Title").Value : null,
-                                               el.Attribute("Parent") != null ? el.Attribute("Parent").Value : null));
-                }
-            }
+            //FileManager.File = file;
+            //_xDoc = XDocument.Load(file);
+            //var components = _xDoc.Element("Components");
+            //var comps = components.Descendants("Component");
+            //var elements = from el in _xDoc.Element("Components").Descendants("Component") select el;
+            //foreach (var el in elements)
+            //{
+            //    AddComponent(new Component(el.Attribute("Title") != null ? el.Attribute("Title").Value : null,
+            //                               el.Attribute("Parent") != null ? el.Attribute("Parent").Value : null));
+            //}
         }
     }
 }

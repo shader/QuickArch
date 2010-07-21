@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
-using QuickArch.DataAccess;
 using System.Collections.Specialized;
-using QuickArch.Model;
 using System.Diagnostics;
 using System.Windows.Data;
-using QuickArch.Properties;
 using System.Windows.Input;
+
+using QuickArch.Properties;
+using QuickArch.Model;
+using QuickArch.DataAccess;
 
 namespace QuickArch.ViewModel
 {
@@ -28,6 +29,7 @@ namespace QuickArch.ViewModel
        RelayCommand _saveCommand;
        RelayCommand _saveAsCommand;
        RelayCommand _openCommand;
+       Document document;
        private int i;
        private int j;
        #endregion
@@ -140,6 +142,11 @@ namespace QuickArch.ViewModel
            dvm.Dispose();
            this.Documents.Remove(dvm);
        }
+       void OpenDocument()
+       {
+           CreateNewDocument();
+           document.Open();
+       }
        #endregion
 
        #region Private Helpers
@@ -179,7 +186,7 @@ namespace QuickArch.ViewModel
        void CreateNewDocument()
        {
            i++;
-           Document document = new Document("Document " + i);
+           document = new Document("Document " + i);
            DocumentViewModel newDocument = new DocumentViewModel(document);
            _documents.Add(newDocument);
        }
@@ -215,7 +222,6 @@ namespace QuickArch.ViewModel
            }
        }
        #endregion
-       
        #region SaveCommand
        //returns the command that attempts to save all of the data in the component diagrams.
        public ICommand SaveCommand
@@ -229,7 +235,6 @@ namespace QuickArch.ViewModel
            }
        }
        #endregion
-       /*
        
        #region SaveAsCommand
        //returns the command that attempts to save all of the data in the component diagrams.
@@ -237,10 +242,10 @@ namespace QuickArch.ViewModel
        {
            get
            {
-               if (saveAsCommand == null)
-                   saveAsCommand = new RelayCommand(param => document.SaveAs());
+               if (_saveAsCommand == null)
+                   _saveAsCommand = new RelayCommand(param => document.SaveAs());
 
-               return saveAsCommand;
+               return _saveAsCommand;
            }
        }
        #endregion
@@ -251,13 +256,12 @@ namespace QuickArch.ViewModel
        {
            get
            {
-               if (openCommand == null)
-                   openCommand = new RelayCommand(param => document.Open());
+               if (_openCommand == null)
+                   _openCommand = new RelayCommand(param => OpenDocument());
 
-               return openCommand;
+               return _openCommand;
            }
        }
        #endregion
-       */
    }
 }

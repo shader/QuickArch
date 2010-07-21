@@ -58,7 +58,7 @@
     <Compile Include="DataAccess\ComponentAddedEventArgs.cs" />
     <Compile Include="DataAccess\ComponentDiagramAddedEventArgs.cs" />
     <Compile Include="DataAccess\ConnectorAddedEventArgs.cs" />
-    <Compile Include="DataAccess\Document.cs" />
+    <Compile Include="Model\Document.cs" />
     <Compile Include="DataAccess\FileManager.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="CompDialog.xaml.cs">

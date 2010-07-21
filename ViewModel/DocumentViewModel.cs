@@ -8,6 +8,8 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
 
+using QuickArch.Model;
+
 namespace QuickArch.ViewModel
 {
     public class DocumentViewModel : WorkspaceViewModel
