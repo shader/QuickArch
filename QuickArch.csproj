@@ -56,7 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataAccess\ComponentAddedEventArgs.cs" />
-    <Compile Include="DataAccess\ComponentDiagramAddedEventArgs.cs" />
+    <Compile Include="DataAccess\ChartAddedEventArgs.cs" />
     <Compile Include="DataAccess\ConnectorAddedEventArgs.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="DataAccess\FileManager.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="ViewModel\ComponentViewModel.cs" />
     <Compile Include="ViewModel\ConnectorViewModel.cs" />
     <Compile Include="ViewModel\DocumentViewModel.cs" />
+    <Compile Include="ViewModel\IChart.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />

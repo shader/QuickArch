@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Linq;
+
 using QuickArch.ViewModel;
 using QuickArch.DataAccess;
 
@@ -11,51 +12,50 @@ namespace QuickArch.Model
 {
     public class Document
     {
-        private List<ComponentDiagramViewModel> _componentDiagrams;
-        //private List<SeqenceChartViewModel> _sequenceCharts;
-        string _file;
+        private List<IChart> _charts;
+        private string _file;
 
         public Document(String title)
         {
-            _componentDiagrams = new List<ComponentDiagramViewModel>();
+            _charts = new List<IChart>();
             Title = title;
         }
         
-        //raised when a Component Diagram (ViewModel) is added to the document
-        public event EventHandler<ComponentDiagramAddedEventArgs> ComponentDiagramAdded;
+        //raised when a Chart (ViewModel) is added to the document
+        public event EventHandler<ChartAddedEventArgs> ChartAdded;
 
         public String Title { get; set; }
 
-        public List<ComponentDiagramViewModel> ComponentDiagrams
+        public List<IChart> Charts
         {
-            get { return _componentDiagrams; }
-            set { _componentDiagrams = value; }
+            get { return _charts; }
+            set { _charts = value; }
         }
 
-        public void AddComponentDiagram(ComponentDiagramViewModel componentDiagram)
+        public void AddChart(IChart chart)
         {
-            if (componentDiagram == null)
-                throw new ArgumentNullException("componentDiagram");
-            if(!_componentDiagrams.Contains(componentDiagram))
+            if (chart == null)
+                throw new ArgumentNullException("chart");
+            if(!_charts.Contains(chart))
             {
-                _componentDiagrams.Add(componentDiagram);
+                _charts.Add(chart);
 
-                if(this.ComponentDiagramAdded != null)
-                    this.ComponentDiagramAdded(this, new ComponentDiagramAddedEventArgs(componentDiagram));
+                if(this.ChartAdded != null)
+                    this.ChartAdded(this, new ChartAddedEventArgs(chart));
             }
         }
 
-        public void RemoveComponentDiagram(ComponentDiagramViewModel componentDiagram)
+        public void RemoveChart(IChart chart)
         {
-            _componentDiagrams.Remove(componentDiagram);
+            _charts.Remove(chart);
         }
 
-        public bool ContainsComponentDiagram(ComponentDiagramViewModel componentDiagram)
+        public bool ContainsChart(IChart chart)
         {
-            if (componentDiagram == null)
-                throw new ArgumentNullException("componentDiagram");
+            if (chart == null)
+                throw new ArgumentNullException("chart");
 
-            return _componentDiagrams.Contains(componentDiagram);
+            return _charts.Contains(chart);
         }
 
         public void Save()

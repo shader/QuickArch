@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickArch.DataAccess;
-using QuickArch.Properties;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Xml.Linq;
+
+using QuickArch.Model;
+using QuickArch.DataAccess;
+using QuickArch.Properties;
 
 namespace QuickArch.ViewModel
 {
@@ -15,7 +18,7 @@ namespace QuickArch.ViewModel
     /// objects that has support for staying synchronized with the 
     /// ComponentManager.
     /// </summary>
-    public class ComponentDiagramViewModel : WorkspaceViewModel
+    public class ComponentDiagramViewModel : WorkspaceViewModel, IChart
     {
         readonly ComponentManager _componentManager;
         bool _isSelected;
@@ -89,6 +92,14 @@ namespace QuickArch.ViewModel
                     this.OnPropertyChanged("IsSelected");
                 }
             }
+        }
+
+        public void Save(XElement element)
+        {
+        }
+
+        public void Load(XElement element)
+        {
         }
 
         #endregion

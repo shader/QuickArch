@@ -30,14 +30,14 @@ namespace QuickArch.ViewModel
             
             base.DisplayName = _document.Title;
 
-            _document.ComponentDiagramAdded += this.OnComponentDiagramAddedToDocument;
+            _document.ChartAdded += this.OnChartAddedToDocument;
 
-            this.ShowComponentDiagrams();
+            this.ShowCharts();
         }
         #endregion
 
         #region Properties
-        public ObservableCollection<ComponentDiagramViewModel> ComponentDiagrams { get; private set; }
+        public ObservableCollection<IChart> Charts { get; private set; }
 
         public bool IsExpanded
         {
@@ -67,15 +67,15 @@ namespace QuickArch.ViewModel
         #endregion
 
         #region Helper methods
-        void ShowComponentDiagrams()
+        void ShowCharts()
         {
-            List<ComponentDiagramViewModel> all = _document.ComponentDiagrams.ToList();
+            List<IChart> all = _document.Charts.ToList();
 
-            foreach (ComponentDiagramViewModel diagram in all)
-                diagram.PropertyChanged += this.OnComponentDiagramViewModelPropertyChanged;
+            foreach (IChart chart in all)
+                chart.PropertyChanged += this.OnChartPropertyChanged;
 
-            this.ComponentDiagrams = new ObservableCollection<ComponentDiagramViewModel>(all);
-            this.ComponentDiagrams.CollectionChanged += this.OnCollectionChanged;
+            this.Charts = new ObservableCollection<IChart>(all);
+            this.Charts.CollectionChanged += this.OnCollectionChanged;
         }
         #endregion
 
@@ -84,14 +84,14 @@ namespace QuickArch.ViewModel
         {
             if (e.NewItems != null && e.NewItems.Count != 0)
                 foreach (ComponentDiagramViewModel compVM in e.NewItems)
-                    compVM.PropertyChanged += this.OnComponentDiagramViewModelPropertyChanged;
+                    compVM.PropertyChanged += this.OnChartPropertyChanged;
 
             if (e.OldItems != null && e.OldItems.Count != 0)
                 foreach (ComponentDiagramViewModel compVM in e.OldItems)
-                    compVM.PropertyChanged -= this.OnComponentDiagramViewModelPropertyChanged;
+                    compVM.PropertyChanged -= this.OnChartPropertyChanged;
         }
 
-        void OnComponentDiagramViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        void OnChartPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             string IsSelected = "IsSelected";
 
@@ -100,7 +100,7 @@ namespace QuickArch.ViewModel
         }
 
         //doesn't really do anything, can be implemented for other things
-        void OnComponentDiagramAddedToDocument(object sender, ComponentDiagramAddedEventArgs e)
+        void OnChartAddedToDocument(object sender, ChartAddedEventArgs e)
         {
         }
         
@@ -110,10 +110,11 @@ namespace QuickArch.ViewModel
         {
             _document.Save();
         }
-        public void Add(ComponentDiagramViewModel newDiagram)
+        public void Add(IChart chart)
         {
-            this.ComponentDiagrams.Add(newDiagram);
-            _document.AddComponentDiagram(newDiagram);
+            this.Charts.Add(chart);
+            _document.AddChart(chart);
         }
+
     }
 }
