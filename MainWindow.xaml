@@ -64,9 +64,8 @@
                 <HierarchicalDataTemplate DataType="{x:Type vm:DocumentViewModel}" ItemsSource="{Binding Charts, UpdateSourceTrigger=PropertyChanged}" >
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
-                            <ContextMenu Opened="DocumentContextMenu_Opened">
-                                <MenuItem Header="New Component Diagram" Command="{Binding Path=NewComponentDiagramCommand}" />
-                                <MenuItem Command="ApplicationCommands.Close" />
+                            <ContextMenu Opened="DocumentContextMenu_Opened" ItemsSource="{Binding Path=DocumentCommands}"
+                                         ItemTemplate="{StaticResource CommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>
@@ -74,7 +73,7 @@
                 <DataTemplate DataType="{x:Type vm:ComponentDiagramViewModel}">
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
-                            <ContextMenu Opened="ComponentDiagramContextMenu_Opened" ItemsSource="{Binding Path=Commands}"
+                            <ContextMenu Opened="ComponentDiagramContextMenu_Opened" ItemsSource="{Binding Path=DiagramCommands}"
                                          ItemTemplate="{StaticResource CommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>

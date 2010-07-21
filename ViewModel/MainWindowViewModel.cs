@@ -18,7 +18,7 @@ namespace QuickArch.ViewModel
    {
        #region Fields
        //Collection of commands to be displayed in UI
-       Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands ;
+       Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _diagramCommands, _documentCommands ;
        //Maintain a list of ComponentManagers created and used by ComponentDiagrams
        List<ComponentManager> _componentManagers;
        //ObservableCollection of workspaces (component diagrams for now, maybe sequence charts later)
@@ -33,15 +33,10 @@ namespace QuickArch.ViewModel
        //Constructor
        public MainWindowViewModel()
        {
+           base.DisplayName = Resources.MainWindowViewModel_DisplayName;
+
            _componentManagers = new List<ComponentManager>();
            _documents = new ObservableCollection<DocumentViewModel>();
-           
-           _fileCommands = new Collection<CommandViewModel>();
-           _editCommands = new Collection<CommandViewModel>();
-           _viewCommands = new Collection<CommandViewModel>();
-           _toolCommands = new Collection<CommandViewModel>();
-
-           base.DisplayName = Resources.MainWindowViewModel_DisplayName;
 
            //private counters for document name/component diagram name
            i = 0;
@@ -69,9 +64,16 @@ namespace QuickArch.ViewModel
                 NewCommand("Export to PNG", param => document.ExportPng())
                });
 
-                //NewCommand(Resources.MainWindowViewModel_Command_CreateNewComponent, param => this.CreateNewComponent()),
-                //NewCommand("Create New Link", param => this.CreateNewConnector()),
-                //NewCommand("New Component Diagram", param => CreateNewComponentDiagram())
+           _diagramCommands = new Collection<CommandViewModel>
+               (new CommandViewModel[] {
+                   NewCommand(Resources.MainWindowViewModel_Command_CreateNewComponent, param => this.CreateNewComponent()),
+                   NewCommand("Create New Link", param => this.CreateNewConnector()),
+               });
+
+           _documentCommands = new Collection<CommandViewModel>
+               (new CommandViewModel[] {
+                   NewCommand("New Component Diagram", param => CreateNewComponentDiagram())
+               });
        }
        
        CommandViewModel NewCommand(string displayName, Action<object> execute, bool isEnabled=true)
@@ -228,6 +230,14 @@ namespace QuickArch.ViewModel
        public Collection<CommandViewModel> ToolCommands
        {
            get { return _toolCommands; }
+       }
+       public Collection<CommandViewModel> DiagramCommands
+       {
+           get { return _diagramCommands; }
+       }
+       public Collection<CommandViewModel> DocumentCommands
+       {
+           get { return _documentCommands; }
        }
        #endregion
    }
