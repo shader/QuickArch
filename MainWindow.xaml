@@ -53,7 +53,8 @@
         </StatusBar>
         
         <!--Treeview of architecture-->
-        <TreeView DockPanel.Dock="Left" Width="140" x:Name="archTree" ItemsSource="{Binding Documents}">
+        <Border Style="{StaticResource MainBorderStyle}">
+        <TreeView DockPanel.Dock="Left" Width="160" x:Name="archTree" ItemsSource="{Binding Documents}" Style="{StaticResource MainTreeStyle}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
@@ -80,26 +81,16 @@
                 <DataTemplate DataType="{x:Type vm:ComponentDiagramViewModel}">
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
-                            <ContextMenu Opened="ComponentDiagramContextMenu_Opened">
-                                <MenuItem Header="Delete" Command="{Binding Path=DeleteCommand}" />
+                            <ContextMenu Opened="ComponentDiagramContextMenu_Opened" ItemsSource="{Binding Path=Commands}"
+                                         ItemTemplate="{StaticResource CommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>
                 </DataTemplate>
             </TreeView.Resources>
         </TreeView>
-        
-        
-        <!--Control panel/Palette-->
-        <StackPanel DockPanel.Dock="Left" x:Name="controlStackPanel" Width="154">
-            <Border Style="{StaticResource MainBorderStyle}" Width="150" Height="{Binding ElementName=controlStackPanel, Path=ActualHeight}">
-                <HeaderedContentControl
-                Content="{Binding Path=Commands}"
-                ContentTemplate="{StaticResource CommandsTemplate}"
-                Style="{StaticResource MainHCCStyle}"/>
-            </Border>
-        </StackPanel>
-        
+        </Border>
+
         <!--Main Workspace canvas within scrollviewer-->
         <Border Style="{StaticResource MainBorderStyle}">
             <HeaderedContentControl Content="{Binding Path=Workspaces}"

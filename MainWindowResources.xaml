@@ -20,10 +20,33 @@
         <MenuItem Command="{Binding Path=Command}" Header="{Binding Path=DisplayName}" 
                   IsEnabled="{Binding Path=IsEnabled}" />
     </DataTemplate>
+    
+    <!--This style configures how the MainWindow's treeview should be displayed -->
+    <Style x:Key="MainTreeStyle" TargetType="{x:Type TreeView}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TreeView">
+                    <Border Name="Border" CornerRadius="2" 
+                            Background="White"
+                            BorderBrush="LightGray"
+                            BorderThickness="1" >
+                        <ScrollViewer Focusable="False"
+                                      CanContentScroll="False"
+                                      Padding="4">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!-- 
   This style configures both of the main content areas in the main window.-->
-  
     <Style x:Key="MainHCCStyle" TargetType="{x:Type HeaderedContentControl}">
         <!--<Setter Property="HeaderTemplate">
             <Setter.Value>
@@ -71,7 +94,7 @@
     <Style x:Key="MainBorderStyle" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="WhiteSmoke" />
         <Setter Property="BorderBrush" Value="LightGray" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="2" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
