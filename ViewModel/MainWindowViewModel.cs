@@ -19,6 +19,7 @@ namespace QuickArch.ViewModel
        #region Fields
        //Collection of commands to be displayed in UI
        Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _diagramCommands, _documentCommands ;
+       private RelayCommand _textBoxEnterCommand;
        //Maintain a list of ComponentManagers created and used by ComponentDiagrams
        List<ComponentManager> _componentManagers;
        //ObservableCollection of workspaces (component diagrams for now, maybe sequence charts later)
@@ -30,7 +31,7 @@ namespace QuickArch.ViewModel
        private int j;
        #endregion
 
-       //Constructor
+       #region Constructor
        public MainWindowViewModel()
        {
            base.DisplayName = Resources.MainWindowViewModel_DisplayName;
@@ -75,7 +76,8 @@ namespace QuickArch.ViewModel
                    NewCommand("New Component Diagram", param => CreateNewComponentDiagram())
                });
        }
-       
+       #endregion
+
        CommandViewModel NewCommand(string displayName, Action<object> execute, bool isEnabled=true)
        {
            return new CommandViewModel(displayName, new RelayCommand(execute), isEnabled);
@@ -214,6 +216,9 @@ namespace QuickArch.ViewModel
        }
        #endregion
 
+
+       #region Presentation Properties
+
        #region Commands
        public Collection<CommandViewModel> FileCommands
        {
@@ -239,6 +244,19 @@ namespace QuickArch.ViewModel
        {
            get { return _documentCommands; }
        }
+       #endregion
+
+       public ICommand TextBoxEnterCommand
+       {
+           get
+           {
+               if(_textBoxEnterCommand == null)
+                   _textBoxEnterCommand = new RelayCommand(param => this.CreateNewComponent());
+
+               return _textBoxEnterCommand;
+           }
+       }
+
        #endregion
    }
 }

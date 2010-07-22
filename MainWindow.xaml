@@ -5,7 +5,7 @@
         xmlns:vw="clr-namespace:QuickArch.View"
         xmlns:vm="clr-namespace:QuickArch.ViewModel"
         Title="{Binding Path=DisplayName}" Height="720" Width="1024" 
-        Icon="/QuickArch;component/Images/Winter.jpg" ResizeMode="CanResizeWithGrip">
+        Icon="/QuickArch;component/Images/Winter.jpg" ResizeMode="CanResizeWithGrip" >
     <Window.Resources>
         <ResourceDictionary Source="MainWindowResources.xaml" />
     </Window.Resources>
@@ -28,7 +28,8 @@
         <!--Top Toolbar/Quickbar-->
         <ToolBar DockPanel.Dock="Top" Height="28" Name="myToolbar" >
             <Label Width="92" Content="New Component: "  />
-            <TextBox Background="White" Width="200" BorderBrush="Black" BorderThickness="1" KeyUp="CompBox_KeyUp"/>
+            <my:CommandTextBox Width ="160" Background="White" BorderBrush="Black" BorderThickness="1"
+                               Command="{Binding Path=TextBoxEnterCommand}" />
                 <ToolBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />
@@ -50,7 +51,9 @@
         <TreeView DockPanel.Dock="Left" Width="160" x:Name="archTree" ItemsSource="{Binding Documents}" Style="{StaticResource MainTreeStyle}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <!-- This Setter applies an attached behavior to all TreeViewItems. -->
+
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                     <Setter Property="FontWeight" Value="Normal" />
                     <Style.Triggers>

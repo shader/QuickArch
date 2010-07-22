@@ -55,9 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommandTextBox.cs" />
     <Compile Include="DataAccess\ComponentAddedEventArgs.cs" />
     <Compile Include="DataAccess\ChartAddedEventArgs.cs" />
     <Compile Include="DataAccess\ConnectorAddedEventArgs.cs" />
+    <Compile Include="KeyCommands.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="DataAccess\FileManager.cs" />
     <Compile Include="RelayCommand.cs" />

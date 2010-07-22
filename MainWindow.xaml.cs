@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Input;
 namespace QuickArch
 {
     public partial class MainWindow : System.Windows.Window
@@ -14,5 +15,6 @@ namespace QuickArch
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = DataContext;
         }
+
     }
 }

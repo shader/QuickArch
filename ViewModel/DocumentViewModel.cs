@@ -15,6 +15,7 @@ namespace QuickArch.ViewModel
     public class DocumentViewModel : WorkspaceViewModel
     {
         readonly Document _document;
+        private IChart _selectedChart;
         bool _isSelected;
         bool _isExpanded;
 
@@ -34,7 +35,7 @@ namespace QuickArch.ViewModel
         }
         #endregion
 
-        #region Properties
+        #region Presentation Properties
         public ObservableCollection<IChart> Charts { get; private set; }
 
         public bool IsExpanded
@@ -60,6 +61,18 @@ namespace QuickArch.ViewModel
                     _isSelected = value;
                     this.OnPropertyChanged("IsSelected");
                 }
+            }
+        }
+
+        public IChart SelectedChart
+        {
+            get { return _selectedChart; }
+            set
+            {
+                if (value != _selectedChart)
+                    _selectedChart = value;
+
+                this.OnPropertyChanged("SelectedChart");
             }
         }
         #endregion
