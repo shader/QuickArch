@@ -47,7 +47,7 @@
 
     <!-- 
   This style configures both of the main content areas in the main window.-->
-    <Style x:Key="MainHCCStyle" TargetType="{x:Type HeaderedContentControl}">
+    <Style x:Key="MainCCStyle" TargetType="{x:Type ContentControl}">
         <!--<Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -71,13 +71,8 @@
         This template ensures that content of a HeaderedContentControl 
         fills the available vertical space. 
         -->
-                <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
+                <ControlTemplate TargetType="{x:Type ContentControl}">
                     <DockPanel>
-                        <ContentPresenter 
-              DockPanel.Dock="Top"
-              ContentSource="Header" 
-              ContentTemplate="{TemplateBinding HeaderTemplate}" 
-              />
                         <ContentPresenter 
               ContentSource="Content" 
               ContentTemplate="{TemplateBinding ContentTemplate}" 
@@ -127,10 +122,11 @@
   -->
     <DataTemplate x:Key="WorkspacesTemplate">
         <TabControl 
-      IsSynchronizedWithCurrentItem="True" 
+      IsSynchronizedWithCurrentItem="True"
       ItemsSource="{Binding}" 
       ItemTemplate="{StaticResource ClosableTabItemTemplate}"
       Margin="4"
+      SelectedItem="{Binding Path=IsSelected}"
       />
     </DataTemplate>
 </ResourceDictionary>

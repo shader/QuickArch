@@ -64,7 +64,7 @@
                 <HierarchicalDataTemplate DataType="{x:Type vm:DocumentViewModel}" ItemsSource="{Binding Charts, UpdateSourceTrigger=PropertyChanged}" >
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
-                            <ContextMenu Opened="DocumentContextMenu_Opened" ItemsSource="{Binding Path=DocumentCommands}"
+                            <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=DocumentCommands}"
                                          ItemTemplate="{StaticResource CommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
@@ -73,7 +73,7 @@
                 <DataTemplate DataType="{x:Type vm:ComponentDiagramViewModel}">
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
-                            <ContextMenu Opened="ComponentDiagramContextMenu_Opened" ItemsSource="{Binding Path=DiagramCommands}"
+                            <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=DiagramCommands}"
                                          ItemTemplate="{StaticResource CommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
@@ -85,9 +85,9 @@
 
         <!--Main Workspace canvas within scrollviewer-->
         <Border Style="{StaticResource MainBorderStyle}">
-            <HeaderedContentControl Content="{Binding Path=Workspaces}"
+            <ContentControl Content="{Binding Path=Workspaces}"
                                     ContentTemplate="{StaticResource WorkspacesTemplate}"
-                                    Style="{StaticResource MainHCCStyle}" />
+                                    Style="{StaticResource MainCCStyle}" />
         </Border>
     </DockPanel>
     <Window.InputBindings>

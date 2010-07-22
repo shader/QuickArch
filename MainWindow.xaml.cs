@@ -8,13 +8,7 @@ namespace QuickArch
             InitializeComponent();
         }
 
-        private void DocumentContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
-        {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = DataContext;
-        }
-
-        private void ComponentDiagramContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = DataContext;
