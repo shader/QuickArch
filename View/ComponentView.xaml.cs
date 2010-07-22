@@ -21,6 +21,7 @@ namespace QuickArch.View
     public partial class ComponentView : UserControl
     {
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(ComponentView));
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(ComponentView));
 
         private Guid id;
 
@@ -28,6 +29,12 @@ namespace QuickArch.View
         {
             get { return (bool)base.GetValue(IsSelectedProperty); }
             set { base.SetValue(IsSelectedProperty, value); }
+        }
+
+        public Point Position
+        {
+            get { return (Point)base.GetValue(PositionProperty); }
+            set { base.SetValue(PositionProperty, value); }
         }
 
         public ComponentView()

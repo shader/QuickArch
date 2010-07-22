@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace QuickArch.View
 {
@@ -21,17 +22,19 @@ namespace QuickArch.View
     {
         AdornerLayer aLayer;
 
-        bool _isDown;
-        bool _isDragging;
+        bool _isDown, _isDragging;
         bool selected = false;
         UIElement selectedElement = null;
 
         Point _startPoint, _originalPoint;
         private Canvas myCanvas;
+        private ObservableCollection<ComponentView> _components;
+        private double xInc;
 
         public ComponentDiagramView()
         {
             InitializeComponent();
+            _components = new ObservableCollection<ComponentView>();
         }
 
         private void myCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -39,7 +42,21 @@ namespace QuickArch.View
             myCanvas = sender as Canvas;
             myCanvas.MouseLeftButtonDown += new MouseButtonEventHandler(myCanvas_MouseLeftButtonDown);
             myCanvas.MouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
-        }   
+        }
+
+        private void ArrangeChildren()
+        {
+            if (myCanvas != null)
+            {
+                if (myCanvas.Children.Count != 0)
+                {
+                    foreach (ComponentView child in myCanvas.Children)
+                    {
+                        Canvas.SetLeft(child, xInc);
+                    }
+                }
+            }
+        }
 
         private void Diagram_Created(object sender, RoutedEventArgs e)
         {
@@ -137,6 +154,17 @@ namespace QuickArch.View
                 selected = true;
                 e.Handled = true;
             }
+        }
+
+        private void Components_Updated(object sender, DataTransferEventArgs e)
+        {
+            ComponentView s = sender as ComponentView;
+            if (s != null)
+            {
+                xInc += s.Width;
+                _components.Add(s);
+            }
+            this.ArrangeChildren();
         }
     }
 }

@@ -46,9 +46,15 @@
             <TextBlock Name="txtBlkCompLoc"/>
         </StatusBar>
         
-        <!--Treeview of architecture-->
-        <Border Style="{StaticResource MainBorderStyle}">
-        <TreeView DockPanel.Dock="Left" Width="160" x:Name="archTree" ItemsSource="{Binding Documents}" Style="{StaticResource MainTreeStyle}">
+        <Grid x:Name="myGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Treeview of architecture-->
+            <TreeView Grid.Column="0" x:Name="archTree" ItemsSource="{Binding Documents}" Style="{StaticResource MainTreeStyle}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <!-- This Setter applies an attached behavior to all TreeViewItems. -->
@@ -84,14 +90,20 @@
                 </DataTemplate>
             </TreeView.Resources>
         </TreeView>
-        </Border>
 
-        <!--Main Workspace canvas within scrollviewer-->
-        <Border Style="{StaticResource MainBorderStyle}">
+        <GridSplitter HorizontalAlignment="Right" 
+                      VerticalAlignment="Stretch" 
+                      Grid.Column="1" ResizeBehavior="PreviousAndNext"
+                      Width="5" Background="#FFBCBCBC"/>
+
+
+            <!--Main Workspace canvas within scrollviewer-->
+        <Border Grid.Column="2" Style="{StaticResource MainBorderStyle}">
             <ContentControl Content="{Binding Path=Workspaces}"
                                     ContentTemplate="{StaticResource WorkspacesTemplate}"
                                     Style="{StaticResource MainCCStyle}" />
         </Border>
+        </Grid>
     </DockPanel>
     <Window.InputBindings>
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding Path=SaveCommand}" />
