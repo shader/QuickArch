@@ -28,8 +28,8 @@
         <!--Top Toolbar/Quickbar-->
         <ToolBar DockPanel.Dock="Top" Height="28" Name="myToolbar" >
             <Label Width="92" Content="New Component: "  />
-            <my:CommandTextBox Width ="160" Background="White" BorderBrush="Black" BorderThickness="1"
-                               Command="{Binding Path=TextBoxEnterCommand}" />
+            <my:CommandTextBox x:Name="cmdTxtBox" Width ="160" Background="White" BorderBrush="Black" BorderThickness="1"
+                               Command="{Binding Path=TextBoxEnterCommand}" CommandParameter="{Binding ElementName=cmdTxtBox, Path=Text}"/>
                 <ToolBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />

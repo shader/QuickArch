@@ -26,6 +26,12 @@ namespace QuickArch.ViewModel
             _componentManager = componentManager;
         }
 
+        public ComponentViewModel(Component component, ComponentManager componentManager, String title)
+            : this(component, componentManager)
+        {
+            _component.Title = title;
+        }
+
         #region Component Properties
         public string Title
         {

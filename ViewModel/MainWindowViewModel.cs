@@ -181,6 +181,14 @@ namespace QuickArch.ViewModel
            ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.GetComponentManager());
            newComponentViewModel.Save();
        }
+       //overloaded method
+       void CreateNewComponent(String title)
+       {
+           Component component = new Component();
+           ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
+           ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.GetComponentManager(),title);
+           newComponentViewModel.Save();
+       }
        void CreateNewConnector()
        {
            Connector connector = new Connector();
@@ -251,7 +259,7 @@ namespace QuickArch.ViewModel
            get
            {
                if(_textBoxEnterCommand == null)
-                   _textBoxEnterCommand = new RelayCommand(param => this.CreateNewComponent());
+                   _textBoxEnterCommand = new RelayCommand(param => this.CreateNewComponent((String)param));
 
                return _textBoxEnterCommand;
            }
