@@ -80,8 +80,8 @@ namespace QuickArch.ViewModel
         /// <summary>
         /// Returns an ObservableCollection of ComponentViewModel objects
         /// </summary>
-        public ObservableCollection<ComponentViewModel> AllComponents { get; private set; }
-        public ObservableCollection<ConnectorViewModel> AllConnectors { get; private set; }
+        public ObservableCollection<ComponentViewModel> AllComponents { get; set; }
+        public ObservableCollection<ConnectorViewModel> AllConnectors { get; set; }
 
         public bool IsSelected
         {

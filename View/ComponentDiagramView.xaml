@@ -24,7 +24,7 @@
         </Style>
     </UserControl.Resources>
     <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"
-                  ItemsSource="{Binding Path=AllComponents, Mode=OneWay, NotifyOnTargetUpdated=True}" ItemTemplate="{StaticResource ComponentTemplate}" 
+                  ItemsSource="{Binding Path=AllComponents, Mode=TwoWay, NotifyOnTargetUpdated=True}" ItemTemplate="{StaticResource ComponentTemplate}" 
                   x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" 
                   Width="{Binding ElementName=ComponentDiagramControl, Path=Width}"
                   TargetUpdated="Components_Updated">
