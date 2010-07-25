@@ -81,6 +81,42 @@ namespace QuickArch.Properties {
         /// <summary>
         ///   Looks up a localized string similar to New Component.
         /// </summary>
+        internal static string DefaultComponentName {
+            get {
+                return ResourceManager.GetString("DefaultComponentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string DefaultFilename {
+            get {
+                return ResourceManager.GetString("DefaultFilename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .aam.
+        /// </summary>
+        internal static string Extension {
+            get {
+                return ResourceManager.GetString("Extension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allscripts Architecture Model (.aam)|*.aam.
+        /// </summary>
+        internal static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Component.
+        /// </summary>
         internal static string MainWindowViewModel_Command_CreateNewComponent {
             get {
                 return ResourceManager.GetString("MainWindowViewModel_Command_CreateNewComponent", resourceCulture);

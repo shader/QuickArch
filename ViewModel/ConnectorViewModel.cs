@@ -3,28 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickArch.Model;
-using QuickArch.DataAccess;
+using QuickArch.Utilities;
 using System.Windows.Input;
 
 namespace QuickArch.ViewModel
 {
-    public class ConnectorViewModel : WorkspaceViewModel
+    public class ConnectorViewModel : ComponentViewModel
     {
-        readonly Connector _connector;
-        readonly ComponentManager _componentManager;
-        bool _isSelected;
-        RelayCommand _saveCommand;
-
         #region Constructor
-        public ConnectorViewModel(Connector connector, ComponentManager componentManager)
+        public ConnectorViewModel(Connector connector) : base(connector)
         {
             if (connector == null)
                 throw new ArgumentNullException("connector");
-            if (componentManager == null)
-                throw new ArgumentNullException("componentManager");
-
-            _connector = connector;
-            _componentManager = componentManager;
         }
         #endregion
 
@@ -32,13 +22,13 @@ namespace QuickArch.ViewModel
 
         public Component Start
         {
-            get { return _connector.Start; }
+            get { return ((Connector)_component).Start; }
             set
             {
-                if (value == _connector.Start)
+                if (value == ((Connector)_component).Start)
                     return;
 
-                _connector.Start = value;
+                ((Connector)_component).Start = value;
 
                 base.OnPropertyChanged("Start");
             }
@@ -46,70 +36,16 @@ namespace QuickArch.ViewModel
 
         public Component End
         {
-            get { return _connector.End; }
+            get { return ((Connector)_component).End; }
             set
             {
-                if (value == _connector.End)
+                if (value == ((Connector)_component).End)
                     return;
 
-                _connector.End = value;
+                ((Connector)_component).End = value;
 
                 base.OnPropertyChanged("End");
             }
-        }
-
-        #endregion
-
-        #region Presentation Properties
-
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set
-            {
-                if (value == _isSelected)
-                    return;
-
-                _isSelected = value;
-
-                base.OnPropertyChanged("IsSelected");
-            }
-        }
-
-        public ICommand SaveCommand
-        {
-            get
-            {
-                if (_saveCommand == null)
-                {
-                    _saveCommand = new RelayCommand(
-                        param => this.Save(),
-                        param => this.CanSave
-                        );
-                }
-                return _saveCommand;
-            }
-        }
-        #endregion
-
-        #region Public Methods
-        public void Save()
-        {
-            if (this.IsNewConnector)
-                _componentManager.AddConnector(_connector);
-        }
-        #endregion
-
-        #region Private Helpers
-        bool IsNewConnector
-        {
-            get { return !_componentManager.ContainsConnector(_connector); }
-        }
-
-        //returns true if the component is valid and can be saved
-        bool CanSave
-        {
-            get {return true; }
         }
         #endregion
     }

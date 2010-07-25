@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace QuickArch.Model
 {
-    public class Connector
+    public class Connector : Component
     {
        public static Connector CreateNewConnector()
         {
@@ -27,5 +28,9 @@ namespace QuickArch.Model
         public Component Start { get; set; }
 
         public Component End { get; set; }
+
+        public override void Save() { }
+
+        public override void Save(XElement element) { }
     }
 }

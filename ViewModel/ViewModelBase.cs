@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace QuickArch.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
-        //Constructor
-        protected ViewModelBase()
-        {
-        }
+        RelayCommand _closeCommand;
+
         public virtual string DisplayName { get; protected set; }
 
         #region Debugging Aides
@@ -47,6 +46,32 @@ namespace QuickArch.ViewModel
         protected virtual bool ThrowOnInvalidPropertyName { get; private set; }
 
         #endregion // Debugging Aides
+
+        #region CloseCommand
+        //returns the command that attempts to remove this workspace from the UI
+        public ICommand CloseCommand
+        {
+            get
+            {
+                if (_closeCommand == null)
+                    _closeCommand = new RelayCommand(param => this.OnRequestClose());
+
+                return _closeCommand;
+            }
+        }
+        #endregion
+
+        #region RequestClose [event]
+        //raised when this workspace should be removed from the UI
+        public event EventHandler RequestClose;
+
+        void OnRequestClose()
+        {
+            EventHandler handler = this.RequestClose;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+        #endregion
 
         #region INotifyPropertyChanged Members
 

@@ -10,48 +10,35 @@ using System.Windows.Input;
 
 using QuickArch.Properties;
 using QuickArch.Model;
-using QuickArch.DataAccess;
+using QuickArch.Utilities;
 
 namespace QuickArch.ViewModel
 {
-   public class MainWindowViewModel : WorkspaceViewModel
+   public class MainWindowViewModel : ViewModelBase
    {
        #region Fields
        //Collection of commands to be displayed in UI
-       Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _diagramCommands, _documentCommands ;
-       private RelayCommand _textBoxEnterCommand;
-       //Maintain a list of ComponentManagers created and used by ComponentDiagrams
-       List<ComponentManager> _componentManagers;
-       //ObservableCollection of workspaces (component diagrams for now, maybe sequence charts later)
-       ObservableCollection<WorkspaceViewModel> _workspaces;
-       //List of DocumentViewModels created by the user/window
-       ObservableCollection<DocumentViewModel> _documents;
-       Document document;
-       private int i;
-       private int j;
+       Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _systemCommands ;
+       RelayCommand _textBoxEnterCommand;
+       //ObservableCollection of components
+       ObservableCollection<ComponentViewModel> _componentVMs;
        #endregion
 
        #region Constructor
        public MainWindowViewModel()
        {
-           base.DisplayName = Resources.MainWindowViewModel_DisplayName;
+           DisplayName = Resources.MainWindowViewModel_DisplayName;
 
-           _componentManagers = new List<ComponentManager>();
-           _documents = new ObservableCollection<DocumentViewModel>();
+           _componentVMs = new ObservableCollection<ComponentViewModel>();
 
-           //private counters for document name/component diagram name
-           i = 0;
-           j = 0;
-
-           this.CreateNewDocument();
-           this.CreateNewComponentDiagram();
+           CreateNewSystem();
 
            _fileCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
-                NewCommand("Save", param => _documents.ElementAt<DocumentViewModel>(0).Save()),
-                NewCommand("Save As...", param => document.SaveAs()),
+                NewCommand("Save", param => GetActiveSystem().Save()),
+                NewCommand("Save As...", param => GetActiveSystem().SaveAs()),
                 NewCommand("Open", param => OpenDocument()),
-                NewCommand("New Document", param => CreateNewDocument()),
+                NewCommand("New Document", param => CreateNewSystem()),
                });
 
            _editCommands = new Collection<CommandViewModel>
@@ -60,20 +47,15 @@ namespace QuickArch.ViewModel
            _viewCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {});
 
-           _toolCommands = new Collection<CommandViewModel>
+           _toolCommands = new Collection<CommandViewModel>();
+               //(new CommandViewModel[] {
+               // NewCommand("Export to PNG", param => GetActiveSystem().ExportPng())
+               //});
+           
+           _systemCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
-                NewCommand("Export to PNG", param => document.ExportPng())
-               });
-
-           _diagramCommands = new Collection<CommandViewModel>
-               (new CommandViewModel[] {
-                   NewCommand(Resources.MainWindowViewModel_Command_CreateNewComponent, param => this.CreateNewComponent()),
-                   NewCommand("Create New Link", param => this.CreateNewConnector()),
-               });
-
-           _documentCommands = new Collection<CommandViewModel>
-               (new CommandViewModel[] {
-                   NewCommand("New Component Diagram", param => CreateNewComponentDiagram())
+                   NewCommand("New Subsystem", param => CreateNewSystem()),
+                   NewCommand("Create New Link", param => this.CreateNewConnector())
                });
        }
        #endregion
@@ -83,142 +65,76 @@ namespace QuickArch.ViewModel
            return new CommandViewModel(displayName, new RelayCommand(execute), isEnabled);
        }
 
-       #region Workspaces
-
-       public ObservableCollection<WorkspaceViewModel> Workspaces
+       #region Components
+       public ObservableCollection<ComponentViewModel> ComponentVMs
        {
            get
            {
-               if (_workspaces == null)
+               if(_componentVMs == null)
                {
-                   _workspaces = new ObservableCollection<WorkspaceViewModel>();
-                   _workspaces.CollectionChanged += this.OnWorkspacesChanged;
+                   _componentVMs = new ObservableCollection<ComponentViewModel>();
+                   _componentVMs.CollectionChanged += this.OnComponentVMsChanged;
                }
-               return _workspaces;
+               return _componentVMs;
            }
        }
 
-       void OnWorkspacesChanged(object sender, NotifyCollectionChangedEventArgs e)
+       void OnComponentVMsChanged(object sender, NotifyCollectionChangedEventArgs e)
        {
            if (e.NewItems != null && e.NewItems.Count != 0)
-               foreach (WorkspaceViewModel workspace in e.NewItems)
-                   workspace.RequestClose += this.OnWorkspaceRequestClose;
+               foreach (SystemViewModel document in e.NewItems)
+                   document.RequestClose += this.OnSystemRequestClose;
 
            if (e.OldItems != null && e.OldItems.Count != 0)
-               foreach (WorkspaceViewModel workspace in e.OldItems)
-                   workspace.RequestClose -= this.OnWorkspaceRequestClose;
+               foreach (SystemViewModel document in e.OldItems)
+                   document.RequestClose -= this.OnSystemRequestClose;
        }
 
-       void OnWorkspaceRequestClose(object sender, EventArgs e)
+       void OnSystemRequestClose(object sender, EventArgs e)
        {
-           WorkspaceViewModel workspace = sender as WorkspaceViewModel;
-           workspace.Dispose();
-           this.Workspaces.Remove(workspace);
-       }
-       #endregion
-
-       #region Documents
-       public ObservableCollection<DocumentViewModel> Documents
-       {
-           get
-           {
-               if(_documents == null)
-               {
-                   _documents = new ObservableCollection<DocumentViewModel>();
-                   _documents.CollectionChanged += this.OnDocumentsChanged;
-               }
-               return _documents;
-           }
-       }
-
-       void OnDocumentsChanged(object sender, NotifyCollectionChangedEventArgs e)
-       {
-           if (e.NewItems != null && e.NewItems.Count != 0)
-               foreach (DocumentViewModel document in e.NewItems)
-                   document.RequestClose += this.OnDocumentRequestClose;
-
-           if (e.OldItems != null && e.OldItems.Count != 0)
-               foreach (DocumentViewModel document in e.OldItems)
-                   document.RequestClose -= this.OnDocumentRequestClose;
-       }
-
-       void OnDocumentRequestClose(object sender, EventArgs e)
-       {
-           DocumentViewModel dvm = sender as DocumentViewModel;
+           SystemViewModel dvm = sender as SystemViewModel;
            dvm.Dispose();
-           this.Documents.Remove(dvm);
+           this.ComponentVMs.Remove(dvm);
        }
        void OpenDocument()
        {
-           CreateNewDocument();
-           document.Open();
        }
        #endregion
 
        #region Private Helpers
 
-       void CreateNewComponentDiagram()
+       void CreateNewSystem()
        {
-           j++;
-           ComponentManager newComponentManager = new ComponentManager();
-           ComponentDiagramViewModel workspace = new ComponentDiagramViewModel(newComponentManager, "Component Diagram " + j);
-           //get current document and add component diagram to it
-           //ERRORS
-           for(int count = 0; count < _documents.Count; count++)
-           {
-               if (_documents.ElementAt<DocumentViewModel>(count).IsSelected || _documents.Count==1)
-               {
-                   _documents.ElementAt<DocumentViewModel>(count).Add(workspace);
-               }
-           }
-           this.Workspaces.Add(workspace);
-           this.SetActiveWorkspace(workspace);
-       }
-       void CreateNewComponent()
-       {
-           Component component = new Component();
-           ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
-           ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.GetComponentManager());
-           newComponentViewModel.Save();
+           CreateNewSystem(Resources.DefaultComponentName);
        }
        //overloaded method
-       void CreateNewComponent(String title)
+       void CreateNewSystem(String title)
        {
-           Component component = new Component();
-           ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
-           ComponentViewModel newComponentViewModel = new ComponentViewModel(component, current.GetComponentManager(),title);
-           newComponentViewModel.Save();
+           SystemViewModel current = GetActiveSystem() as SystemViewModel;
+           SystemViewModel newSystemViewModel = new SystemViewModel(new QuickArch.Model.System(title));
+           ComponentVMs.Add(newSystemViewModel);
        }
        void CreateNewConnector()
        {
            Connector connector = new Connector();
-           ComponentDiagramViewModel current = GetActiveWorkspace() as ComponentDiagramViewModel;
-           ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector, current.GetComponentManager());
-           newConnectorViewModel.Save();
-           //Mouse.OverrideCursor = Cursors.Cross;
-       }
-       void CreateNewDocument()
-       {
-           i++;
-           document = new Document("Document " + i);
-           DocumentViewModel newDocument = new DocumentViewModel(document);
-           _documents.Add(newDocument);
+           SystemViewModel current = GetActiveSystem() as SystemViewModel;
+           ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector);
        }
 
-       void SetActiveWorkspace(WorkspaceViewModel workspace)
+       void SetActiveSystem(ComponentViewModel system)
        {
-           Debug.Assert(this.Workspaces.Contains(workspace));
+           Debug.Assert(this.ComponentVMs.Contains(system));
 
-           System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
+           System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.ComponentVMs);
            if(collectionView != null)
-               collectionView.MoveCurrentTo(workspace);
+               collectionView.MoveCurrentTo(system);
        }
-       WorkspaceViewModel GetActiveWorkspace()
+       ComponentViewModel GetActiveSystem()
        {
-           System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
+           System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.ComponentVMs);
            if (collectionView != null)
            {
-               return collectionView.CurrentItem as WorkspaceViewModel;
+               return collectionView.CurrentItem as ComponentViewModel;
            }
            return null;
        }
@@ -244,13 +160,9 @@ namespace QuickArch.ViewModel
        {
            get { return _toolCommands; }
        }
-       public Collection<CommandViewModel> DiagramCommands
-       {
-           get { return _diagramCommands; }
-       }
        public Collection<CommandViewModel> DocumentCommands
        {
-           get { return _documentCommands; }
+           get { return _systemCommands; }
        }
        #endregion
 
@@ -259,7 +171,7 @@ namespace QuickArch.ViewModel
            get
            {
                if(_textBoxEnterCommand == null)
-                   _textBoxEnterCommand = new RelayCommand(param => this.CreateNewComponent((String)param));
+                   _textBoxEnterCommand = new RelayCommand(param => this.CreateNewSystem((String)param));
 
                return _textBoxEnterCommand;
            }

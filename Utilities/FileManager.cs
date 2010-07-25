@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace QuickArch.DataAccess
+namespace QuickArch.Utilities
 {
     public class FileManager
     {

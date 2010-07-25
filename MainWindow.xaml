@@ -70,19 +70,19 @@
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type vm:DocumentViewModel}" ItemsSource="{Binding Charts, UpdateSourceTrigger=PropertyChanged}" >
+                <HierarchicalDataTemplate DataType="{x:Type vm:SystemViewModel}" ItemsSource="{Binding Charts, UpdateSourceTrigger=PropertyChanged}" >
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
-                            <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=DocumentCommands}"
+                            <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SystemCommands}"
                                          ItemTemplate="{StaticResource CommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>
                 </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type vm:ComponentDiagramViewModel}">
+                <DataTemplate DataType="{x:Type vm:SequenceViewModel}">
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
-                            <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=DiagramCommands}"
+                            <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SequenceCommands}"
                                          ItemTemplate="{StaticResource CommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>

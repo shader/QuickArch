@@ -125,6 +125,22 @@
     <value>Component</value>
     <comment>The display name of a new Component object</comment>
   </data>
+  <data name="DefaultComponentName" xml:space="preserve">
+    <value>New Component</value>
+    <comment>Default Component name</comment>
+  </data>
+  <data name="DefaultFilename" xml:space="preserve">
+    <value />
+    <comment>Default filename for opening</comment>
+  </data>
+  <data name="Extension" xml:space="preserve">
+    <value>.aam</value>
+    <comment>Default extension for files</comment>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Allscripts Architecture Model (.aam)|*.aam</value>
+    <comment>Filter for file extensions</comment>
+  </data>
   <data name="MainWindowViewModel_Command_CreateNewComponent" xml:space="preserve">
     <value>New Component</value>
     <comment>Display name for the command that creates a new component</comment>

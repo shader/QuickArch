@@ -6,11 +6,8 @@
     
 <!--This template applies a ComponentView to an instance of the 
     ComponentViewModel class shown in the main window.-->
-    <DataTemplate DataType="{x:Type vm:ComponentViewModel}">
-        <vw:ComponentView />
-    </DataTemplate>
-    
-    <DataTemplate DataType="{x:Type vm:ComponentDiagramViewModel}">
+   
+    <DataTemplate DataType="{x:Type vm:SystemViewModel}">
         <vw:ComponentDiagramView />
     </DataTemplate>
     

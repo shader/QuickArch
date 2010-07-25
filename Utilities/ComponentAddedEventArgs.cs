@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using QuickArch.Model;
 
-namespace QuickArch.DataAccess
+namespace QuickArch.Utilities
 {
     public class ComponentAddedEventArgs : EventArgs
     {
