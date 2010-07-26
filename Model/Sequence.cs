@@ -8,7 +8,9 @@ namespace QuickArch.Model
 {
     public class Sequence : Component
     {
-        public Sequence(XElement source)
+        public Sequence(XElement source) : this(source, null) { }
+
+        public Sequence(XElement source, System parent)
         {
         }
 

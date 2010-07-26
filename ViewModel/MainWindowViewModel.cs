@@ -67,7 +67,7 @@ namespace QuickArch.ViewModel
                 NewCommand("Save", param => SelectedComponentVM.Save()),
                 NewCommand("Save As...", param => SelectedComponentVM.SaveAs()),
                 NewCommand("Save All", param => SaveAll()),
-                NewCommand("Open", param => OpenComponent()),
+                NewCommand("Open", param => OpenSystem()),
                 NewCommand("New System", param => CreateNewSystem())
                });
 
@@ -130,22 +130,26 @@ namespace QuickArch.ViewModel
        {
            SelectedComponentVM = cvm;
        }
-
-       void OnComponentAdded(object sender, EventArgs e)
-       {
-
-       }
        #endregion
 
        #region Private Helpers
+
+       void OpenSystem()
+       {
+           string filename = FileManager.OpenFile(Resources.DefaultFilename, Resources.Extension, Resources.Filter);
+           if (filename != null)
+           {
+               SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(filename));
+               TreeVMs.Add(sys);
+               TabVMs.Add(sys);
+           }
+       }
 
        void CreateNewSystem()
        {
            CreateNewSystem(Resources.DefaultComponentName);
        }
-       void OpenComponent()
-       {
-       }
+
        //overloaded method
        void CreateNewSystem(String title)
        {
@@ -177,8 +181,7 @@ namespace QuickArch.ViewModel
            }
        }
        #endregion
-
-
+       
        #region Presentation Properties
 
        #region Commands
