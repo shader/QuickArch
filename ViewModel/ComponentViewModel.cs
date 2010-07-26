@@ -47,7 +47,7 @@ namespace QuickArch.ViewModel
                     _isSelected = value;
                     this.OnPropertyChanged("IsSelected");
                 }
-                if (true == value)
+                if (true == value && Selected != null)
                 {
                     Selected(this, EventArgs.Empty);
                 }

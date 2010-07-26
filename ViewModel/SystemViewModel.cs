@@ -53,12 +53,10 @@ namespace QuickArch.ViewModel
             ComponentVMs = new ObservableCollection<ComponentViewModel>();
             if(system.Components.Count > 0)
                 ComponentVMs.Add(new ComponentPlaceHolder());
-                
-                        
+
             ((QuickArch.Model.System)_component).ComponentAdded += OnComponentAddedToSystem;
         }
         
-        #region Helper methods
         /// <summary>
         /// LoadComponentViews creates viewmodels dynamically for components stored in the system when it is expanded.
         /// </summary>
@@ -66,7 +64,7 @@ namespace QuickArch.ViewModel
         {
             if (ComponentVMs.Count > 0 && ComponentVMs[0] is ComponentPlaceHolder) //place holder implies we need to load components
             {
-                ComponentVMs = new ObservableCollection<ComponentViewModel>();
+                ComponentVMs.Clear();
                 foreach (var comp in ((QuickArch.Model.System)_component).Components)
                 {
                     if (comp is QuickArch.Model.System)
@@ -79,10 +77,8 @@ namespace QuickArch.ViewModel
                     }
                 }
                 foreach (var vm in ComponentVMs) { vm.PropertyChanged += this.OnComponentPropertyChanged; }
-                ComponentVMs.CollectionChanged += OnCollectionChanged;
             }
         }
-        #endregion
 
         public void AddSubsystem(string title)
         {

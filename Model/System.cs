@@ -20,18 +20,22 @@ namespace QuickArch.Model
             Filename = filename;
         }
 
-        public System(XElement source)
+        public System(XElement source) : this(source, null) { }
+            
+
+        public System(XElement source, System parent)
+            : this(source.Attribute("Title") != null ? source.Attribute("Title").Value : Resources.DefaultFilename,
+                   null)
         {
-            Title = source.Attribute("Title") != null ? source.Attribute("Title").Value : Resources.DefaultFilename;
             foreach (var child in source.Elements())
             {
                 if (child.Name.LocalName == Resources.SubsystemTagName)
                 {
-                    AddComponent(new System(child));
+                    AddComponent(new System(child, this));
                 }
                 else if (child.Name.LocalName == Resources.SequenceTagName)
                 {
-                    AddComponent(new Sequence(child));
+                    AddComponent(new Sequence(child, this));
                 }
             }
         }
