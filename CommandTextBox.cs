@@ -10,10 +10,6 @@ namespace QuickArch
 {
     public class CommandTextBox : TextBox, ICommandSource
     {
-        public CommandTextBox() : base() 
-        {
-        }
-
         #region Dependency Properties
         // Make Command a dependency property so it can use databinding.
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
@@ -164,5 +160,4 @@ namespace QuickArch
         }
         private static EventHandler canExecuteChangedHandler;
     }
-
 }

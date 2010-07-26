@@ -18,17 +18,9 @@ namespace QuickArch.ViewModel
         ICommand _deleteCommand;
         bool _isExpanded;
 
-        public SystemViewModel(QuickArch.Model.System system) : base(system)
-        {
-            if (system == null)
-                throw new ArgumentNullException("system");
-                        
-            ((QuickArch.Model.System)_component).ComponentAdded += this.OnComponentAddedToSystem;
-        }
-
-        #region Presentation Properties
+        #region Properties
         public ObservableCollection<ComponentViewModel> ComponentVMs { get; private set; }
-
+    
         public bool IsExpanded
         {
             get { return _isExpanded; }
@@ -59,13 +51,26 @@ namespace QuickArch.ViewModel
         }
         #endregion
 
+        public SystemViewModel(QuickArch.Model.System system) : base(system)
+        {
+            if (system == null)
+                throw new ArgumentNullException("system");
+
+            ComponentVMs = new ObservableCollection<ComponentViewModel>();
+            if(system.Components.Count > 0)
+                ComponentVMs.Add(new ComponentPlaceHolder());
+                
+                        
+            ((QuickArch.Model.System)_component).ComponentAdded += OnComponentAddedToSystem;
+        }
+        
         #region Helper methods
         /// <summary>
         /// LoadComponentViews creates viewmodels dynamically for components stored in the system when it is expanded.
         /// </summary>
         void LoadComponentViews()
         {
-            if (ComponentVMs != null && ComponentVMs[0] is ComponentPlaceHolder) //place holder implies we need to load components
+            if (ComponentVMs.Count > 0 && ComponentVMs[0] is ComponentPlaceHolder) //place holder implies we need to load components
             {
                 ComponentVMs = new ObservableCollection<ComponentViewModel>();
                 foreach (var comp in ((QuickArch.Model.System)_component).Components)
@@ -80,10 +85,15 @@ namespace QuickArch.ViewModel
                     }
                 }
                 foreach (var vm in ComponentVMs) { vm.PropertyChanged += this.OnComponentPropertyChanged; }
+                ComponentVMs.CollectionChanged += OnCollectionChanged;
             }
-            ComponentVMs.CollectionChanged += this.OnCollectionChanged;
         }
         #endregion
+
+        public void AddSubsystem(string title)
+        {
+            ((QuickArch.Model.System)_component).AddSubsystem(title);
+        }
 
         public ICommand DeleteCommand
         {
@@ -110,7 +120,9 @@ namespace QuickArch.ViewModel
         {
             if (e.NewItems != null && e.NewItems.Count != 0)
                 foreach (ComponentViewModel compVM in e.NewItems)
+                {
                     compVM.PropertyChanged += OnComponentPropertyChanged;
+                }
 
             if (e.OldItems != null && e.OldItems.Count != 0)
                 foreach (ComponentViewModel compVM in e.OldItems)
@@ -128,6 +140,14 @@ namespace QuickArch.ViewModel
         //doesn't really do anything, can be implemented for other things
         void OnComponentAddedToSystem(object sender, ComponentAddedEventArgs e)
         {
+            if (sender is QuickArch.Model.System)
+            {
+                ComponentVMs.Add(new SystemViewModel((QuickArch.Model.System)e.NewComponent));
+            }
+            else if (sender is Sequence)
+            {
+                ComponentVMs.Add(new SequenceViewModel((Sequence)e.NewComponent));
+            }
         }
         
         #endregion

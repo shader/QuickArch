@@ -8,6 +8,9 @@ namespace QuickArch.Model
 {
     public class Sequence : Component
     {
+        public Sequence(XElement source)
+        {
+        }
 
         public override void Save()
         {

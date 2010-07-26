@@ -11,9 +11,11 @@ namespace QuickArch.Model
     public abstract class Component
     {
         public string Filename;
-        Component _parent;
+        protected Component _parent;
 
-        public Component() { }
+        public Component() : this(null) { }
+
+        public Component(string title) : this(title, null) { }
 
         public Component(string title, Component parent)
         {

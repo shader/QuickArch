@@ -9,8 +9,6 @@ namespace QuickArch.ViewModel
 {
     public class SequenceViewModel : ComponentViewModel
     {
-        private ComponentViewModel _selectedComponent;
-
         public SequenceViewModel(Sequence sequence) : base(sequence)
         {
             if (sequence == null)

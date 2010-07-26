@@ -149,5 +149,32 @@ namespace QuickArch.Properties {
                 return ResourceManager.GetString("MainWindowViewModel_DisplayName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence.
+        /// </summary>
+        internal static string SequenceTagName {
+            get {
+                return ResourceManager.GetString("SequenceTagName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subsystem.
+        /// </summary>
+        internal static string SubsystemTagName {
+            get {
+                return ResourceManager.GetString("SubsystemTagName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        internal static string SystemTagName {
+            get {
+                return ResourceManager.GetString("SystemTagName", resourceCulture);
+            }
+        }
     }
 }

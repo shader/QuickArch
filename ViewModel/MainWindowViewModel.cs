@@ -21,7 +21,34 @@ namespace QuickArch.ViewModel
        Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _systemCommands ;
        RelayCommand _textBoxEnterCommand;
        //ObservableCollection of components
-       ObservableCollection<ComponentViewModel> _componentVMs;
+       #endregion
+
+       #region Properties
+       public ObservableCollection<ComponentViewModel> TreeVMs { get; private set; }
+       public ObservableCollection<ComponentViewModel> TabVMs { get; private set; }
+       public ComponentViewModel SelectedComponentVM { get; private set; }
+
+       ComponentViewModel DisplayedComponent
+       {
+           get
+           {
+               System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(TabVMs);
+               if (collectionView != null)
+               {
+                   return collectionView.CurrentItem as ComponentViewModel;
+               }
+               return null;
+           }
+           set
+           {
+               if (!TabVMs.Contains(value))
+                   TabVMs.Add(value);
+
+               System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(TabVMs);
+               if (collectionView != null)
+                   collectionView.MoveCurrentTo(value);
+           }
+       }
        #endregion
 
        #region Constructor
@@ -29,16 +56,19 @@ namespace QuickArch.ViewModel
        {
            DisplayName = Resources.MainWindowViewModel_DisplayName;
 
-           _componentVMs = new ObservableCollection<ComponentViewModel>();
+           TreeVMs = new ObservableCollection<ComponentViewModel>();
+           TreeVMs.CollectionChanged += OnComponentVMsChanged;
 
-           CreateNewSystem();
+           TabVMs = new ObservableCollection<ComponentViewModel>();
+           TabVMs.CollectionChanged += OnComponentVMsChanged;
 
            _fileCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
-                NewCommand("Save", param => GetActiveSystem().Save()),
-                NewCommand("Save As...", param => GetActiveSystem().SaveAs()),
-                NewCommand("Open", param => OpenDocument()),
-                NewCommand("New Document", param => CreateNewSystem()),
+                NewCommand("Save", param => SelectedComponentVM.Save()),
+                NewCommand("Save As...", param => SelectedComponentVM.SaveAs()),
+                NewCommand("Save All", param => SaveAll()),
+                NewCommand("Open", param => OpenComponent()),
+                NewCommand("New System", param => CreateNewSystem())
                });
 
            _editCommands = new Collection<CommandViewModel>
@@ -66,38 +96,44 @@ namespace QuickArch.ViewModel
        }
 
        #region Components
-       public ObservableCollection<ComponentViewModel> ComponentVMs
-       {
-           get
-           {
-               if(_componentVMs == null)
-               {
-                   _componentVMs = new ObservableCollection<ComponentViewModel>();
-                   _componentVMs.CollectionChanged += this.OnComponentVMsChanged;
-               }
-               return _componentVMs;
-           }
-       }
-
        void OnComponentVMsChanged(object sender, NotifyCollectionChangedEventArgs e)
        {
            if (e.NewItems != null && e.NewItems.Count != 0)
-               foreach (SystemViewModel document in e.NewItems)
-                   document.RequestClose += this.OnSystemRequestClose;
+               foreach (ComponentViewModel cvm in e.NewItems)
+               {
+                   cvm.RequestClose += OnComponentRequestClose;
+                   cvm.Selected += OnComponentSelected;
+                   if (cvm is SystemViewModel)
+                   {
+                       ((SystemViewModel)cvm).ComponentVMs.CollectionChanged += OnComponentVMsChanged;
+                   }
+               }
 
            if (e.OldItems != null && e.OldItems.Count != 0)
-               foreach (SystemViewModel document in e.OldItems)
-                   document.RequestClose -= this.OnSystemRequestClose;
+               foreach (ComponentViewModel cvm in e.OldItems)
+               {
+                   cvm.RequestClose -= OnComponentRequestClose;
+                   cvm.Selected -= OnComponentSelected;
+                   if (cvm is SystemViewModel)
+                   {
+                       ((SystemViewModel)cvm).ComponentVMs.CollectionChanged += OnComponentVMsChanged;
+                   }
+               }
        }
 
-       void OnSystemRequestClose(object sender, EventArgs e)
-       {
-           SystemViewModel dvm = sender as SystemViewModel;
-           dvm.Dispose();
-           this.ComponentVMs.Remove(dvm);
+       void OnComponentRequestClose(object sender, EventArgs e)
+       {          
+           TabVMs.Remove((ComponentViewModel)sender);
        }
-       void OpenDocument()
+
+       void OnComponentSelected(ComponentViewModel cvm, EventArgs e)
        {
+           SelectedComponentVM = cvm;
+       }
+
+       void OnComponentAdded(object sender, EventArgs e)
+       {
+
        }
        #endregion
 
@@ -107,36 +143,36 @@ namespace QuickArch.ViewModel
        {
            CreateNewSystem(Resources.DefaultComponentName);
        }
+       void OpenComponent()
+       {
+       }
        //overloaded method
        void CreateNewSystem(String title)
        {
-           SystemViewModel current = GetActiveSystem() as SystemViewModel;
-           SystemViewModel newSystemViewModel = new SystemViewModel(new QuickArch.Model.System(title));
-           ComponentVMs.Add(newSystemViewModel);
+           if (SelectedComponentVM != null && SelectedComponentVM is SystemViewModel)
+           {
+               ((SystemViewModel)SelectedComponentVM).AddSubsystem(title);
+           }
+           else
+           {
+               SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
+               TreeVMs.Add(sys);
+               TabVMs.Add(sys);
+           }
        }
        void CreateNewConnector()
        {
            Connector connector = new Connector();
-           SystemViewModel current = GetActiveSystem() as SystemViewModel;
+           SystemViewModel current = DisplayedComponent as SystemViewModel;
            ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector);
        }
 
-       void SetActiveSystem(ComponentViewModel system)
+       void SaveAll()
        {
-           Debug.Assert(this.ComponentVMs.Contains(system));
-
-           System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.ComponentVMs);
-           if(collectionView != null)
-               collectionView.MoveCurrentTo(system);
-       }
-       ComponentViewModel GetActiveSystem()
-       {
-           System.ComponentModel.ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.ComponentVMs);
-           if (collectionView != null)
+           foreach (ComponentViewModel cvm in TreeVMs) 
            {
-               return collectionView.CurrentItem as ComponentViewModel;
+               cvm.Save();
            }
-           return null;
        }
        #endregion
 
@@ -160,7 +196,7 @@ namespace QuickArch.ViewModel
        {
            get { return _toolCommands; }
        }
-       public Collection<CommandViewModel> DocumentCommands
+       public Collection<CommandViewModel> SystemCommands
        {
            get { return _systemCommands; }
        }

@@ -10,6 +10,8 @@ using QuickArch.Properties;
 
 namespace QuickArch.ViewModel
 {
+    public delegate void ComponentSelectionHandler(ComponentViewModel sender, EventArgs e);
+
     public abstract class ComponentViewModel : ViewModelBase
     {
         #region Fields
@@ -33,8 +35,14 @@ namespace QuickArch.ViewModel
                     _isSelected = value;
                     this.OnPropertyChanged("IsSelected");
                 }
+                if (true == value)
+                {
+                    Selected(this, EventArgs.Empty);
+                }
             }
         }
+
+        public event ComponentSelectionHandler Selected;
 
         public void Save()
         {

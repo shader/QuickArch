@@ -157,4 +157,16 @@
     <value>QuickArch</value>
     <comment>Title of the main window</comment>
   </data>
+  <data name="SequenceTagName" xml:space="preserve">
+    <value>Sequence</value>
+    <comment>XML tag name for saving message sequences</comment>
+  </data>
+  <data name="SubsystemTagName" xml:space="preserve">
+    <value>Subsystem</value>
+    <comment>XML tag name for saving subsystem</comment>
+  </data>
+  <data name="SystemTagName" xml:space="preserve">
+    <value>System</value>
+    <comment>XML tag name for saving system object</comment>
+  </data>
 </root>

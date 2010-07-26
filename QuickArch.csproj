@@ -61,10 +61,11 @@
     <Compile Include="Model\System.cs" />
     <Compile Include="Utilities\FileManager.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="Utilities\SelectionHandler.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\ComponentPlaceHolder.cs" />
     <Compile Include="ViewModel\ConnectorViewModel.cs" />
-    <Compile Include="ViewModel\SequenceTreeViewModel.cs" />
+    <Compile Include="ViewModel\SequenceViewModel.cs" />
     <Compile Include="ViewModel\SystemViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

@@ -27,10 +27,13 @@
         
         <!--Top Toolbar/Quickbar-->
         <ToolBar DockPanel.Dock="Top" Height="28" Name="myToolbar" >
-            <Label Width="92" Content="New Component: "  />
-            <my:CommandTextBox x:Name="cmdTxtBox" Width="160" Background="White" BorderBrush="Black" BorderThickness="1"
-                               Command="{Binding Path=TextBoxEnterCommand}" CommandParameter="{Binding ElementName=cmdTxtBox, Path=Text}"/>
-                <ToolBar.Background>
+            <Label Width="100" Content="New Component: "  />
+            <my:CommandTextBox x:Name="newComponentTxtBox" Width="160" Background="White" BorderBrush="Black" BorderThickness="1"
+                               Command="{Binding Path=TextBoxEnterCommand}" CommandParameter="{Binding ElementName=newComponentTxtBox, Path=Text}"/>
+            <Label Width="100" Content="In: "  />
+            <my:CommandTextBox x:Name="parentComponentTxtBox" Width="160" Background="White" BorderBrush="Black" BorderThickness="1"
+                               Command="{Binding Path=TextBoxEnterCommand}" CommandParameter="{Binding ElementName=parentComponentTxtBox, Path=Text}"/>
+            <ToolBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />
                     <GradientStop Color="White" Offset="0" />
@@ -54,12 +57,12 @@
             </Grid.ColumnDefinitions>
 
             <!--Treeview of architecture-->
-            <TreeView Grid.Column="0" x:Name="archTree" ItemsSource="{Binding Documents}" Style="{StaticResource MainTreeStyle}">
+            <TreeView Grid.Column="0" x:Name="archTree" ItemsSource="{Binding TreeVMs}" Style="{StaticResource MainTreeStyle}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <!-- This Setter applies an attached behavior to all TreeViewItems. -->
 
-                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                     <Setter Property="FontWeight" Value="Normal" />
                     <Style.Triggers>
@@ -70,7 +73,7 @@
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type vm:SystemViewModel}" ItemsSource="{Binding Charts, UpdateSourceTrigger=PropertyChanged}" >
+                <HierarchicalDataTemplate DataType="{x:Type vm:SystemViewModel}" ItemsSource="{Binding ComponentVMs, UpdateSourceTrigger=PropertyChanged}" >
                     <TextBlock Text="{Binding DisplayName}">
                         <TextBlock.ContextMenu>
                             <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SystemCommands}"
@@ -99,7 +102,7 @@
 
             <!--Main Workspace canvas within scrollviewer-->
         <Border Grid.Column="2" Style="{StaticResource MainBorderStyle}">
-            <ContentControl Content="{Binding Path=Workspaces}"
+            <ContentControl Content="{Binding Path=TabVMs}"
                                     ContentTemplate="{StaticResource WorkspacesTemplate}"
                                     Style="{StaticResource MainCCStyle}" />
         </Border>
