@@ -30,7 +30,7 @@ namespace QuickArch.View
         public ConnectorView()
         {
             linegeo = new LineGeometry();
-                        
+
             this.Stroke = Brushes.Black;
             this.StrokeThickness = 2;
         }

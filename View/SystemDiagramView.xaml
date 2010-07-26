@@ -8,8 +8,11 @@
              x:Name="SystemDiagram"
              Width="650" Height="490" Loaded="Diagram_Created">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type vm:SystemViewModel}" x:Key="ComponentTemplate">
+        <DataTemplate DataType="{x:Type vm:SystemViewModel}" x:Name="ComponentTemplate">
             <vw:SystemBasicView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ConnectorViewModel}" x:Name="ConnectorTemplate">
+            <vw:ConnectorControl />
         </DataTemplate>
         <Style TargetType="{x:Type ItemsControl}">
             <Setter Property="Template">
@@ -24,8 +27,8 @@
         </Style>
     </UserControl.Resources>
     <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"
-                  ItemsSource="{Binding Path=ComponentVMs, NotifyOnTargetUpdated=True}" ItemTemplate="{StaticResource ComponentTemplate}" 
-                  x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" 
+                  ItemsSource="{Binding Path=ComponentVMs, NotifyOnTargetUpdated=True}" 
+                  x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" ItemTemplateSelector="{StaticResource ItemsControlItemSelector}"
                   Width="{Binding ElementName=ComponentDiagramControl, Path=Width}"
                   TargetUpdated="Components_Updated">
             <ItemsControl.ItemsPanel>

@@ -38,6 +38,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -71,13 +73,17 @@
     <Compile Include="ViewModel\TemporaryConnectorViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ComponentViewModel.cs" />
+    <Compile Include="View\ConnectorControl.xaml.cs">
+      <DependentUpon>ConnectorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ConnectorView.cs" />
+    <Compile Include="View\ItemsControlItemSelector.cs" />
     <Compile Include="View\SystemDiagramView.xaml.cs">
       <DependentUpon>SystemDiagramView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SystemBasicView.xaml.cs">
       <DependentUpon>SystemBasicView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ConnectorView.cs" />
     <Compile Include="View\DragCanvas.cs" />
     <Compile Include="View\ResizingAdorner.cs" />
     <Page Include="MainWindow.xaml">
@@ -100,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\ComponentControlTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ConnectorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
