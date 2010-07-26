@@ -153,6 +153,7 @@ namespace QuickArch.ViewModel
            {
                ((SystemViewModel)SelectedComponentVM).AddSubsystem(title);
            }
+           //for top level system
            else
            {
                SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
@@ -165,6 +166,7 @@ namespace QuickArch.ViewModel
            Connector connector = new Connector();
            SystemViewModel current = DisplayedComponent as SystemViewModel;
            ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector);
+           current.ComponentVMs.Add(newConnectorViewModel);
        }
 
        void SaveAll()

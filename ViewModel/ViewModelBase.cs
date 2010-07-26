@@ -12,7 +12,7 @@ namespace QuickArch.ViewModel
     {
         RelayCommand _closeCommand;
 
-        public virtual string DisplayName { get; protected set; }
+        public virtual string DisplayName { get; set; }
 
         #region Debugging Aides
         /// <summary>

@@ -51,7 +51,7 @@
         
         <Grid x:Name="myGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="160" MinWidth="90" MaxWidth="260"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>

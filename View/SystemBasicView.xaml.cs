@@ -18,10 +18,10 @@ namespace QuickArch.View
     /// <summary>
     /// Interaction logic for ComponentView.xaml
     /// </summary>
-    public partial class ComponentView : UserControl
+    public partial class SystemBasicView : UserControl
     {
-        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(ComponentView));
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(ComponentView));
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(SystemBasicView));
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(SystemBasicView));
 
         private Guid id;
 
@@ -37,7 +37,7 @@ namespace QuickArch.View
             set { base.SetValue(PositionProperty, value); }
         }
 
-        public ComponentView()
+        public SystemBasicView()
         {
             this.RenderTransform = new TranslateTransform(0, 0);
             InitializeComponent();

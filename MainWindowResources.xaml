@@ -8,7 +8,7 @@
     ComponentViewModel class shown in the main window.-->
    
     <DataTemplate DataType="{x:Type vm:SystemViewModel}">
-        <vw:ComponentDiagramView />
+        <vw:SystemDiagramView />
     </DataTemplate>
     
 <!--This template shows how to render the list of commands on the left

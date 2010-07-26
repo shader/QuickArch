@@ -18,7 +18,7 @@ namespace QuickArch.View
     /// <summary>
     /// Interaction logic for ComponentDiagramView.xaml
     /// </summary>
-    public partial class ComponentDiagramView : UserControl
+    public partial class SystemDiagramView : UserControl
     {
         AdornerLayer aLayer;
 
@@ -28,13 +28,13 @@ namespace QuickArch.View
 
         Point _startPoint, _originalPoint;
         private Canvas myCanvas;
-        private ObservableCollection<ComponentView> _components;
+        private ObservableCollection<SystemBasicView> _components;
         private double xInc;
 
-        public ComponentDiagramView()
+        public SystemDiagramView()
         {
             InitializeComponent();
-            _components = new ObservableCollection<ComponentView>();
+            _components = new ObservableCollection<SystemBasicView>();
         }
 
         private void myCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace QuickArch.View
             {
                 if (myCanvas.Children.Count != 0)
                 {
-                    foreach (ComponentView child in myCanvas.Children)
+                    foreach (SystemBasicView child in myCanvas.Children)
                     {
                         Canvas.SetLeft(child, xInc);
                     }
@@ -140,7 +140,7 @@ namespace QuickArch.View
             }
 
             // If a componentView is selected, add adorner layer to it
-            if (e.Source.GetType() == typeof(ComponentView))
+            if (e.Source.GetType() == typeof(SystemBasicView))
             {
                 _isDown = true;
                 _startPoint = e.GetPosition(myCanvas);
@@ -158,7 +158,7 @@ namespace QuickArch.View
 
         private void Components_Updated(object sender, DataTransferEventArgs e)
         {
-            ComponentView s = sender as ComponentView;
+            SystemBasicView s = sender as SystemBasicView;
             if (s != null)
             {
                 xInc += s.Width;

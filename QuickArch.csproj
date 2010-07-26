@@ -70,11 +70,11 @@
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ComponentViewModel.cs" />
-    <Compile Include="View\ComponentDiagramView.xaml.cs">
-      <DependentUpon>ComponentDiagramView.xaml</DependentUpon>
+    <Compile Include="View\SystemDiagramView.xaml.cs">
+      <DependentUpon>SystemDiagramView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ComponentView.xaml.cs">
-      <DependentUpon>ComponentView.xaml</DependentUpon>
+    <Compile Include="View\SystemBasicView.xaml.cs">
+      <DependentUpon>SystemBasicView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ConnectorView.cs" />
     <Compile Include="View\DragCanvas.cs" />
@@ -102,11 +102,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ComponentDiagramView.xaml">
+    <Page Include="View\SystemDiagramView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ComponentView.xaml">
+    <Page Include="View\SystemBasicView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

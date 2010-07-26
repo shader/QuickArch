@@ -22,7 +22,19 @@ namespace QuickArch.ViewModel
         public ComponentViewModel(Component component)
         {
             _component = component;
-            DisplayName = component.Title;
+        }
+
+        public override string DisplayName
+        {
+            get
+            {
+                return _component.Title;
+            }
+            set
+            {
+                base.DisplayName = value;
+                _component.Title = value;
+            }
         }
 
         public bool IsSelected
