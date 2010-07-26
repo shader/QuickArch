@@ -68,6 +68,7 @@ namespace QuickArch.ViewModel
                 NewCommand("Save As...", param => SelectedComponentVM.SaveAs()),
                 NewCommand("Save All", param => SaveAll()),
                 NewCommand("Open", param => OpenComponent()),
+                NewCommand("New Document", param => CreateNewDocument(Resources.DefaultName)),
                 NewCommand("New System", param => CreateNewSystem())
                });
 
@@ -161,6 +162,14 @@ namespace QuickArch.ViewModel
                TabVMs.Add(sys);
            }
        }
+
+       void CreateNewDocument(String title)
+       {
+           SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
+           TreeVMs.Add(sys);
+           TabVMs.Add(sys);
+       }
+
        void CreateNewConnector()
        {
            Connector connector = new Connector();
