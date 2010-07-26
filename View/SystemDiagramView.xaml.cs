@@ -24,7 +24,7 @@ namespace QuickArch.View
 
         bool _isDown, _isDragging;
         bool selected = false;
-        bool isAddNewLink = false;
+        private bool isAddNewLink = false;
 
         UIElement selectedElement = null;
 
@@ -157,10 +157,15 @@ namespace QuickArch.View
                 e.Handled = true;
             }
         }
-
-        void NewLinkButton_Click(object sender, MouseButtonEventArgs e)
+        void myCanvas_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        public void NewLinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            isAddNewLink = true;
+            Mouse.OverrideCursor = Cursors.Cross;
         }
 
         private void Components_Updated(object sender, DataTransferEventArgs e)

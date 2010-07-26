@@ -31,6 +31,11 @@
             <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Name ="myCanvas" Background="Transparent" Loaded="myCanvas_Loaded">
+                    <Canvas.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="New Link" Click="NewLinkButton_Click" />
+                        </ContextMenu>
+                    </Canvas.ContextMenu>
                 </Canvas>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>

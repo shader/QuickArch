@@ -20,7 +20,7 @@ namespace QuickArch.ViewModel
 
         #region Connector Properties
 
-        public Component Start
+        public QuickArch.Model.System Start
         {
             get { return ((Connector)_component).Start; }
             set
@@ -34,7 +34,7 @@ namespace QuickArch.ViewModel
             }
         }
 
-        public Component End
+        public QuickArch.Model.System End
         {
             get { return ((Connector)_component).End; }
             set

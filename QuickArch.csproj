@@ -68,6 +68,7 @@
     <Compile Include="ViewModel\SequenceViewModel.cs" />
     <Compile Include="ViewModel\SystemViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\TemporaryConnectorViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ComponentViewModel.cs" />
     <Compile Include="View\SystemDiagramView.xaml.cs">

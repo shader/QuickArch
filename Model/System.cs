@@ -63,6 +63,11 @@ namespace QuickArch.Model
             }
         }
 
+        public void AddConnector(System start, System end)
+        {
+            AddComponent(new Connector(start, end));
+        }
+
         public void AddSubsystem(string title)
         {
             AddComponent(new System(title, this));

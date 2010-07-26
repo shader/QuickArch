@@ -14,13 +14,14 @@ namespace QuickArch.ViewModel
 {
     public class SystemViewModel : ComponentViewModel
     {
-        private ComponentViewModel _selectedComponent;
         private List<ConnectorViewModel> _connections;
         ICommand _deleteCommand;
         bool _isExpanded;
 
         #region Properties
         public ObservableCollection<ComponentViewModel> ComponentVMs { get; private set; }
+
+        public event ComponentSelectionHandler ComponentSelected;
     
         public bool IsExpanded
         {
@@ -38,17 +39,9 @@ namespace QuickArch.ViewModel
                 }
             }
         }
-
-        public ComponentViewModel SelectedComponent
+        public QuickArch.Model.System System
         {
-            get { return _selectedComponent; }
-            set
-            {
-                if (value != _selectedComponent)
-                    _selectedComponent = value;
-
-                this.OnPropertyChanged("SelectedComponent");
-            }
+            get { return _component as QuickArch.Model.System; }
         }
         #endregion
 
@@ -96,9 +89,9 @@ namespace QuickArch.ViewModel
             ((QuickArch.Model.System)_component).AddSubsystem(title);
         }
 
-        public void AddConnector()
+        public void AddConnector(ConnectorViewModel newConnectorVM)
         {
-
+           // ((QuickArch.Model.System)_component).AddConnector();
         }
 
         public ICommand DeleteCommand
@@ -155,7 +148,35 @@ namespace QuickArch.ViewModel
                 ComponentVMs.Add(new SequenceViewModel((Sequence)e.NewComponent));
             }
         }
+
+        //added to ComponentSelected Event when Link button is clicked
+        public void StartTempConnector(ComponentViewModel start, EventArgs e)
+        {
+            //Create temporary connector for visual display
+            TemporaryConnectorViewModel temp = new TemporaryConnectorViewModel(start as SystemViewModel);
+            ComponentVMs.Add(temp);
+            //remove handler from event to prevent being called again
+            ComponentSelected -= StartTempConnector;
+            //create event handler closure to remember start
+            ComponentSelectionHandler h = null;
+            h = (end, args) =>
+            {
+                //create real connector with remembered start and new end
+                CreateConnector(start as SystemViewModel, end as SystemViewModel);
+                //remove h so not called again
+                ComponentSelected -= h;
+                //remove temporary connector
+                ComponentVMs.Remove(temp);
+            };
+            //add anonymous event handler "h" to ComponentSelected
+            ComponentSelected += h;
+        }
         
+        void CreateConnector(SystemViewModel start, SystemViewModel end)
+        {
+            System.AddConnector(start.System, end.System);
+        }
+
         #endregion
     }
 }

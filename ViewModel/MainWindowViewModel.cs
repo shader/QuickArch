@@ -175,7 +175,7 @@ namespace QuickArch.ViewModel
            Connector connector = new Connector();
            SystemViewModel current = DisplayedComponent as SystemViewModel;
            ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector);
-           current.ComponentVMs.Add(newConnectorViewModel);
+           current.AddConnector(newConnectorViewModel);
        }
 
        void SaveAll()
@@ -229,7 +229,8 @@ namespace QuickArch.ViewModel
            get
            {
                if (_linkButtonCommand == null)
-                   _linkButtonCommand = new RelayCommand(param => this.CreateNewConnector());
+                   _linkButtonCommand = new RelayCommand(param => (DisplayedComponent as SystemViewModel).ComponentSelected += 
+                       (DisplayedComponent as SystemViewModel).StartTempConnector);
 
                return _linkButtonCommand;
            }

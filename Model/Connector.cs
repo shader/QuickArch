@@ -14,20 +14,17 @@ namespace QuickArch.Model
             return new Connector();
         }
 
-        public static Connector CreateConnector(Component start, Component end)
-        {
-            return new Connector
-            {
-                Start = start,
-                End = end
-            };
-        }
+       public Connector(System start, System end)
+       {
+           Start = start;
+           End = end;
+       }
 
         public Connector() { }
 
-        public Component Start { get; set; }
+        public System Start { get; set; }
 
-        public Component End { get; set; }
+        public System End { get; set; }
 
         public override void Save() { }
 

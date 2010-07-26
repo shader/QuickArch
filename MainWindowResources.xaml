@@ -85,7 +85,7 @@
   -->
     <Style x:Key="MainBorderStyle" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="WhiteSmoke" />
-        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderBrush" Value="#FFBCBCBC" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -123,7 +123,7 @@
       ItemsSource="{Binding}" 
       ItemTemplate="{StaticResource ClosableTabItemTemplate}"
       Margin="4"
-      SelectedItem="{Binding Path=IsSelected}"
+      SelectedItem="{Binding Path=IsSelected, Mode=TwoWay}"
       />
     </DataTemplate>
 </ResourceDictionary>

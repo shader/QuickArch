@@ -33,7 +33,7 @@
             <Label Width="25" Content="In: " />
             <my:CommandTextBox x:Name="parentComponentTxtBox" Width="160" Background="White" BorderBrush="Black" BorderThickness="1"
                                Command="{Binding Path=TextBoxEnterCommand}" CommandParameter="{Binding ElementName=parentComponentTxtBox, Path=Text}" />
-            <Button Background="LightCyan" Content="Link" BorderBrush="Black" BorderThickness="1" Margin="5,0" />
+            <Button Content="Link" BorderBrush="Black" BorderThickness="1" Background="LightCyan" Command="{Binding Path=LinkButtonCommand}" />
             <ToolBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />
