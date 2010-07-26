@@ -19,7 +19,7 @@ namespace QuickArch.ViewModel
        #region Fields
        //Collection of commands to be displayed in UI
        Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _systemCommands ;
-       RelayCommand _textBoxEnterCommand;
+       RelayCommand _textBoxEnterCommand, _linkButtonCommand;
        //ObservableCollection of components
        #endregion
 
@@ -221,6 +221,17 @@ namespace QuickArch.ViewModel
                    _textBoxEnterCommand = new RelayCommand(param => this.CreateNewSystem((String)param));
 
                return _textBoxEnterCommand;
+           }
+       }
+
+       public ICommand LinkButtonCommand
+       {
+           get
+           {
+               if (_linkButtonCommand == null)
+                   _linkButtonCommand = new RelayCommand(param => this.CreateNewConnector());
+
+               return _linkButtonCommand;
            }
        }
 

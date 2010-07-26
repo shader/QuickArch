@@ -15,6 +15,7 @@ namespace QuickArch.ViewModel
     public class SystemViewModel : ComponentViewModel
     {
         private ComponentViewModel _selectedComponent;
+        private List<ConnectorViewModel> _connections;
         ICommand _deleteCommand;
         bool _isExpanded;
 
@@ -93,6 +94,11 @@ namespace QuickArch.ViewModel
         public void AddSubsystem(string title)
         {
             ((QuickArch.Model.System)_component).AddSubsystem(title);
+        }
+
+        public void AddConnector()
+        {
+
         }
 
         public ICommand DeleteCommand

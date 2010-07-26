@@ -24,6 +24,8 @@ namespace QuickArch.View
 
         bool _isDown, _isDragging;
         bool selected = false;
+        bool isAddNewLink = false;
+
         UIElement selectedElement = null;
 
         Point _startPoint, _originalPoint;
@@ -156,6 +158,11 @@ namespace QuickArch.View
             }
         }
 
+        void NewLinkButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
         private void Components_Updated(object sender, DataTransferEventArgs e)
         {
             SystemBasicView s = sender as SystemBasicView;
@@ -164,7 +171,6 @@ namespace QuickArch.View
                 xInc += s.Width;
                 _components.Add(s);
             }
-            this.ArrangeChildren();
         }
     }
 }
