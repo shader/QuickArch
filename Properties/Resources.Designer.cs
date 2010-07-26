@@ -97,6 +97,15 @@ namespace QuickArch.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Document.
+        /// </summary>
+        internal static string DefaultName {
+            get {
+                return ResourceManager.GetString("DefaultName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .aam.
         /// </summary>
         internal static string Extension {

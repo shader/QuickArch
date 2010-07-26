@@ -27,12 +27,13 @@
         
         <!--Top Toolbar/Quickbar-->
         <ToolBar DockPanel.Dock="Top" Height="28" Name="myToolbar" >
-            <Label Width="100" Content="New Component: "  />
+            <Label Width="100" Content="New Component: " />
             <my:CommandTextBox x:Name="newComponentTxtBox" Width="160" Background="White" BorderBrush="Black" BorderThickness="1"
                                Command="{Binding Path=TextBoxEnterCommand}" CommandParameter="{Binding ElementName=newComponentTxtBox, Path=Text}"/>
-            <Label Width="100" Content="In: "  />
+            <Label Width="25" Content="In: " />
             <my:CommandTextBox x:Name="parentComponentTxtBox" Width="160" Background="White" BorderBrush="Black" BorderThickness="1"
-                               Command="{Binding Path=TextBoxEnterCommand}" CommandParameter="{Binding ElementName=parentComponentTxtBox, Path=Text}"/>
+                               Command="{Binding Path=TextBoxEnterCommand}" CommandParameter="{Binding ElementName=parentComponentTxtBox, Path=Text}" />
+            <Button Background="LightCyan" Content="Link" BorderBrush="Black" BorderThickness="1" Margin="5,0" />
             <ToolBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />

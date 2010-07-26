@@ -19,7 +19,7 @@ namespace QuickArch.ViewModel
        #region Fields
        //Collection of commands to be displayed in UI
        Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _systemCommands ;
-       RelayCommand _textBoxEnterCommand;
+       RelayCommand _textBoxEnterCommand, _linkButtonCommand;
        //ObservableCollection of components
        #endregion
 
@@ -68,6 +68,7 @@ namespace QuickArch.ViewModel
                 NewCommand("Save As...", param => SelectedComponentVM.SaveAs()),
                 NewCommand("Save All", param => SaveAll()),
                 NewCommand("Open", param => OpenSystem()),
+                NewCommand("New Document", param => CreateNewDocument(Resources.DefaultName)),
                 NewCommand("New System", param => CreateNewSystem())
                });
 
@@ -165,6 +166,14 @@ namespace QuickArch.ViewModel
                TabVMs.Add(sys);
            }
        }
+
+       void CreateNewDocument(String title)
+       {
+           SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
+           TreeVMs.Add(sys);
+           TabVMs.Add(sys);
+       }
+
        void CreateNewConnector()
        {
            Connector connector = new Connector();
@@ -215,6 +224,17 @@ namespace QuickArch.ViewModel
                    _textBoxEnterCommand = new RelayCommand(param => this.CreateNewSystem((String)param));
 
                return _textBoxEnterCommand;
+           }
+       }
+
+       public ICommand LinkButtonCommand
+       {
+           get
+           {
+               if (_linkButtonCommand == null)
+                   _linkButtonCommand = new RelayCommand(param => this.CreateNewConnector());
+
+               return _linkButtonCommand;
            }
        }
 
