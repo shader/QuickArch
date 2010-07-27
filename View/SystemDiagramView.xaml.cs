@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using QuickArch.ViewModel;
 
 namespace QuickArch.View
 {
@@ -178,4 +179,36 @@ namespace QuickArch.View
             }
         }
     }
+
+    #region DataTemplateSelectorClass
+    public class ItemsControlTemplateSelector : DataTemplateSelector
+    {
+        private DataTemplate _componentTemplate = null;
+        public DataTemplate ComponentTemplate
+        {
+            get { return _componentTemplate; }
+            set { _componentTemplate = value; }
+        }
+
+        private DataTemplate _tempConnectorTemplate = null;
+        public DataTemplate TempConnectorTemplate
+        {
+            get { return _tempConnectorTemplate; }
+            set { _tempConnectorTemplate = value; }
+        }
+
+        public override DataTemplate SelectTemplate(object item,
+            DependencyObject container)
+        {
+            if (item is ComponentViewModel)
+            {
+                if (item is SystemViewModel)
+                    return _componentTemplate;
+                if (item is TemporaryConnectorViewModel)
+                    return _tempConnectorTemplate;
+            }
+            return base.SelectTemplate(item, container);
+        }
+    }
+    #endregion
 }

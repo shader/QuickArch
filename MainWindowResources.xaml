@@ -6,12 +6,16 @@
     
 <!--This template applies a ComponentView to an instance of the 
     ComponentViewModel class shown in the main window.-->
-   
-    <DataTemplate DataType="{x:Type vm:SystemViewModel}">
-        <vw:SystemDiagramView />
+
+    <DataTemplate DataType="{x:Type vm:SystemViewModel}" x:Key="ComponentTemplate">
+        <vw:SystemBasicView />
     </DataTemplate>
     
-<!--This template shows how to render the list of commands on the left
+    <DataTemplate DataType="{x:Type vm:TemporaryConnectorViewModel}" x:Key="TempConnectorTemplate">
+        <vw:ConnectorControl />
+    </DataTemplate>
+
+    <!--This template shows how to render the list of commands on the left
     side in the main window (the 'Palette/Control Panel' area).-->
     <DataTemplate x:Key="CommandsTemplate">
         <MenuItem Command="{Binding Path=Command}" Header="{Binding Path=DisplayName}" 

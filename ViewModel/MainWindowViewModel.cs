@@ -18,7 +18,7 @@ namespace QuickArch.ViewModel
    {
        #region Fields
        //Collection of commands to be displayed in UI
-       Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _systemCommands ;
+       Collection<CommandViewModel> _fileCommands, _editCommands, _viewCommands, _toolCommands, _systemCommands, _treeviewCommands ;
        RelayCommand _textBoxEnterCommand, _linkButtonCommand;
        //ObservableCollection of components
        #endregion
@@ -26,7 +26,7 @@ namespace QuickArch.ViewModel
        #region Properties
        public ObservableCollection<ComponentViewModel> TreeVMs { get; private set; }
        public ObservableCollection<ComponentViewModel> TabVMs { get; private set; }
-       public ComponentViewModel SelectedComponentVM { get; private set; }
+       public ComponentViewModel SelectedComponentVM { get; set; }
 
        ComponentViewModel DisplayedComponent
        {
@@ -62,13 +62,14 @@ namespace QuickArch.ViewModel
            TabVMs = new ObservableCollection<ComponentViewModel>();
            TabVMs.CollectionChanged += OnComponentVMsChanged;
 
+           #region Build Command Collections
            _fileCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
                 NewCommand("Save", param => SelectedComponentVM.Save()),
                 NewCommand("Save As...", param => SelectedComponentVM.SaveAs()),
                 NewCommand("Save All", param => SaveAll()),
                 NewCommand("Open", param => OpenSystem()),
-                NewCommand("New Document", param => CreateNewDocument(Resources.DefaultName)),
+                NewCommand("New Document", param => CreateNewDocument(Resources.DefaultDocumentName)),
                 NewCommand("New System", param => CreateNewSystem())
                });
 
@@ -86,8 +87,15 @@ namespace QuickArch.ViewModel
            _systemCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
                    NewCommand("New Subsystem", param => CreateNewSystem()),
-                   NewCommand("Create New Link", param => this.CreateNewConnector())
+                   NewCommand("Create New Link", param => this.CreateNewConnector()),
+                   NewCommand("Delete", param => this.DeleteSystem())
                });
+
+           _treeviewCommands = new Collection<CommandViewModel>
+           (new CommandViewModel[] {
+               NewCommand("New Document", param => CreateNewDocument(Resources.DefaultDocumentName))
+           });
+           #endregion
        }
        #endregion
 
@@ -181,6 +189,16 @@ namespace QuickArch.ViewModel
            ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector);
            current.AddConnector(newConnectorViewModel);
        }
+       void DeleteSystem()
+       {
+           if (SelectedComponentVM != null && SelectedComponentVM is SystemViewModel)
+           {
+               TreeVMs.Remove(SelectedComponentVM);
+               TabVMs.Remove(SelectedComponentVM);
+               SelectedComponentVM.Dispose();
+               SelectedComponentVM = null;
+           }
+       }
 
        void SaveAll()
        {
@@ -213,6 +231,10 @@ namespace QuickArch.ViewModel
        public Collection<CommandViewModel> SystemCommands
        {
            get { return _systemCommands; }
+       }
+       public Collection<CommandViewModel> TreeViewCommands
+       {
+           get { return _treeviewCommands; }
        }
        #endregion
 

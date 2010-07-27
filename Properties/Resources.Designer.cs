@@ -88,20 +88,20 @@ namespace QuickArch.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Document.
+        /// </summary>
+        internal static string DefaultDocumentName {
+            get {
+                return ResourceManager.GetString("DefaultDocumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string DefaultFilename {
             get {
                 return ResourceManager.GetString("DefaultFilename", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Document.
-        /// </summary>
-        internal static string DefaultName {
-            get {
-                return ResourceManager.GetString("DefaultName", resourceCulture);
             }
         }
         

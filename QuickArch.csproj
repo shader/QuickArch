@@ -77,7 +77,6 @@
       <DependentUpon>ConnectorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ConnectorView.cs" />
-    <Compile Include="View\ItemsControlItemSelector.cs" />
     <Compile Include="View\SystemDiagramView.xaml.cs">
       <DependentUpon>SystemDiagramView.xaml</DependentUpon>
     </Compile>

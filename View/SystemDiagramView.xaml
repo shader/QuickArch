@@ -8,17 +8,19 @@
              x:Name="SystemDiagram"
              Width="650" Height="490" Loaded="Diagram_Created">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type vm:SystemViewModel}" x:Name="ComponentTemplate">
+        <DataTemplate x:Key="ComponentTemplate">
             <vw:SystemBasicView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:ConnectorViewModel}" x:Name="ConnectorTemplate">
+        <DataTemplate x:Key="TempConnectorTemplate">
             <vw:ConnectorControl />
         </DataTemplate>
+        <vw:ItemsControlTemplateSelector x:Key="ItemsControlTemplateSelector" ComponentTemplate="{StaticResource ComponentTemplate}" 
+                                     TempConnectorTemplate="{StaticResource TempConnectorTemplate}" />
         <Style TargetType="{x:Type ItemsControl}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ItemsControl}">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <ItemsPresenter />
                             </ScrollViewer>
                     </ControlTemplate>
@@ -27,10 +29,11 @@
         </Style>
     </UserControl.Resources>
     <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"
-                  ItemsSource="{Binding Path=ComponentVMs, NotifyOnTargetUpdated=True}" 
-                  x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" ItemTemplateSelector="{StaticResource ItemsControlItemSelector}"
+                  ItemsSource="{Binding Path=ComponentVMs, NotifyOnSourceUpdated=True}" 
+                  x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" ItemTemplate="{StaticResource ComponentTemplate}"
+                  ItemTemplateSelector="{StaticResource ItemsControlTemplateSelector}"
                   Width="{Binding ElementName=ComponentDiagramControl, Path=Width}"
-                  TargetUpdated="Components_Updated">
+                  SourceUpdated="Components_Updated">
             <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Name ="myCanvas" Background="Transparent" Loaded="myCanvas_Loaded">

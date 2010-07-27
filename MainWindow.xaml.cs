@@ -16,5 +16,29 @@ namespace QuickArch
             menu.DataContext = DataContext;
         }
 
+        private void archTree_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!(e.OriginalSource is TextBlock))
+            {
+                QuickArch.ViewModel.SystemViewModel item = archTree.SelectedItem as QuickArch.ViewModel.SystemViewModel;
+                if (item != null)
+                {
+                    archTree.Focus();
+                    item.IsSelected = false;
+                    QuickArch.ViewModel.MainWindowViewModel mwVM = this.DataContext as QuickArch.ViewModel.MainWindowViewModel;
+                    mwVM.SelectedComponentVM = null;
+                }
+            }
+            else
+            {
+                QuickArch.ViewModel.SystemViewModel item = archTree.SelectedItem as QuickArch.ViewModel.SystemViewModel;
+                if (item != null)
+                {
+                    item.IsSelected = true;
+                    archTree.Focus();
+                }
+            }
+        }
+
     }
 }
