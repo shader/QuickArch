@@ -193,10 +193,13 @@ namespace QuickArch.ViewModel
        {
            if (SelectedComponentVM != null && SelectedComponentVM is SystemViewModel)
            {
-               TreeVMs.Remove(SelectedComponentVM);
-               TabVMs.Remove(SelectedComponentVM);
-               SelectedComponentVM.Dispose();
-               SelectedComponentVM = null;
+               if (TreeVMs.Contains(SelectedComponentVM))
+               {
+                   TreeVMs.Remove(SelectedComponentVM);
+                   TabVMs.Remove(SelectedComponentVM);
+                   SelectedComponentVM.Dispose();
+                   SelectedComponentVM = null;
+               }
            }
        }
 
