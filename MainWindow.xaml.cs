@@ -31,7 +31,7 @@ namespace QuickArch
             }
             else
             {
-                QuickArch.ViewModel.SystemViewModel item = archTree.SelectedItem as QuickArch.ViewModel.SystemViewModel;
+                QuickArch.ViewModel.SystemViewModel item = archTree.SelectedValue as QuickArch.ViewModel.SystemViewModel;
                 if (item != null)
                 {
                     item.IsSelected = true;

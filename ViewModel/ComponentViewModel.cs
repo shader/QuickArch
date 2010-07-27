@@ -45,7 +45,7 @@ namespace QuickArch.ViewModel
                 if (value != _isSelected)
                 {
                     _isSelected = value;
-                    this.OnPropertyChanged("IsSelected");
+                    OnPropertyChanged("IsSelected");
                 }
                 if (true == value && Selected != null)
                 {
