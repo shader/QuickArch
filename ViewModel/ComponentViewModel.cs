@@ -19,6 +19,11 @@ namespace QuickArch.ViewModel
         bool _isSelected;
         #endregion
 
+        public Component Component
+        {
+            get { return _component; }
+        }
+
         public ComponentViewModel(Component component)
         {
             _component = component;

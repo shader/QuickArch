@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.IO;
@@ -15,6 +17,16 @@ namespace QuickArch.Model
     {
         private List<Component> _components;
         
+        //raised when a Component is added to the construct
+        public event EventHandler<NotifyCollectionChangedEventArgs> ComponentsChanged;
+
+        public List<Component> Components
+        {
+            get { return _components; }
+            set { _components = value; }
+        }
+
+        #region Constructors
         public System(String filename) : this(XElement.Load(filename))
         {
             Filename = filename;
@@ -44,27 +56,27 @@ namespace QuickArch.Model
         {
             _components = new List<Component>();
         }
-        
-        //raised when a Component is added to the construct
-        public event EventHandler<ComponentAddedEventArgs> ComponentAdded;
-        
-        public List<Component> Components
-        {
-            get { return _components; }
-            set { _components = value; }
-        }
+        #endregion
 
         public void AddComponent(Component comp)
         {
-            if (comp == null)
-                throw new ArgumentNullException("comp");
             if(!_components.Contains(comp))
             {
                 _components.Add(comp);
 
-                if(this.ComponentAdded != null)
-                    this.ComponentAdded(this, new ComponentAddedEventArgs(comp));
+                if(this.ComponentsChanged != null)
+                    this.ComponentsChanged(this, 
+                        new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, comp));
             }
+        }
+
+        public void RemoveComponent(Component comp)
+        {
+            _components.Remove(comp);
+
+            if(this.ComponentsChanged != null)
+                    this.ComponentsChanged(this, 
+                        new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, comp));
         }
 
         public void AddConnector(System start, System end)

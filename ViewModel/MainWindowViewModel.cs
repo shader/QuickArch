@@ -87,9 +87,9 @@ namespace QuickArch.ViewModel
            _systemCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
                    NewCommand("Save As...", param => (param as SystemViewModel).SaveAs()),
-                   NewCommand("New Subsystem", param => CreateNewSystem()),
-                   NewCommand("Create New Link", param => CreateNewConnector()),
-                   NewCommand("Delete", param => DeleteSystem())
+                   NewCommand("New Subsystem", param => (param as SystemViewModel).AddSubsystem()),
+                   NewCommand("Create New Link", param => (param as SystemViewModel).AddConnector()),
+                   NewCommand("Delete", param => DeleteSystem((param as SystemViewModel)))
                });
 
            _treeviewCommands = new Collection<CommandViewModel>
@@ -185,22 +185,20 @@ namespace QuickArch.ViewModel
 
        void CreateNewConnector()
        {
-           Connector connector = new Connector();
-           SystemViewModel current = DisplayedComponent as SystemViewModel;
-           ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector);
-           current.AddConnector(newConnectorViewModel);
        }
-       void DeleteSystem()
+
+       void DeleteSystem(SystemViewModel sys)
        {
-           if (SelectedComponentVM != null && SelectedComponentVM is SystemViewModel)
+           if (TreeVMs.Contains(sys))
            {
-               if (TreeVMs.Contains(SelectedComponentVM))
-               {
-                   TreeVMs.Remove(SelectedComponentVM);
-                   TabVMs.Remove(SelectedComponentVM);
-                   SelectedComponentVM.Dispose();
-                   SelectedComponentVM = null;
-               }
+               TreeVMs.Remove(sys);
+               TabVMs.Remove(sys);
+               sys.Dispose();
+               sys = null;
+           }
+           else
+           {
+               sys.Delete();
            }
        }
 

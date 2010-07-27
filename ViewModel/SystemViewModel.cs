@@ -54,7 +54,7 @@ namespace QuickArch.ViewModel
             if(system.Components.Count > 0)
                 ComponentVMs.Add(new ComponentPlaceHolder());
 
-            ((QuickArch.Model.System)_component).ComponentAdded += OnComponentAddedToSystem;
+            ((QuickArch.Model.System)_component).ComponentsChanged += OnComponentsChanged;
         }
         
         /// <summary>
@@ -90,9 +90,14 @@ namespace QuickArch.ViewModel
             ((QuickArch.Model.System)_component).AddSubsystem(title);
         }
 
-        public void AddConnector(ConnectorViewModel newConnectorVM)
+        public void AddConnector()
         {
            // ((QuickArch.Model.System)_component).AddConnector();
+        }
+
+        public void Delete()
+        {
+            _component.Delete();
         }
         /*
         public ICommand DeleteCommand
@@ -138,15 +143,41 @@ namespace QuickArch.ViewModel
         }
 
         //doesn't really do anything, can be implemented for other things
-        void OnComponentAddedToSystem(object sender, ComponentAddedEventArgs e)
+        void OnComponentsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (sender is QuickArch.Model.System)
+            if (e.NewItems != null && e.NewItems.Count != 0)
             {
-                ComponentVMs.Add(new SystemViewModel((QuickArch.Model.System)e.NewComponent));
+                foreach (QuickArch.Model.Component comp in e.NewItems)
+                {
+                    if (comp is QuickArch.Model.System)
+                    {
+                        ComponentVMs.Add(new SystemViewModel((QuickArch.Model.System)comp));
+                    }
+                    else if (comp is Sequence)
+                    {
+                        ComponentVMs.Add(new SequenceViewModel((Sequence)comp));
+                    }
+                }
             }
-            else if (sender is Sequence)
+
+            if (e.OldItems != null && e.OldItems.Count != 0)
             {
-                ComponentVMs.Add(new SequenceViewModel((Sequence)e.NewComponent));
+                List<ComponentViewModel> marked = new List<ComponentViewModel>();
+                foreach (var comp in e.OldItems)
+                {
+                    foreach (var cvm in ComponentVMs)
+                    {
+                        if (cvm.Component == comp)
+                        {
+                            marked.Add(cvm);
+                        }
+                    }
+                }
+                foreach (var cvm in marked)
+                {
+                    ComponentVMs.Remove(cvm);
+                    cvm.Dispose();
+                }
             }
         }
 
