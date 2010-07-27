@@ -89,7 +89,7 @@ namespace QuickArch.ViewModel
         {
            // ((QuickArch.Model.System)_component).AddConnector();
         }
-
+        /*
         public ICommand DeleteCommand
         {
             get
@@ -99,7 +99,7 @@ namespace QuickArch.ViewModel
 
                 return _deleteCommand;
             }
-        }
+        }*/
 
         #region Event Handling Methods
         protected override void OnDispose()
