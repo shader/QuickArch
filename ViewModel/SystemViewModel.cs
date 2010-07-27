@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickArch.Utilities;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
 using System.ComponentModel;
 
 using QuickArch.Model;
+using QuickArch.Properties;
+using QuickArch.Utilities;
 
 namespace QuickArch.ViewModel
 {
     public class SystemViewModel : ComponentViewModel
     {
-        private List<ConnectorViewModel> _connections;
         ICommand _deleteCommand;
         bool _isExpanded;
 
@@ -78,6 +78,11 @@ namespace QuickArch.ViewModel
                 }
                 foreach (var vm in ComponentVMs) { vm.PropertyChanged += this.OnComponentPropertyChanged; }
             }
+        }
+
+        public void AddSubsystem()
+        {
+            AddSubsystem(Resources.DefaultComponentName);
         }
 
         public void AddSubsystem(string title)

@@ -68,8 +68,6 @@
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <!-- This Setter applies an attached behavior to all TreeViewItems. -->
-                    <EventSetter Event="TreeViewItem.MouseRightButtonDown"
-                            Handler="TreeViewItem_MouseRightButtonDown" />
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <Setter Property="FontWeight" Value="Normal" />
@@ -88,7 +86,7 @@
                     <TextBlock Text="{Binding DisplayName}" FontStretch="Expanded">
                         <TextBlock.ContextMenu>
                             <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SystemCommands}"
-                                         ItemTemplate="{StaticResource CommandsTemplate}">
+                                         ItemTemplate="{StaticResource ContextCommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>

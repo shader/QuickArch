@@ -65,8 +65,8 @@ namespace QuickArch.ViewModel
            #region Build Command Collections
            _fileCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
-                NewCommand("Save", param => SelectedComponentVM.Save()),
-                NewCommand("Save As...", param => SelectedComponentVM.SaveAs()),
+                NewCommand("Save", param => { if (SelectedComponentVM != null) SelectedComponentVM.Save(); }),
+                NewCommand("Save As...", param => { if (SelectedComponentVM != null) SelectedComponentVM.SaveAs(); }),
                 NewCommand("Save All", param => SaveAll()),
                 NewCommand("Open", param => OpenSystem()),
                 NewCommand("New Document", param => CreateNewDocument(Resources.DefaultDocumentName)),
@@ -86,9 +86,10 @@ namespace QuickArch.ViewModel
            
            _systemCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
+                   NewCommand("Save As...", param => (param as SystemViewModel).SaveAs()),
                    NewCommand("New Subsystem", param => CreateNewSystem()),
-                   NewCommand("Create New Link", param => this.CreateNewConnector()),
-                   NewCommand("Delete", param => this.DeleteSystem())
+                   NewCommand("Create New Link", param => CreateNewConnector()),
+                   NewCommand("Delete", param => DeleteSystem())
                });
 
            _treeviewCommands = new Collection<CommandViewModel>

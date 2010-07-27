@@ -60,7 +60,10 @@ namespace QuickArch.ViewModel
         {
             if (_component != null)
             {
-                _component.Save();
+                if (_component.Filename != null)
+                    _component.Save();
+                else
+                    SaveAs();
             }
         }
         public void SaveAs()
