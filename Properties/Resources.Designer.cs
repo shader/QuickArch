@@ -186,6 +186,13 @@ namespace QuickArch.Properties {
             }
         }
         
+        internal static System.Drawing.Icon line {
+            get {
+                object obj = ResourceManager.GetObject("line", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to New Component.
         /// </summary>
@@ -232,6 +239,13 @@ namespace QuickArch.Properties {
         internal static System.Drawing.Icon plus {
             get {
                 object obj = ResourceManager.GetObject("plus", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon redo {
+            get {
+                object obj = ResourceManager.GetObject("redo", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -301,6 +315,13 @@ namespace QuickArch.Properties {
         internal static System.Drawing.Icon trash {
             get {
                 object obj = ResourceManager.GetObject("trash", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon undo {
+            get {
+                object obj = ResourceManager.GetObject("undo", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

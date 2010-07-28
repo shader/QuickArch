@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using System.Drawing;
+using System.Windows.Media.Imaging;
 
 namespace QuickArch.ViewModel
 {
@@ -9,6 +10,7 @@ namespace QuickArch.ViewModel
     /// </summary>
     public class CommandViewModel : ViewModelBase
     {
+
         public CommandViewModel(string displayName, ICommand command, bool isEnabled, Icon icon)
         {
             if (command == null)
@@ -17,14 +19,17 @@ namespace QuickArch.ViewModel
             base.DisplayName = displayName;
             this.Command = command;
             this.IsEnabled = isEnabled;
-            this.Icon = icon;
+
+            System.IO.MemoryStream strm = new System.IO.MemoryStream();
+            icon.Save(strm);
+            Icon = BitmapFrame.Create(strm);
         }
 
         public ICommand Command { get; private set; }
 
         public bool IsEnabled { get; set; }
 
-        public Icon Icon
+        public BitmapFrame Icon
         {
             get;
             private set;

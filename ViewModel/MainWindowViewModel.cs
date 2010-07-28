@@ -89,7 +89,7 @@ namespace QuickArch.ViewModel
                (new CommandViewModel[] {
                    NewCommand("New Subsystem", param => CreateNewSystem(), Resources.gear),
                    //NewCommand("Create New Link", param => this.CreateNewConnector(), new Icon("")),
-                   NewCommand("Delete", param => this.DeleteSystem(), Resources.delete)
+                   NewCommand("Delete", param => this.DeleteSystem(param as SystemViewModel), Resources.delete)
                });
 
            _treeviewCommands = new Collection<CommandViewModel>
