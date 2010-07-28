@@ -185,22 +185,20 @@ namespace QuickArch.ViewModel
 
        void CreateNewConnector()
        {
-           Connector connector = new Connector();
-           SystemViewModel current = DisplayedComponent as SystemViewModel;
-           ConnectorViewModel newConnectorViewModel = new ConnectorViewModel(connector);
-           current.AddConnector(newConnectorViewModel);
        }
-       void DeleteSystem()
+
+       void DeleteSystem(SystemViewModel sys)
        {
-           if (SelectedComponentVM != null && SelectedComponentVM is SystemViewModel)
+           if (TreeVMs.Contains(sys))
            {
-               if (TreeVMs.Contains(SelectedComponentVM))
-               {
-                   TreeVMs.Remove(SelectedComponentVM);
-                   TabVMs.Remove(SelectedComponentVM);
-                   SelectedComponentVM.Dispose();
-                   SelectedComponentVM = null;
-               }
+               TreeVMs.Remove(sys);
+               TabVMs.Remove(sys);
+               sys.Dispose();
+               sys = null;
+           }
+           else
+           {
+               sys.Delete();
            }
        }
 

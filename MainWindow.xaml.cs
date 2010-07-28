@@ -39,16 +39,5 @@ namespace QuickArch
                 }
             }
         }
-
-        private void TreeViewItem_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            TreeViewItem item = sender as TreeViewItem;
-            if (item != null)
-            {
-                item.Focus();
-                e.Handled = true;
-            }
-        }
-
     }
 }

@@ -32,5 +32,9 @@ namespace QuickArch.Model
             Filename = filename;
             Save();
         }
+        public void Delete()
+        {
+            (_parent as System).RemoveComponent(this);
+        }
     }
 }

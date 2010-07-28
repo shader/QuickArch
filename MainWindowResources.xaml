@@ -26,6 +26,16 @@
         </MenuItem>
     </DataTemplate>
     
+    <DataTemplate x:Key="ContextCommandsTemplate">
+        <MenuItem Command="{Binding Path=Command}" 
+                  Header="{Binding Path=DisplayName}"
+                  CommandParameter="{Binding Path=PlacementTarget.DataContext,
+                                  RelativeSource={RelativeSource FindAncestor,
+                                  AncestorType={x:Type ContextMenu}}}"
+                  IsEnabled="{Binding Path=IsEnabled}"/>
+    </DataTemplate>
+    
+
     <!--This style configures how the MainWindow's treeview should be displayed -->
     <Style x:Key="MainTreeStyle" TargetType="{x:Type TreeView}">
         <Setter Property="OverridesDefaultStyle" Value="True" />

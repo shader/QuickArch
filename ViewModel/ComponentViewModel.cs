@@ -19,6 +19,11 @@ namespace QuickArch.ViewModel
         bool _isSelected;
         #endregion
 
+        public Component Component
+        {
+            get { return _component; }
+        }
+
         public ComponentViewModel(Component component)
         {
             _component = component;
@@ -60,7 +65,10 @@ namespace QuickArch.ViewModel
         {
             if (_component != null)
             {
-                _component.Save();
+                if (_component.Filename != null)
+                    _component.Save();
+                else
+                    SaveAs();
             }
         }
         public void SaveAs()
