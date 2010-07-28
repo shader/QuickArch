@@ -88,7 +88,7 @@ namespace QuickArch.ViewModel
            _systemCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
                    NewCommand("New Subsystem", param => CreateNewSystem(), Resources.gear),
-                   //NewCommand("Create New Link", param => this.CreateNewConnector(), new Icon("")),
+                   NewCommand("Create New Link", param => this.CreateNewConnector(), Resources.line),
                    NewCommand("Delete", param => this.DeleteSystem(param as SystemViewModel), Resources.delete)
                });
 
@@ -185,6 +185,13 @@ namespace QuickArch.ViewModel
 
        void CreateNewConnector()
        {
+           if (SelectedComponentVM != null && SelectedComponentVM is SystemViewModel)
+               ((SystemViewModel)SelectedComponentVM).AddConnector();
+           else
+           {
+               ConnectorViewModel conn = new ConnectorViewModel(new QuickArch.Model.Connector());
+               TreeVMs.Add(conn);
+           }
        }
 
        void DeleteSystem(SystemViewModel sys)

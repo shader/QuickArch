@@ -2,43 +2,37 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:QuickArch.ViewModel"
-                    xmlns:vw="clr-namespace:QuickArch.View">
+                    xmlns:vw="clr-namespace:QuickArch.View"
+                    xmlns:my="clr-namespace:QuickArch">
     
 <!--This template applies a ComponentView to an instance of the 
     ComponentViewModel class shown in the main window.-->
 
-    <DataTemplate DataType="{x:Type vm:SystemViewModel}" x:Key="ComponentTemplate">
-        <vw:SystemBasicView />
+    <DataTemplate DataType="{x:Type vm:SystemViewModel}">
+        <vw:SystemDiagramView />
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:TemporaryConnectorViewModel}" x:Key="TempConnectorTemplate">
         <vw:ConnectorControl />
     </DataTemplate>
-
-    <!--This template shows how to render the list of commands on the left
-    side in the main window (the 'Palette/Control Panel' area).-->
-    <DataTemplate x:Key="CommandsTemplate">
-        <MenuItem Command="{Binding Path=Command}" Header="{Binding Path=DisplayName}" Background="Transparent"
-                  IsEnabled="{Binding Path=IsEnabled}" >
-            <MenuItem.Icon>
-                <Image Height="16" Width="16" Source="{Binding Path=Icon}" />
-            </MenuItem.Icon>
-        </MenuItem>
-    </DataTemplate>
     
-    <DataTemplate x:Key="ContextCommandsTemplate">
-        <MenuItem Command="{Binding Path=Command}" 
-                  Header="{Binding Path=DisplayName}"
-                  Background="Transparent"
-                  CommandParameter="{Binding Path=PlacementTarget.DataContext,
+    <Image x:Shared="false" x:Key="Img" Width="16" Height="16" Source="{Binding Path=Icon}" />
+
+    <!--This style shows how to render the list of commands in the toolbar's menus.-->
+    <Style TargetType="MenuItem" x:Key="MenuItemCommandsStyle" >
+        <Setter Property="MenuItem.Header" Value="{Binding Path=DisplayName}" />
+        <Setter Property="MenuItem.Command" Value="{Binding Path=Command}" />
+        <Setter Property="MenuItem.Icon" Value="{StaticResource Img}" />
+    </Style>
+    
+    <Style TargetType="MenuItem" x:Key="ContextMenuItemCommandsStyle" >
+        <Setter Property="MenuItem.Header" Value="{Binding Path=DisplayName}" />
+        <Setter Property="MenuItem.Command" Value="{Binding Path=Command}" />
+        <Setter Property="MenuItem.CommandParameter" Value="{Binding Path=PlacementTarget.DataContext,
                                   RelativeSource={RelativeSource FindAncestor,
-                                  AncestorType={x:Type ContextMenu}}}"
-                  IsEnabled="{Binding Path=IsEnabled}">
-            <MenuItem.Icon>
-                <Image Height="16" Width="16" Source="{Binding Path=Icon}" />
-            </MenuItem.Icon>
-        </MenuItem>
-    </DataTemplate>
+                                  AncestorType={x:Type ContextMenu}}}"/>
+        <Setter Property="MenuItem.Icon" Value="{StaticResource Img}" />
+    </Style>
     
 
     <!--This style configures how the MainWindow's treeview should be displayed -->

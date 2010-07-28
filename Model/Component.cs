@@ -10,9 +10,13 @@ namespace QuickArch.Model
 {
     public abstract class Component
     {
+        #region Fields
         public string Filename;
+        private Guid _id = Guid.NewGuid();
         protected Component _parent;
+        #endregion
 
+        #region Constructors
         public Component() : this(null) { }
 
         public Component(string title) : this(title, null) { }
@@ -22,8 +26,16 @@ namespace QuickArch.Model
             Title = title;
             _parent = parent;
         }
+        #endregion
 
+        #region Properties
         public string Title { get; set; }
+
+        public Guid ID
+        {
+            get { return _id; }
+        }
+        #endregion
 
         public abstract void Save(); // save to the predefined file
         public abstract void Save(XElement parent); // save information under parent's tree

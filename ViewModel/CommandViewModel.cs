@@ -21,15 +21,21 @@ namespace QuickArch.ViewModel
             this.IsEnabled = isEnabled;
 
             System.IO.MemoryStream strm = new System.IO.MemoryStream();
-            icon.Save(strm);
-            Icon = BitmapFrame.Create(strm);
+            Bitmap b = icon.ToBitmap();
+            b.Save(strm, System.Drawing.Imaging.ImageFormat.Png);
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.StreamSource = strm;
+            bi.EndInit();
+
+            Icon = bi;
         }
 
         public ICommand Command { get; private set; }
 
         public bool IsEnabled { get; set; }
 
-        public BitmapFrame Icon
+        public BitmapImage Icon
         {
             get;
             private set;

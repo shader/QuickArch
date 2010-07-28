@@ -30,7 +30,7 @@
     </UserControl.Resources>
     <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"
                   ItemsSource="{Binding Path=ComponentVMs, NotifyOnSourceUpdated=True}" 
-                  x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}" ItemTemplate="{StaticResource ComponentTemplate}"
+                  x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}"
                   ItemTemplateSelector="{StaticResource ItemsControlTemplateSelector}"
                   Width="{Binding ElementName=ComponentDiagramControl, Path=Width}"
                   SourceUpdated="Components_Updated">

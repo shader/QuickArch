@@ -12,10 +12,10 @@
     <DockPanel>
         <!--Top Menu-->
         <Menu DockPanel.Dock="Top" Height="22" Name="topMenu" FontSize="11" Foreground="#FF7575F1">
-            <MenuItem Header="File" ItemsSource="{Binding Path=FileCommands}" ItemTemplate="{StaticResource CommandsTemplate}" />
-            <MenuItem Header="Edit" ItemsSource="{Binding Path=EditCommands}" ItemTemplate="{StaticResource CommandsTemplate}" />
-            <MenuItem Header="View" ItemsSource="{Binding Path=ViewCommands}" ItemTemplate="{StaticResource CommandsTemplate}" />
-            <MenuItem Header="Tools" ItemsSource="{Binding Path=ToolCommands}" ItemTemplate="{StaticResource CommandsTemplate}" />
+            <MenuItem Header="File" ItemsSource="{Binding Path=FileCommands}" ItemContainerStyle="{StaticResource MenuItemCommandsStyle}" />
+            <MenuItem Header="Edit" ItemsSource="{Binding Path=EditCommands}" ItemContainerStyle="{StaticResource MenuItemCommandsStyle}" />
+            <MenuItem Header="View" ItemsSource="{Binding Path=ViewCommands}" ItemContainerStyle="{StaticResource MenuItemCommandsStyle}" />
+            <MenuItem Header="Tools" ItemsSource="{Binding Path=ToolCommands}" ItemContainerStyle="{StaticResource MenuItemCommandsStyle}" />
             <Menu.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFCFCFCF" Offset="0.5" />
@@ -66,7 +66,7 @@
                       PreviewMouseLeftButtonUp="archTree_PreviewMouseLeftButtonUp">
                 <TreeView.ContextMenu>
                     <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=TreeViewCommands}" 
-                                 ItemTemplate="{StaticResource CommandsTemplate}" >
+                                 ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}" >
                     </ContextMenu>
                 </TreeView.ContextMenu>
             <TreeView.ItemContainerStyle>
@@ -90,7 +90,7 @@
                     <TextBlock Text="{Binding DisplayName}" FontStretch="Expanded">
                         <TextBlock.ContextMenu>
                             <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SystemCommands}"
-                                         ItemTemplate="{StaticResource CommandsTemplate}">
+                                         ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>
@@ -99,7 +99,7 @@
                     <TextBlock Text="{Binding DisplayName, Mode=TwoWay}">
                         <TextBlock.ContextMenu>
                             <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SequenceCommands}"
-                                         ItemTemplate="{StaticResource CommandsTemplate}">
+                                         ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>
