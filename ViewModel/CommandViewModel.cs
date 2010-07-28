@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using System.Drawing;
 
 namespace QuickArch.ViewModel
 {
@@ -8,7 +9,7 @@ namespace QuickArch.ViewModel
     /// </summary>
     public class CommandViewModel : ViewModelBase
     {
-        public CommandViewModel(string displayName, ICommand command, bool isEnabled)
+        public CommandViewModel(string displayName, ICommand command, bool isEnabled, Icon icon)
         {
             if (command == null)
                 throw new ArgumentNullException("command");
@@ -16,10 +17,17 @@ namespace QuickArch.ViewModel
             base.DisplayName = displayName;
             this.Command = command;
             this.IsEnabled = isEnabled;
+            this.Icon = icon;
         }
 
         public ICommand Command { get; private set; }
 
         public bool IsEnabled { get; set; }
+
+        public Icon Icon
+        {
+            get;
+            private set;
+        }
     }
 }

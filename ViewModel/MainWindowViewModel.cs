@@ -11,6 +11,7 @@ using System.Windows.Input;
 using QuickArch.Properties;
 using QuickArch.Model;
 using QuickArch.Utilities;
+using System.Drawing;
 
 namespace QuickArch.ViewModel
 {
@@ -65,12 +66,12 @@ namespace QuickArch.ViewModel
            #region Build Command Collections
            _fileCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
-                NewCommand("Save", param => SelectedComponentVM.Save()),
-                NewCommand("Save As...", param => SelectedComponentVM.SaveAs()),
-                NewCommand("Save All", param => SaveAll()),
-                NewCommand("Open", param => OpenSystem()),
-                NewCommand("New Document", param => CreateNewDocument(Resources.DefaultDocumentName)),
-                NewCommand("New System", param => CreateNewSystem())
+                NewCommand("Save", param => SelectedComponentVM.Save(), Resources.save),
+                NewCommand("Save As...", param => SelectedComponentVM.SaveAs(), Resources.save),
+                NewCommand("Save All", param => SaveAll(),Resources.save),
+                NewCommand("Open", param => OpenSystem(), Resources.folder),
+                NewCommand("New Document", param => CreateNewDocument(Resources.DefaultDocumentName), Resources.document),
+                NewCommand("New Subsystem", param => CreateNewSystem(), Resources.gear)
                });
 
            _editCommands = new Collection<CommandViewModel>
@@ -86,22 +87,22 @@ namespace QuickArch.ViewModel
            
            _systemCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
-                   NewCommand("New Subsystem", param => CreateNewSystem()),
-                   NewCommand("Create New Link", param => this.CreateNewConnector()),
-                   NewCommand("Delete", param => this.DeleteSystem())
+                   NewCommand("New Subsystem", param => CreateNewSystem(), Resources.gear),
+                   //NewCommand("Create New Link", param => this.CreateNewConnector(), new Icon("")),
+                   NewCommand("Delete", param => this.DeleteSystem(), Resources.delete)
                });
 
            _treeviewCommands = new Collection<CommandViewModel>
            (new CommandViewModel[] {
-               NewCommand("New Document", param => CreateNewDocument(Resources.DefaultDocumentName))
+               NewCommand("New Document", param => CreateNewDocument(Resources.DefaultDocumentName), Resources.document)
            });
            #endregion
        }
        #endregion
 
-       CommandViewModel NewCommand(string displayName, Action<object> execute, bool isEnabled=true)
+       CommandViewModel NewCommand(string displayName, Action<object> execute, Icon icon, bool isEnabled=true)
        {
-           return new CommandViewModel(displayName, new RelayCommand(execute), isEnabled);
+           return new CommandViewModel(displayName, new RelayCommand(execute), isEnabled, icon);
        }
 
        #region Components

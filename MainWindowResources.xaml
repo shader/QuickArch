@@ -18,8 +18,12 @@
     <!--This template shows how to render the list of commands on the left
     side in the main window (the 'Palette/Control Panel' area).-->
     <DataTemplate x:Key="CommandsTemplate">
-        <MenuItem Command="{Binding Path=Command}" Header="{Binding Path=DisplayName}" 
-                  IsEnabled="{Binding Path=IsEnabled}" />
+        <MenuItem Command="{Binding Path=Command}" Header="{Binding Path=DisplayName}" Background="Transparent"
+                  IsEnabled="{Binding Path=IsEnabled}" >
+            <MenuItem.Icon>
+                <Image Height="16" Width="16" Source="{Binding Path=Icon}" />
+            </MenuItem.Icon>
+        </MenuItem>
     </DataTemplate>
     
     <!--This style configures how the MainWindow's treeview should be displayed -->
@@ -91,7 +95,6 @@
         <Setter Property="Background" Value="WhiteSmoke" />
         <Setter Property="BorderBrush" Value="#FFBCBCBC" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="CornerRadius" Value="5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 

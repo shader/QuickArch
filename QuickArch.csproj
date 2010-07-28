@@ -147,11 +147,28 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Icons\block.ico" />
+    <None Include="Icons\delete.ico" />
+    <None Include="Icons\diagram.ico" />
+    <None Include="Icons\document.ico" />
+    <None Include="Icons\folder.ico" />
+    <None Include="Icons\gear.ico" />
+    <None Include="Icons\help.ico" />
+    <None Include="Icons\home.ico" />
+    <None Include="Icons\info.ico" />
+    <None Include="Icons\monitor.ico" />
+    <None Include="Icons\plus.ico" />
+    <Resource Include="Icons\save.ico" />
+    <None Include="Icons\search.ico" />
+    <None Include="Icons\statistics.ico" />
+    <None Include="Icons\stop.ico" />
+    <None Include="Icons\tick.ico" />
+    <None Include="Icons\trash.ico" />
+    <None Include="Icons\user.ico" />
+    <None Include="Icons\warning.ico" />
     <Resource Include="Images\Winter.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Icons\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
