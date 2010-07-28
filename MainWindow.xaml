@@ -90,7 +90,7 @@
                     <TextBlock Text="{Binding DisplayName}" FontStretch="Expanded">
                         <TextBlock.ContextMenu>
                             <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SystemCommands}"
-                                         ItemTemplate="{StaticResource CommandsTemplate}">
+                                         ItemTemplate="{StaticResource ContextCommandsTemplate}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
                     </TextBlock>

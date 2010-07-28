@@ -29,10 +29,15 @@
     <DataTemplate x:Key="ContextCommandsTemplate">
         <MenuItem Command="{Binding Path=Command}" 
                   Header="{Binding Path=DisplayName}"
+                  Background="Transparent"
                   CommandParameter="{Binding Path=PlacementTarget.DataContext,
                                   RelativeSource={RelativeSource FindAncestor,
                                   AncestorType={x:Type ContextMenu}}}"
-                  IsEnabled="{Binding Path=IsEnabled}"/>
+                  IsEnabled="{Binding Path=IsEnabled}">
+            <MenuItem.Icon>
+                <Image Height="16" Width="16" Source="{Binding Path=Icon}" />
+            </MenuItem.Icon>
+        </MenuItem>
     </DataTemplate>
     
 
