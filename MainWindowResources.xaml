@@ -142,4 +142,19 @@
       SelectedItem="{Binding Path=IsSelected, Mode=TwoWay}"
       />
     </DataTemplate>
+
+    <!--
+  This template explains how to render the 'Properties' content area in the main window.
+  -->
+    <DataTemplate x:Key="PropertiesTemplate">
+        <Grid>
+            <Label Content="Properties" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="96,0,0,0" Name="ObjectName" VerticalAlignment="Top" Width="104" Text="{Binding Path=DisplayName, Mode=TwoWay}" />
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding Value.Text}"></TextBlock>
+                    <TextBlock> =</TextBlock>
+                    <TextBlock Text="{Binding Value.Value}"></TextBlock>                                     
+                </StackPanel>
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>

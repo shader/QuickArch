@@ -61,53 +61,74 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!--Treeview of architecture-->
-            <TreeView Grid.Column="0" x:Name="archTree" ItemsSource="{Binding TreeVMs}" Style="{StaticResource MainTreeStyle}" 
+            <Grid x:Name="SideBarGrid" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"  />
+                    <RowDefinition Height="Auto"  />
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+
+                <!--Treeview of architecture-->
+                <TreeView Grid.Row="0" x:Name="archTree" ItemsSource="{Binding TreeVMs}" Style="{StaticResource MainTreeStyle}" 
                       PreviewMouseLeftButtonUp="archTree_PreviewMouseLeftButtonUp">
-                <TreeView.ContextMenu>
-                    <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=TreeViewCommands}" 
+                    <TreeView.ContextMenu>
+                        <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=TreeViewCommands}" 
                                  ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}" >
-                    </ContextMenu>
-                </TreeView.ContextMenu>
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <!-- This Setter applies an attached behavior to all TreeViewItems. -->
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Setter Property="FontWeight" Value="Normal" />
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="FontWeight" Value="Bold" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="False">
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <!-- This Setter applies an attached behavior to all TreeViewItems. -->
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <Setter Property="FontWeight" Value="Normal" />
-                        </Trigger>
-                    </Style.Triggers>  
-                    </Style>
-            </TreeView.ItemContainerStyle>
-            <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type vm:SystemViewModel}" ItemsSource="{Binding ComponentVMs, UpdateSourceTrigger=PropertyChanged}" >
-                    <TextBlock Text="{Binding DisplayName}" FontStretch="Expanded">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter Property="FontWeight" Value="Normal" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type vm:SystemViewModel}" ItemsSource="{Binding ComponentVMs, UpdateSourceTrigger=PropertyChanged}" >
+                            <TextBlock Text="{Binding DisplayName}" FontStretch="Expanded">
                         <TextBlock.ContextMenu>
                             <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SystemCommands}"
                                          ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
-                    </TextBlock>
-                </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type vm:SequenceViewModel}">
-                    <TextBlock Text="{Binding DisplayName, Mode=TwoWay}">
+                            </TextBlock>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type vm:SequenceViewModel}">
+                            <TextBlock Text="{Binding DisplayName, Mode=TwoWay}">
                         <TextBlock.ContextMenu>
                             <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SequenceCommands}"
                                          ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
-                    </TextBlock>
-                </DataTemplate>
-            </TreeView.Resources>
-        </TreeView>
+                            </TextBlock>
+                        </DataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
 
-        <GridSplitter HorizontalAlignment="Right" 
+                <GridSplitter VerticalAlignment="Bottom" 
+                      HorizontalAlignment="Stretch" 
+                      Grid.Column="0" ResizeBehavior="PreviousAndNext"
+                      Grid.Row="1"
+                      Height="5" Background="#FFBCBCBC"/>
+                
+                <Border Grid.Row="2" Style="{StaticResource MainBorderStyle}">
+                    <ContentControl Content="{Binding SelectedComponentVM}"
+                                    ContentTemplate="{StaticResource PropertiesTemplate}"
+                                    Style="{StaticResource MainCCStyle}" />
+                </Border>
+
+            </Grid>
+
+            <GridSplitter HorizontalAlignment="Right" 
                       VerticalAlignment="Stretch" 
                       Grid.Column="1" ResizeBehavior="PreviousAndNext"
                       Width="5" Background="#FFBCBCBC"/>

@@ -29,6 +29,15 @@ namespace QuickArch.ViewModel
             _component = component;
         }
 
+        public Dictionary<String,String> Properties 
+        {
+            get
+            {
+                return _component.Properties;
+            }
+        }
+
+
         public override string DisplayName
         {
             get
