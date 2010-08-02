@@ -265,6 +265,7 @@ namespace QuickArch.ViewModel
                if (_linkButtonCommand == null)
                    _linkButtonCommand = new RelayCommand(param => (DisplayedComponent as SystemViewModel).ComponentSelected += 
                        (DisplayedComponent as SystemViewModel).StartTempConnector);
+               Debug.WriteLine("test");
 
                return _linkButtonCommand;
            }
