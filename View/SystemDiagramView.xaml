@@ -8,38 +8,20 @@
              x:Name="SystemDiagram"
              Width="650" Height="490" Loaded="Diagram_Created">
     <UserControl.Resources>
-        <DataTemplate x:Key="ComponentTemplate">
-            <vw:SystemBasicView />
-        </DataTemplate>
-        <DataTemplate x:Key="TempConnectorTemplate">
-            <vw:ConnectorControl />
-        </DataTemplate>
-        <vw:ItemsControlTemplateSelector x:Key="ItemsControlTemplateSelector" ComponentTemplate="{StaticResource ComponentTemplate}" 
-                                     TempConnectorTemplate="{StaticResource TempConnectorTemplate}" />
-        <Style TargetType="{x:Type ItemsControl}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ItemsControl}">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <ItemsPresenter />
-                            </ScrollViewer>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary Source="SystemDiagramResources.xaml" />
     </UserControl.Resources>
-    <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White"
+    <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Style="{StaticResource ItemsControlStyle}"
                   ItemsSource="{Binding Path=ComponentVMs, NotifyOnSourceUpdated=True}" 
                   x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}"
                   ItemTemplateSelector="{StaticResource ItemsControlTemplateSelector}"
                   Width="{Binding ElementName=ComponentDiagramControl, Path=Width}"
                   SourceUpdated="Components_Updated">
-            <ItemsControl.ItemsPanel>
+        <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Name ="myCanvas" Background="Transparent" Loaded="myCanvas_Loaded">
                     <Canvas.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="New Link" Click="NewLinkButton_Click" />
+                        <ContextMenu ItemsSource="{Binding Path=Commands}" 
+                                     ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}" Opened="ContextMenu_Opened">
                         </ContextMenu>
                     </Canvas.ContextMenu>
                 </Canvas>

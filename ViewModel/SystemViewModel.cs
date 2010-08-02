@@ -10,16 +10,21 @@ using System.ComponentModel;
 using QuickArch.Model;
 using QuickArch.Properties;
 using QuickArch.Utilities;
+using System.Drawing;
 
 namespace QuickArch.ViewModel
 {
     public class SystemViewModel : ComponentViewModel
     {
-        ICommand _deleteCommand;
+        private Collection<CommandViewModel> _commands;
         bool _isExpanded;
 
         #region Properties
         public ObservableCollection<ComponentViewModel> ComponentVMs { get; private set; }
+        public Collection<CommandViewModel> Commands
+        {
+            get { return _commands; }
+        }
 
         public event ComponentSelectionHandler ComponentSelected;
     
@@ -55,6 +60,12 @@ namespace QuickArch.ViewModel
                 ComponentVMs.Add(new ComponentPlaceHolder());
 
             ((QuickArch.Model.System)_component).ComponentsChanged += OnComponentsChanged;
+
+            _commands = new Collection<CommandViewModel>
+                (new CommandViewModel[] {
+                   NewCommand("New Subsystem", param => this.AddSubsystem(), Resources.gear),
+                   NewCommand("Create New Link", param => this.TestAddConnector(), Resources.line)
+               });
         }
         
         /// <summary>
@@ -92,24 +103,18 @@ namespace QuickArch.ViewModel
 
         public void AddConnector()
         {
-           // ((QuickArch.Model.System)_component).AddConnector();
+            //((QuickArch.Model.System)_component).AddConnector();
+        }
+
+        public void TestAddConnector()
+        {
+            ComponentVMs.Add(new ConnectorViewModel(new Connector()));
         }
 
         public void Delete()
         {
             _component.Delete();
         }
-        /*
-        public ICommand DeleteCommand
-        {
-            get
-            {
-                if (_deleteCommand == null)
-                    _deleteCommand = new RelayCommand(param => this.OnDispose());
-
-                return _deleteCommand;
-            }
-        }*/
 
         #region Event Handling Methods
         protected override void OnDispose()
@@ -210,5 +215,10 @@ namespace QuickArch.ViewModel
         }
 
         #endregion
+
+        CommandViewModel NewCommand(string displayName, Action<object> execute, Icon icon, bool isEnabled = true)
+        {
+            return new CommandViewModel(displayName, new RelayCommand(execute), isEnabled, icon);
+        }
     }
 }

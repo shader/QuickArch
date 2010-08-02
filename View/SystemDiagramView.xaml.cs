@@ -178,6 +178,12 @@ namespace QuickArch.View
                 _components.Add(s);
             }
         }
+
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            ContextMenu menu = sender as ContextMenu;
+            menu.DataContext = DataContext;
+        }
     }
 
     #region DataTemplateSelectorClass
@@ -205,6 +211,8 @@ namespace QuickArch.View
                 if (item is SystemViewModel)
                     return _componentTemplate;
                 if (item is TemporaryConnectorViewModel)
+                    return _tempConnectorTemplate;
+                if (item is ConnectorViewModel)
                     return _tempConnectorTemplate;
             }
             return base.SelectTemplate(item, container);
