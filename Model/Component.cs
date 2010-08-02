@@ -12,6 +12,7 @@ namespace QuickArch.Model
     {
         #region Fields
         public string Filename;
+        public Dictionary<String, String> Properties;
         private Guid _id = Guid.NewGuid();
         protected Component _parent;
         #endregion
