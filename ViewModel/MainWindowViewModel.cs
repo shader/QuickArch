@@ -87,7 +87,7 @@ namespace QuickArch.ViewModel
            
            _systemCommands = new Collection<CommandViewModel>
                (new CommandViewModel[] {
-                   NewCommand("New Subsystem", param => CreateNewSystem(), Resources.gear),
+                   NewCommand("New Subsystem", param => (param as SystemViewModel).AddSubsystem(), Resources.gear),
                    NewCommand("Create New Link", param => this.CreateNewConnector(), Resources.line),
                    NewCommand("Delete", param => this.DeleteSystem(param as SystemViewModel), Resources.delete)
                });
