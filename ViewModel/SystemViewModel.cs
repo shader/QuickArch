@@ -16,12 +16,12 @@ namespace QuickArch.ViewModel
 {
     public class SystemViewModel : ComponentViewModel
     {
-        private Collection<CommandViewModel> _commands;
+        private ObservableCollection<CommandViewModel> _commands;
         bool _isExpanded;
 
         #region Properties
         public ObservableCollection<ComponentViewModel> ComponentVMs { get; private set; }
-        public Collection<CommandViewModel> Commands
+        public ObservableCollection<CommandViewModel> Commands
         {
             get { return _commands; }
         }
@@ -61,7 +61,7 @@ namespace QuickArch.ViewModel
 
             ((QuickArch.Model.System)_component).ComponentsChanged += OnComponentsChanged;
 
-            _commands = new Collection<CommandViewModel>
+            _commands = new ObservableCollection<CommandViewModel>
                 (new CommandViewModel[] {
                    NewCommand("New Subsystem", param => this.AddSubsystem(), Resources.gear),
                    NewCommand("Create New Link", param => this.TestAddConnector(), Resources.line)

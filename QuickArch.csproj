@@ -58,6 +58,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CommandTextBox.cs" />
+    <Compile Include="Model\Document.cs" />
+    <Compile Include="Model\SystemDiagram.cs" />
     <Compile Include="Utilities\ComponentAddedEventArgs.cs" />
     <Compile Include="Model\Sequence.cs" />
     <Compile Include="Model\System.cs" />
@@ -66,8 +68,11 @@
     <Compile Include="Utilities\SelectionHandler.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\ComponentPlaceHolder.cs" />
+    <Compile Include="ViewModel\ComponentViewModelFactory.cs" />
     <Compile Include="ViewModel\ConnectorViewModel.cs" />
+    <Compile Include="ViewModel\DocumentViewModel.cs" />
     <Compile Include="ViewModel\SequenceViewModel.cs" />
+    <Compile Include="ViewModel\SystemDiagramViewModel.cs" />
     <Compile Include="ViewModel\SystemViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\TemporaryConnectorViewModel.cs" />

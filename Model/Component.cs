@@ -12,7 +12,7 @@ namespace QuickArch.Model
     {
         #region Fields
         public string Filename;
-        public Dictionary<String, String> Properties;
+        public Dictionary<String, String> Properties {get; set;}
         private Guid _id = Guid.NewGuid();
         protected Component _parent;
         #endregion
@@ -20,17 +20,21 @@ namespace QuickArch.Model
         #region Constructors
         public Component() : this(null) { }
 
-        public Component(string title) : this(title, null) { }
+        public Component(string name) : this(name, null) { }
 
-        public Component(string title, Component parent)
+        public Component(string name, Component parent)
         {
-            Title = title;
+            Properties.Add("Name", name);
             _parent = parent;
         }
         #endregion
 
         #region Properties
-        public string Title { get; set; }
+        public string Name
+        {
+            get { return Properties["Name"]; }
+            set { Properties["Name"] = value; }
+        }
 
         public Guid ID
         {

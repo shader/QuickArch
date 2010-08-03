@@ -36,18 +36,17 @@ namespace QuickArch.ViewModel
                 return _component.Properties;
             }
         }
-
-
+        
         public override string DisplayName
         {
             get
             {
-                return _component.Title;
+                return _component.Name;
             }
             set
             {
                 base.DisplayName = value;
-                _component.Title = value;
+                _component.Name = value;
             }
         }
 
@@ -84,7 +83,7 @@ namespace QuickArch.ViewModel
         {
             if (_component != null)
             {
-                string filename = FileManager.GetSaveFile(_component.Title, Resources.Extension, Resources.Filter);
+                string filename = FileManager.GetSaveFile(_component.Name, Resources.Extension, Resources.Filter);
                 if (filename != null)
                     _component.SaveAs(filename);
             }

@@ -148,7 +148,6 @@
   -->
     <DataTemplate x:Key="PropertiesTemplate">
         <Grid>
-            <Label Content="Properties" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" />
             <TextBox Height="23" HorizontalAlignment="Left" Margin="96,0,0,0" Name="ObjectName" VerticalAlignment="Top" Width="104" Text="{Binding Path=DisplayName, Mode=TwoWay}" />
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="{Binding Value.Text}"></TextBlock>
@@ -157,4 +156,17 @@
                 </StackPanel>
         </Grid>
     </DataTemplate>
+
+    <DataTemplate x:Key="PropertiesHeaderTemplate">
+        <TextBlock Text="{Binding}">
+            <TextBlock.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFCFCFCF" Offset="0.5" />
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="White" Offset="0.992" />
+                </LinearGradientBrush>
+            </TextBlock.Background>
+        </TextBlock>
+    </DataTemplate>
+    
 </ResourceDictionary>

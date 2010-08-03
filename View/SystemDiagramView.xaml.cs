@@ -25,7 +25,7 @@ namespace QuickArch.View
 
         bool _isDown, _isDragging;
         bool selected = false;
-        private bool isAddNewLink = false;
+        bool isAddNewLink = false;
 
         UIElement selectedElement = null;
 

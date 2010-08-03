@@ -85,12 +85,12 @@ namespace QuickArch.ViewModel
                // NewCommand("Export to PNG", param => GetActiveSystem().ExportPng())
                //});
            
-           _systemCommands = new Collection<CommandViewModel>
-               (new CommandViewModel[] {
-                   NewCommand("New Subsystem", param => (param as SystemViewModel).AddSubsystem(), Resources.gear),
-                   NewCommand("Create New Link", param => this.CreateNewConnector(), Resources.line),
-                   NewCommand("Delete", param => this.DeleteSystem(param as SystemViewModel), Resources.delete)
-               });
+           //_systemCommands = new Collection<CommandViewModel>
+           //    (new CommandViewModel[] {
+           //        NewCommand("New Subsystem", param => (param as SystemViewModel).AddSubsystem(), Resources.gear),
+           //        NewCommand("Create New Link", param => this.CreateNewConnector(), Resources.line),
+           //        NewCommand("Delete", param => this.DeleteSystem(param as SystemViewModel), Resources.delete)
+           //    });
 
            _treeviewCommands = new Collection<CommandViewModel>
            (new CommandViewModel[] {
@@ -172,11 +172,16 @@ namespace QuickArch.ViewModel
            {
                SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
                TreeVMs.Add(sys);
-               TabVMs.Add(sys);
            }
        }
 
        void CreateNewDocument(String title)
+       {
+           SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
+           TreeVMs.Add(sys);
+       }
+
+       void CreateNewSystemDiagram(String title)
        {
            SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
            TreeVMs.Add(sys);
@@ -263,8 +268,14 @@ namespace QuickArch.ViewModel
            get
            {
                if (_linkButtonCommand == null)
-                   _linkButtonCommand = new RelayCommand(param => (DisplayedComponent as SystemViewModel).ComponentSelected += 
-                       (DisplayedComponent as SystemViewModel).StartTempConnector);
+                   _linkButtonCommand = new RelayCommand(param =>
+                   {
+                       if (DisplayedComponent != null)
+                       {
+                           (DisplayedComponent as SystemViewModel).ComponentSelected +=
+                               (DisplayedComponent as SystemViewModel).StartTempConnector;
+                       }
+                   });
                Debug.WriteLine("test");
 
                return _linkButtonCommand;
