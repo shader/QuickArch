@@ -94,7 +94,7 @@ namespace QuickArch.Model
             if ( Filename != null)
             {
                 XElement doc = new XElement(Resources.SystemTagName,
-                                            new XAttribute("Title", Title));
+                                            new XAttribute("Title", Name));
                 foreach ( Component cmp in _components ) 
                 {
                     cmp.Save(doc); //add each component recursively to the save tree.
@@ -108,14 +108,14 @@ namespace QuickArch.Model
             if (Filename != null)
             {
                 parent.Add(new XElement(Resources.SubsystemTagName,
-                                        new XAttribute("Title", Title),
+                                        new XAttribute("Title", Name),
                                         new XAttribute("Filename", Filename)));
                 Save();
             }
             else
             {
                 XElement elm = new XElement(Resources.SubsystemTagName,
-                                            new XAttribute("Title", Title));
+                                            new XAttribute("Title", Name));
                 parent.Add(elm);
                 foreach (Component cmp in _components)
                 {

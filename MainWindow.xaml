@@ -96,7 +96,7 @@
                         <HierarchicalDataTemplate DataType="{x:Type vm:SystemViewModel}" ItemsSource="{Binding ComponentVMs, UpdateSourceTrigger=PropertyChanged}" >
                             <TextBlock Text="{Binding DisplayName}" FontStretch="Expanded">
                         <TextBlock.ContextMenu>
-                            <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=SystemCommands}"
+                            <ContextMenu Opened="ContextMenu_Opened" ItemsSource="{Binding Path=PlacementTarget.DataContext.Commands, RelativeSource={RelativeSource Self}}"
                                          ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}">
                             </ContextMenu>
                         </TextBlock.ContextMenu>
@@ -121,9 +121,10 @@
                       Height="5" Background="#FFBCBCBC"/>
                 
                 <Border Grid.Row="2" Style="{StaticResource MainBorderStyle}">
-                    <ContentControl Content="{Binding SelectedComponentVM}"
-                                    ContentTemplate="{StaticResource PropertiesTemplate}"
-                                    Style="{StaticResource MainCCStyle}" />
+                    <HeaderedContentControl Content="{Binding SelectedComponentVM}"
+                                            ContentTemplate="{StaticResource PropertiesTemplate}"
+                                            Header="Properties"
+                                            HeaderTemplate="{StaticResource PropertiesHeaderTemplate}"/>
                 </Border>
 
             </Grid>
