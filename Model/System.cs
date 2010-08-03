@@ -58,7 +58,7 @@ namespace QuickArch.Model
         }
         #endregion
 
-        public void AddComponent(Component comp)
+        public Component AddComponent(Component comp)
         {
             if(!_components.Contains(comp))
             {
@@ -68,6 +68,7 @@ namespace QuickArch.Model
                     this.ComponentsChanged(this, 
                         new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, comp));
             }
+            return comp;
         }
 
         public void RemoveComponent(Component comp)
@@ -87,6 +88,11 @@ namespace QuickArch.Model
         public void AddSubsystem(string title)
         {
             AddComponent(new System(title, this));
+        }
+
+        public SystemDiagram AddSystemDiagram(string title, Document parent)
+        {
+            return AddComponent(new SystemDiagram(title, parent)) as SystemDiagram;
         }
 
         public override void Save()

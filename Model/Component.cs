@@ -24,6 +24,7 @@ namespace QuickArch.Model
 
         public Component(string name, Component parent)
         {
+            Properties = new Dictionary<string, string>();
             Properties.Add("Name", name);
             _parent = parent;
         }

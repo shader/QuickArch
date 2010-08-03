@@ -140,6 +140,21 @@ namespace QuickArch.ViewModel
        {
            SelectedComponentVM = cvm;
        }
+
+       void OnDocumentComponentVMsChanged(object sender, NotifyCollectionChangedEventArgs e)
+       {
+           if (e.NewItems != null && e.NewItems.Count != 0)
+               foreach (ComponentViewModel cvm in e.NewItems)
+               {
+                   TabVMs.Add(cvm);
+               }
+
+           if (e.OldItems != null && e.OldItems.Count != 0)
+               foreach (ComponentViewModel cvm in e.OldItems)
+               {
+                   TabVMs.Remove(cvm);
+               }
+       }
        #endregion
 
        #region Private Helpers
@@ -177,15 +192,14 @@ namespace QuickArch.ViewModel
 
        void CreateNewDocument(String title)
        {
-           SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
-           TreeVMs.Add(sys);
+           DocumentViewModel doc = new DocumentViewModel(new Document(title));
+           TreeVMs.Add(doc);
+           doc.ComponentVMs.CollectionChanged += OnDocumentComponentVMsChanged;
        }
 
        void CreateNewSystemDiagram(String title)
        {
-           SystemViewModel sys = new SystemViewModel(new QuickArch.Model.System(title, null));
-           TreeVMs.Add(sys);
-           TabVMs.Add(sys);
+           (SelectedComponentVM as DocumentViewModel).AddSystemDiagram(title);
        }
 
        void CreateNewConnector()

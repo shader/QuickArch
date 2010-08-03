@@ -60,6 +60,7 @@
     <Compile Include="CommandTextBox.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\SystemDiagram.cs" />
+    <Compile Include="Utilities\Commands.cs" />
     <Compile Include="Utilities\ComponentAddedEventArgs.cs" />
     <Compile Include="Model\Sequence.cs" />
     <Compile Include="Model\System.cs" />
