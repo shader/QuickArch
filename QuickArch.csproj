@@ -73,9 +73,6 @@
     <Compile Include="ViewModel\TemporaryConnectorViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ComponentViewModel.cs" />
-    <Compile Include="View\ConnectorControl.xaml.cs">
-      <DependentUpon>ConnectorControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ConnectorView.cs" />
     <Compile Include="View\SystemDiagramView.xaml.cs">
       <DependentUpon>SystemDiagramView.xaml</DependentUpon>
@@ -105,10 +102,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\ComponentControlTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ConnectorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

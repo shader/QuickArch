@@ -25,40 +25,30 @@ namespace QuickArch.View
 
         bool _isDown, _isDragging;
         bool selected = false;
-        private bool isAddNewLink = false;
+        bool _isAddNewLink, _isLinkStarted = false;
+        TemporaryConnectorViewModel _tempLink;
+        SystemBasicView _linkedSystem;
 
         UIElement selectedElement = null;
+        LineGeometry _link;
 
         Point _startPoint, _originalPoint;
         private Canvas myCanvas;
-        private ObservableCollection<SystemBasicView> _components;
-        private double xInc;
+        private ObservableCollection<ComponentViewModel> _components;
+        SystemViewModel _context;
 
         public SystemDiagramView()
         {
             InitializeComponent();
-            _components = new ObservableCollection<SystemBasicView>();
+            _components = new ObservableCollection<ComponentViewModel>();
         }
 
         private void myCanvas_Loaded(object sender, RoutedEventArgs e)
         {
             myCanvas = sender as Canvas;
-            myCanvas.MouseLeftButtonDown += new MouseButtonEventHandler(myCanvas_MouseLeftButtonDown);
-            myCanvas.MouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
-        }
-
-        private void ArrangeChildren()
-        {
-            if (myCanvas != null)
-            {
-                if (myCanvas.Children.Count != 0)
-                {
-                    foreach (SystemBasicView child in myCanvas.Children)
-                    {
-                        Canvas.SetLeft(child, xInc);
-                    }
-                }
-            }
+            myCanvas.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(myCanvas_PreviewMouseLeftButtonDown);
+            myCanvas.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
+            myCanvas.PreviewMouseMove += new MouseEventHandler(myCanvas_PreviewMouseMove);
         }
 
         private void Diagram_Created(object sender, RoutedEventArgs e)
@@ -67,6 +57,7 @@ namespace QuickArch.View
             this.MouseLeftButtonUp += new MouseButtonEventHandler(DragFinishedMouseHandler);
             this.MouseMove += new MouseEventHandler(Diagram_MouseMove);
             this.MouseLeave += new MouseEventHandler(Diagram_MouseLeave);
+            _context = DataContext as SystemViewModel;
         }
 
         // Handler for drag stopping on leaving the window
@@ -79,6 +70,22 @@ namespace QuickArch.View
         // Handler for drag stopping on user choise
         void DragFinishedMouseHandler(object sender, MouseButtonEventArgs e)
         {
+            if(e.Source.GetType() == typeof(SystemBasicView))
+            {
+                if (_tempLink != null)
+                {
+                    SystemBasicView targetSystem = e.Source as SystemBasicView;
+                    SystemViewModel s = (targetSystem.DataContext) as SystemViewModel;
+                    _tempLink.End = s;
+                    _tempLink.EndPosition = e.GetPosition(this);
+                    Mouse.OverrideCursor = null;
+                    _isAddNewLink = false;
+                    _isLinkStarted = false;
+                    _context.ComponentVMs.Add(_tempLink);
+                    _tempLink = null;
+                    e.Handled = true;
+                }
+            }
             StopDragging();
             e.Handled = true;
         }
@@ -128,7 +135,7 @@ namespace QuickArch.View
         }
 
         // Handler for element selection on the canvas providing resizing adorner
-        void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        void myCanvas_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Remove selection on clicking anywhere the window
             if (selected)
@@ -141,22 +148,45 @@ namespace QuickArch.View
                     selectedElement = null;
                 }
             }
-
-            // If a componentView is selected, add adorner layer to it
+            //If adding a new link
             if (e.Source.GetType() == typeof(SystemBasicView))
             {
-                _isDown = true;
-                _startPoint = e.GetPosition(myCanvas);
+                if (e.Source.GetType() == typeof(SystemBasicView) && _isAddNewLink)
+                {
+                    if (!_isLinkStarted)
+                    {
+                        if (_link == null || _link.EndPoint != _link.StartPoint)
+                        {
+                            _isLinkStarted = true;
+                            _linkedSystem = e.Source as SystemBasicView;
+                            SystemViewModel svm = (_linkedSystem.DataContext) as SystemViewModel;
+                            _tempLink = new TemporaryConnectorViewModel(svm);
+                            _tempLink.StartPostion = _linkedSystem.Position;
+                            e.Handled = true;
+                        }
+                    }
+                }
+                // If a componentView is selected, add adorner layer to it
+                else
+                {
+                    _isDown = true;
+                    _startPoint = e.GetPosition(myCanvas);
 
-                selectedElement = e.Source as UIElement;
-                _originalPoint = selectedElement.TranslatePoint(new Point(0,0), myCanvas);
+                    selectedElement = e.Source as UIElement;
+                    _originalPoint = selectedElement.TranslatePoint(new Point(0, 0), myCanvas);
 
-                aLayer = AdornerLayer.GetAdornerLayer(selectedElement);
-                aLayer.Add(new ResizingAdorner(selectedElement, myCanvas));
+                    aLayer = AdornerLayer.GetAdornerLayer(selectedElement);
+                    aLayer.Add(new ResizingAdorner(selectedElement, myCanvas));
 
-                selected = true;
-                e.Handled = true;
+                    selected = true;
+                    e.Handled = true;
+                }
             }
+        }
+        void myCanvas_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isAddNewLink && _isLinkStarted)
+                e.Handled = true;
         }
         void myCanvas_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -165,16 +195,15 @@ namespace QuickArch.View
 
         public void NewLinkButton_Click(object sender, RoutedEventArgs e)
         {
-            isAddNewLink = true;
+            _isAddNewLink = true;
             Mouse.OverrideCursor = Cursors.Cross;
         }
 
         private void Components_Updated(object sender, DataTransferEventArgs e)
         {
-            SystemBasicView s = sender as SystemBasicView;
+            ComponentViewModel s = sender as ComponentViewModel;
             if (s != null)
             {
-                xInc += s.Width;
                 _components.Add(s);
             }
         }

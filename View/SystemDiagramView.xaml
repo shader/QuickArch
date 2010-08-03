@@ -6,26 +6,39 @@
              xmlns:vw ="clr-namespace:QuickArch.View"
              xmlns:vm ="clr-namespace:QuickArch.ViewModel"
              x:Name="SystemDiagram"
-             Width="650" Height="490" Loaded="Diagram_Created">
+             Width="650" Height="490" Loaded="Diagram_Created" DataContext="{Binding}">
     <UserControl.Resources>
         <ResourceDictionary Source="SystemDiagramResources.xaml" />
     </UserControl.Resources>
+    <Grid>
     <ItemsControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Style="{StaticResource ItemsControlStyle}"
-                  ItemsSource="{Binding Path=ComponentVMs, NotifyOnSourceUpdated=True}" 
+                  ItemsSource="{Binding Path=ComponentVMs, NotifyOnTargetUpdated=True}" 
                   x:Name="myItemsControl" Height="{Binding ElementName=ComponentDiagramControl, Path=Height}"
                   ItemTemplateSelector="{StaticResource ItemsControlTemplateSelector}"
                   Width="{Binding ElementName=ComponentDiagramControl, Path=Width}"
-                  SourceUpdated="Components_Updated">
+                  TargetUpdated="Components_Updated">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <Canvas Name ="myCanvas" Background="Transparent" Loaded="myCanvas_Loaded">
+                <Canvas x:Name="myCanvas" Background="Transparent" Loaded="myCanvas_Loaded" Width="{Binding Path=SystemDiagram.ActualWidth}" 
+                        Height="{Binding Path=SystemDiagram.ActualHeight}">
                     <Canvas.ContextMenu>
-                        <ContextMenu ItemsSource="{Binding Path=Commands}" 
+                        <!--
+                        <ContextMenu ItemsSource="{Binding Path=DiagramCommands}" 
                                      ItemContainerStyle="{StaticResource ContextMenuItemCommandsStyle}" Opened="ContextMenu_Opened">
+                        </ContextMenu>-->
+                        <ContextMenu>
+                            <MenuItem Header="TestAddLink" Click="NewLinkButton_Click" />
                         </ContextMenu>
                     </Canvas.ContextMenu>
                 </Canvas>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemContainerStyle>
+            <Style>
+                <Setter Property="Canvas.Left" Value="{Binding Path=Left}" />
+                <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
+            </Style>
+        </ItemsControl.ItemContainerStyle>
     </ItemsControl>
+    </Grid>
 </UserControl>

@@ -12,10 +12,6 @@
         <vw:SystemDiagramView />
     </DataTemplate>
     
-    <DataTemplate DataType="{x:Type vm:TemporaryConnectorViewModel}" x:Key="TempConnectorTemplate">
-        <vw:ConnectorControl />
-    </DataTemplate>
-    
     <Image x:Shared="false" x:Key="Img" Width="16" Height="16" Source="{Binding Path=Icon}" />
 
     <!--This style shows how to render the list of commands in the toolbar's menus.-->

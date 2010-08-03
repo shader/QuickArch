@@ -16,14 +16,17 @@ namespace QuickArch.ViewModel
 {
     public class SystemViewModel : ComponentViewModel
     {
-        private Collection<CommandViewModel> _commands;
+        private Collection<CommandViewModel> _diagramCommands;
+        private ICommand _deleteCommand;
         bool _isExpanded;
+        bool _isLinking = false;
+        TemporaryConnectorViewModel _tempConnector;
 
         #region Properties
         public ObservableCollection<ComponentViewModel> ComponentVMs { get; private set; }
-        public Collection<CommandViewModel> Commands
+        public Collection<CommandViewModel> DiagramCommands
         {
-            get { return _commands; }
+            get { return _diagramCommands; }
         }
 
         public event ComponentSelectionHandler ComponentSelected;
@@ -50,6 +53,11 @@ namespace QuickArch.ViewModel
         }
         #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Create new SystemViewModel from System model class, set up commands, and create 
+        /// ObservableCollection of children ViewModels
+        /// </summary>
         public SystemViewModel(QuickArch.Model.System system) : base(system)
         {
             if (system == null)
@@ -61,13 +69,14 @@ namespace QuickArch.ViewModel
 
             ((QuickArch.Model.System)_component).ComponentsChanged += OnComponentsChanged;
 
-            _commands = new Collection<CommandViewModel>
+            _diagramCommands = new Collection<CommandViewModel>
                 (new CommandViewModel[] {
                    NewCommand("New Subsystem", param => this.AddSubsystem(), Resources.gear),
                    NewCommand("Create New Link", param => this.TestAddConnector(), Resources.line)
                });
         }
-        
+        #endregion
+
         /// <summary>
         /// LoadComponentViews creates viewmodels dynamically for components stored in the system when it is expanded.
         /// </summary>
@@ -108,7 +117,8 @@ namespace QuickArch.ViewModel
 
         public void TestAddConnector()
         {
-            ComponentVMs.Add(new ConnectorViewModel(new Connector()));
+            _isLinking = true;
+            Mouse.OverrideCursor = Cursors.Cross;
         }
 
         public void Delete()
@@ -214,6 +224,20 @@ namespace QuickArch.ViewModel
             System.AddConnector(start.System, end.System);
         }
 
+        #endregion
+
+        #region Other Commands
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                    _deleteCommand = new RelayCommand(param =>this.Delete());
+
+                return _deleteCommand;
+            }
+
+        }
         #endregion
 
         CommandViewModel NewCommand(string displayName, Action<object> execute, Icon icon, bool isEnabled = true)

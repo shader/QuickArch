@@ -1,9 +1,0 @@
-﻿<UserControl x:Class="QuickArch.View.ConnectorControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             x:Name="connectorControl"
-             Width="150" Height="2">
-    <Line Stroke="Black" Height="{Binding ElementName=connectorControl,Path=Height}" Width="{Binding ElementName=connectorControl,Path=Width}" />
-</UserControl>

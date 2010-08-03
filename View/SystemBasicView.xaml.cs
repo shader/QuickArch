@@ -21,9 +21,11 @@ namespace QuickArch.View
     public partial class SystemBasicView : UserControl
     {
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(SystemBasicView));
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Point), typeof(SystemBasicView));
 
         private Guid id;
+
+        public List<ConnectorView> EndLines { get; private set; }
+        public List<ConnectorView> StartLines { get; private set; }
 
         public bool IsSelected
         {
@@ -33,15 +35,34 @@ namespace QuickArch.View
 
         public Point Position
         {
-            get { return (Point)base.GetValue(PositionProperty); }
-            set { base.SetValue(PositionProperty, value); }
+            get
+            { return new Point(Canvas.GetLeft(this), Canvas.GetTop(this)); }
+            set
+            {
+                Canvas.SetLeft(this, value.X);
+                Canvas.SetTop(this, value.Y);
+            }
+        }
+
+        public double Left
+        {
+            get { return this.Position.X; }
+            set { Canvas.SetLeft(this, value); }
+        }
+
+        public double Top
+        {
+            get { return this.Position.Y; }
+            set { Canvas.SetTop(this, value); }
         }
 
         public SystemBasicView()
         {
-            this.RenderTransform = new TranslateTransform(0, 0);
             InitializeComponent();
             id = Guid.NewGuid();
+
+            StartLines = new List<ConnectorView>();
+            EndLines = new List<ConnectorView>();
         }
 
         public Guid ID

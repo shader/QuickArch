@@ -6,6 +6,16 @@
              xmlns:vw="clr-namespace:QuickArch.View" 
              Width="100" Height="40" x:Name="componentControl" Cursor="Hand"
              >
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Bring to Front" />
+            <MenuItem Header="Delete" Command="{Binding Path=DeleteCommand}">
+                <MenuItem.Icon>
+                    <Image Source="/Icons/delete.ico" Height="16" Width="16" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
     <Canvas x:Name="thumbCanvas" Width="{Binding ElementName=componentControl, Path=Width}" Height="{Binding ElementName=componentControl, Path=Height}">
         <Rectangle x:Name="tplRect" Width="{Binding ElementName=thumbCanvas, Path=Width}" 
                                Height="{Binding ElementName=thumbCanvas, Path=Height}" Fill="LightCyan" />
